@@ -13,7 +13,6 @@ namespace MyEShop.Models
 
         private int? _parentCategoryId;
 
-        //[Display(Name = "Parent Category")]
         public int? ParentCategoryId
         {
             get { return _parentCategoryId; }
@@ -26,9 +25,6 @@ namespace MyEShop.Models
             }
         }
 
-        //[Required(ErrorMessage = "You must enter a category name.")]
-        //[StringLength(20, ErrorMessage = "Category names must be 20 characters or shorter.")]
-        //[Display(Name = "Category")]
         public string CategoryName { get; set; }
 
         public virtual Category Parent { get; set; }

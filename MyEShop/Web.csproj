@@ -221,12 +221,17 @@
     <Compile Include="Migrations\201703280849262_AddShoppingCart.Designer.cs">
       <DependentUpon>201703280849262_AddShoppingCart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703280917029_AddGroupFilter.cs" />
+    <Compile Include="Migrations\201703280917029_AddGroupFilter.Designer.cs">
+      <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
     <Compile Include="ModelConfigs\AuctionConfiguration.cs" />
     <Compile Include="ModelConfigs\CategoryConfiguration.cs" />
     <Compile Include="ModelConfigs\CommentConfiguration.cs" />
+    <Compile Include="ModelConfigs\GroupFilterConfiguration.cs" />
     <Compile Include="ModelConfigs\PaymentConfiguration.cs" />
     <Compile Include="ModelConfigs\ProductConfiguration.cs" />
     <Compile Include="ModelConfigs\ProductImageConfiguration.cs" />
@@ -238,6 +243,7 @@
     <Compile Include="Models\Auction.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\GroupFilter.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Product.cs" />
@@ -358,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703280849262_AddShoppingCart.resx">
       <DependentUpon>201703280849262_AddShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703280917029_AddGroupFilter.resx">
+      <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
