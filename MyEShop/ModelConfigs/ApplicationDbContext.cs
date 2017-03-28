@@ -25,6 +25,7 @@ namespace Web.ModelConfigs
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
 
 
