@@ -225,12 +225,17 @@
     <Compile Include="Migrations\201703280917029_AddGroupFilter.Designer.cs">
       <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs" />
+    <Compile Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.Designer.cs">
+      <DependentUpon>201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
     <Compile Include="ModelConfigs\AuctionConfiguration.cs" />
     <Compile Include="ModelConfigs\CategoryConfiguration.cs" />
     <Compile Include="ModelConfigs\CommentConfiguration.cs" />
+    <Compile Include="ModelConfigs\FilterItemConfiguration.cs" />
     <Compile Include="ModelConfigs\GroupFilterConfiguration.cs" />
     <Compile Include="ModelConfigs\PaymentConfiguration.cs" />
     <Compile Include="ModelConfigs\ProductConfiguration.cs" />
@@ -243,6 +248,7 @@
     <Compile Include="Models\Auction.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\FilterItem.cs" />
     <Compile Include="Models\GroupFilter.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -367,6 +373,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703280917029_AddGroupFilter.resx">
       <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.resx">
+      <DependentUpon>201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

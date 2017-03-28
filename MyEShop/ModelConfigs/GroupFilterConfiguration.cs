@@ -17,6 +17,8 @@ namespace MyEShop.ModelConfigs
                  .WithMany(g => g.Children)
                  .HasForeignKey(g => g.ParentId)
                  .WillCascadeOnDelete(false);
+
+           
         }
     }
 }

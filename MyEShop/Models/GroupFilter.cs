@@ -29,5 +29,7 @@ namespace MyEShop.Models
         public virtual GroupFilter Parent { get; set; }
 
         public IList<GroupFilter> Children { get; set; }
+
+        public ICollection<FilterItem> FilterItems { get; set; }
     }
 }
