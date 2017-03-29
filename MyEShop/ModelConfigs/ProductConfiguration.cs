@@ -24,6 +24,14 @@ namespace MyEShop.ModelConfigs
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName,
                     new IndexAnnotation(new IndexAttribute("IX_Product_CategoryId") { IsUnique = false }));
 
+            HasMany<FilterItem>(p => p.FilterItems)
+                .WithMany(f => f.Products)
+                .Map(pf =>
+                {
+                    pf.MapLeftKey("ProductId");
+                    pf.MapRightKey("FilterItemId");
+                    pf.ToTable("Products_FilterItems");
+                });
 
         }
 

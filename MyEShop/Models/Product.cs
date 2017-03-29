@@ -48,5 +48,8 @@ namespace MyEShop.Models
         public virtual IEnumerable<ProductImage> ProductImages { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
+
+        public ICollection<FilterItem> FilterItems { get; set; }
+
     }
 }

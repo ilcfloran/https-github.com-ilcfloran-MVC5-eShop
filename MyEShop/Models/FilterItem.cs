@@ -14,5 +14,7 @@ namespace MyEShop.Models
         public int GroupFilterId { get; set; }
 
         public GroupFilter GroupFilter { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }
