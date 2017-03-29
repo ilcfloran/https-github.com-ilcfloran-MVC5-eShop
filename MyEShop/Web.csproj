@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201703290858047_AddProcutFiltersRelationship.Designer.cs">
       <DependentUpon>201703290858047_AddProcutFiltersRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs" />
+    <Compile Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.Designer.cs">
+      <DependentUpon>201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -383,6 +387,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703290858047_AddProcutFiltersRelationship.resx">
       <DependentUpon>201703290858047_AddProcutFiltersRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.resx">
+      <DependentUpon>201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

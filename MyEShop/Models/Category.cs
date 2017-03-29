@@ -30,5 +30,7 @@ namespace MyEShop.Models
         public virtual Category Parent { get; set; }
 
         public IList<Category> Children { get; set; }
+
+        public ICollection<GroupFilter> GroupFilters { get; set; }
     }
 }

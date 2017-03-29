@@ -25,6 +25,16 @@ namespace MyEShop.ModelConfigs
                 .WithMany(c => c.Children)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .WillCascadeOnDelete(false);
+
+            HasMany<GroupFilter>(c => c.GroupFilters)
+                .WithMany(gf => gf.Categories)
+                .Map(cg =>
+                {
+                    cg.MapLeftKey("CategoryId");
+                    cg.MapRightKey("GroupFilterId");
+                    cg.ToTable("Categories_GroupFilters");
+                });
+
         }
     }
 }

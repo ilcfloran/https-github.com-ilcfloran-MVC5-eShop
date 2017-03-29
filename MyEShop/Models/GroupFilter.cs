@@ -31,5 +31,7 @@ namespace MyEShop.Models
         public IList<GroupFilter> Children { get; set; }
 
         public ICollection<FilterItem> FilterItems { get; set; }
+
+        public ICollection<Category> Categories { get; set; }
     }
 }
