@@ -28,6 +28,7 @@ namespace Web.ModelConfigs
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<TempSale> TempSale { get; set; }
         public DbSet<GroupFilter> GroupFilter { get; set; }
+        public DbSet<Slide> Slides { get; set; }
 
 
 
