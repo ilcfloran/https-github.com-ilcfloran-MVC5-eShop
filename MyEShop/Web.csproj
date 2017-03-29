@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201703290917566_AddSlidesTable.Designer.cs">
       <DependentUpon>201703290917566_AddSlidesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.cs" />
+    <Compile Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.Designer.cs">
+      <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -429,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703290917566_AddSlidesTable.resx">
       <DependentUpon>201703290917566_AddSlidesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.resx">
+      <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
