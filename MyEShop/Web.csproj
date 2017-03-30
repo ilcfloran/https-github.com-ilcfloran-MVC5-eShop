@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.Designer.cs">
       <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703300708171_AddImageToProduct.cs" />
+    <Compile Include="Migrations\201703300708171_AddImageToProduct.Designer.cs">
+      <DependentUpon>201703300708171_AddImageToProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -279,6 +283,8 @@
     <Compile Include="ViewModels\AuctionVM.cs" />
     <Compile Include="ViewModels\CategoryVM.cs" />
     <Compile Include="ViewModels\CommentVM.cs" />
+    <Compile Include="ViewModels\FilterItemVM.cs" />
+    <Compile Include="ViewModels\GroupFilter.cs" />
     <Compile Include="ViewModels\ITreeNodeDotNet3.cs" />
     <Compile Include="ViewModels\PaymentVM.cs" />
     <Compile Include="ViewModels\ProductImageVM.cs" />
@@ -293,6 +299,12 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\prettyPhoto.css" />
     <Content Include="Content\price-range.css" />
+    <Content Include="Content\Product-Pictures\product1.jpg" />
+    <Content Include="Content\Product-Pictures\product2.jpg" />
+    <Content Include="Content\Product-Pictures\product3.jpg" />
+    <Content Include="Content\Product-Pictures\product4.jpg" />
+    <Content Include="Content\Product-Pictures\product5.jpg" />
+    <Content Include="Content\Product-Pictures\product6.jpg" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\Website-Images\girl1.jpg" />
     <Content Include="Content\Website-Images\girl2.jpg" />
@@ -436,6 +448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.resx">
       <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703300708171_AddImageToProduct.resx">
+      <DependentUpon>201703300708171_AddImageToProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

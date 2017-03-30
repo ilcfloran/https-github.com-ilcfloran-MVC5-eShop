@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyEShop.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace MyEShop.ViewModels
 
         public string Description { get; set; }
 
+        public string Image { get; set; }
+
         public decimal Price { get; set; }
 
         public int Visit { get; set; }
@@ -55,5 +58,8 @@ namespace MyEShop.ViewModels
         public virtual IEnumerable<ProductImageVM> ProductImages { get; set; }
 
         public virtual IEnumerable<CommentVM> Comments { get; set; }
+
+        public ICollection<FilterItemVM> FilterItems { get; set; }
+
     }
 }
