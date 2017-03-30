@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -299,12 +300,15 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\prettyPhoto.css" />
     <Content Include="Content\price-range.css" />
+    <Content Include="Content\Product-Pictures\auction.png" />
+    <Content Include="Content\Product-Pictures\new.png" />
     <Content Include="Content\Product-Pictures\product1.jpg" />
     <Content Include="Content\Product-Pictures\product2.jpg" />
     <Content Include="Content\Product-Pictures\product3.jpg" />
     <Content Include="Content\Product-Pictures\product4.jpg" />
     <Content Include="Content\Product-Pictures\product5.jpg" />
     <Content Include="Content\Product-Pictures\product6.jpg" />
+    <Content Include="Content\Product-Pictures\sale.png" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\Website-Images\girl1.jpg" />
     <Content Include="Content\Website-Images\girl2.jpg" />
@@ -384,6 +388,12 @@
     <Content Include="Views\Shared\_TopHeader.cshtml" />
     <Content Include="Views\Shared\_HeaderMiddle.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Categories\_CategoryProducts.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

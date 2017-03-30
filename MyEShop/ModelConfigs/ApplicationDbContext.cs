@@ -29,13 +29,14 @@ namespace Web.ModelConfigs
         public DbSet<TempSale> TempSale { get; set; }
         public DbSet<GroupFilter> GroupFilter { get; set; }
         public DbSet<Slide> Slides { get; set; }
+        public DbSet<FilterItem> FilterItems { get; set; }
 
 
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Configurations.Add(new ProductConfiguration());
             modelBuilder.Configurations.Add(new CategoryConfiguration());
             modelBuilder.Configurations.Add(new ProductImageConfiguration());

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Web.ModelConfigs;
 
 namespace MyEShop.Controllers
 {
@@ -10,8 +11,14 @@ namespace MyEShop.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var products = db.Products.ToList();
+
+            return View(products);
         }
+
+
 
         public ActionResult About()
         {

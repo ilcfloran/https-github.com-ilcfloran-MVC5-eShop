@@ -7,7 +7,7 @@ using TreeUtility;
 
 namespace MyEShop.Models
 {
-    public class Category 
+    public class Category : ITreeNode<Category>
     {
         public int Id { get; set; }
 
@@ -32,5 +32,6 @@ namespace MyEShop.Models
         public IList<Category> Children { get; set; }
 
         public ICollection<GroupFilter> GroupFilters { get; set; }
+
     }
 }
