@@ -1,4 +1,4 @@
-﻿using MyEShop.Models;
+﻿using MyEShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using TreeUtility;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class CommentVM : ITreeNode<CommentVM>
     {

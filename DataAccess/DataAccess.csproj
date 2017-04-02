@@ -48,9 +48,45 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,7 +95,96 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201703180852526_ExtendApplicationUser.cs" />
+    <Compile Include="Migrations\201703180852526_ExtendApplicationUser.Designer.cs">
+      <DependentUpon>201703180852526_ExtendApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703181140100_CreateProductCategoryModel.cs" />
+    <Compile Include="Migrations\201703181140100_CreateProductCategoryModel.Designer.cs">
+      <DependentUpon>201703181140100_CreateProductCategoryModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703250913509_AddBankInfoToApplicationUser.cs" />
+    <Compile Include="Migrations\201703250913509_AddBankInfoToApplicationUser.Designer.cs">
+      <DependentUpon>201703250913509_AddBankInfoToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703250956026_AddTextFieldToProduct.cs" />
+    <Compile Include="Migrations\201703250956026_AddTextFieldToProduct.Designer.cs">
+      <DependentUpon>201703250956026_AddTextFieldToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703260910335_AddProductImage.cs" />
+    <Compile Include="Migrations\201703260910335_AddProductImage.Designer.cs">
+      <DependentUpon>201703260910335_AddProductImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703260927034_AddAuction.cs" />
+    <Compile Include="Migrations\201703260927034_AddAuction.Designer.cs">
+      <DependentUpon>201703260927034_AddAuction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703261013236_AddComment.cs" />
+    <Compile Include="Migrations\201703261013236_AddComment.Designer.cs">
+      <DependentUpon>201703261013236_AddComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703270850513_AaddCountToProduct.cs" />
+    <Compile Include="Migrations\201703270850513_AaddCountToProduct.Designer.cs">
+      <DependentUpon>201703270850513_AaddCountToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703270949259_AddUserToAuction.cs" />
+    <Compile Include="Migrations\201703270949259_AddUserToAuction.Designer.cs">
+      <DependentUpon>201703270949259_AddUserToAuction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703271058195_AddPayment.cs" />
+    <Compile Include="Migrations\201703271058195_AddPayment.Designer.cs">
+      <DependentUpon>201703271058195_AddPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703280849262_AddShoppingCart.cs" />
+    <Compile Include="Migrations\201703280849262_AddShoppingCart.Designer.cs">
+      <DependentUpon>201703280849262_AddShoppingCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703280917029_AddGroupFilter.cs" />
+    <Compile Include="Migrations\201703280917029_AddGroupFilter.Designer.cs">
+      <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs" />
+    <Compile Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.Designer.cs">
+      <DependentUpon>201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290858047_AddProcutFiltersRelationship.cs" />
+    <Compile Include="Migrations\201703290858047_AddProcutFiltersRelationship.Designer.cs">
+      <DependentUpon>201703290858047_AddProcutFiltersRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs" />
+    <Compile Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.Designer.cs">
+      <DependentUpon>201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290917566_AddSlidesTable.cs" />
+    <Compile Include="Migrations\201703290917566_AddSlidesTable.Designer.cs">
+      <DependentUpon>201703290917566_AddSlidesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.cs" />
+    <Compile Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.Designer.cs">
+      <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703300708171_AddImageToProduct.cs" />
+    <Compile Include="Migrations\201703300708171_AddImageToProduct.Designer.cs">
+      <DependentUpon>201703300708171_AddImageToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
+    <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
+    <Compile Include="ModelConfigs\AuctionConfiguration.cs" />
+    <Compile Include="ModelConfigs\CategoryConfiguration.cs" />
+    <Compile Include="ModelConfigs\CommentConfiguration.cs" />
+    <Compile Include="ModelConfigs\FilterItemConfiguration.cs" />
+    <Compile Include="ModelConfigs\GroupFilterConfiguration.cs" />
+    <Compile Include="ModelConfigs\PaymentConfiguration.cs" />
+    <Compile Include="ModelConfigs\ProductConfiguration.cs" />
+    <Compile Include="ModelConfigs\ProductImageConfiguration.cs" />
+    <Compile Include="ModelConfigs\SaleConfiguration.cs" />
+    <Compile Include="ModelConfigs\ShoppingCartConfiguration.cs" />
+    <Compile Include="ModelConfigs\TempSaleConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IProductRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -87,7 +212,66 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{b53cb5db-dc89-4dae-ab75-eb760452db19}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703180852526_ExtendApplicationUser.resx">
+      <DependentUpon>201703180852526_ExtendApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703181140100_CreateProductCategoryModel.resx">
+      <DependentUpon>201703181140100_CreateProductCategoryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703250913509_AddBankInfoToApplicationUser.resx">
+      <DependentUpon>201703250913509_AddBankInfoToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703250956026_AddTextFieldToProduct.resx">
+      <DependentUpon>201703250956026_AddTextFieldToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703260910335_AddProductImage.resx">
+      <DependentUpon>201703260910335_AddProductImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703260927034_AddAuction.resx">
+      <DependentUpon>201703260927034_AddAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703261013236_AddComment.resx">
+      <DependentUpon>201703261013236_AddComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703270850513_AaddCountToProduct.resx">
+      <DependentUpon>201703270850513_AaddCountToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703270949259_AddUserToAuction.resx">
+      <DependentUpon>201703270949259_AddUserToAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703271058195_AddPayment.resx">
+      <DependentUpon>201703271058195_AddPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703280849262_AddShoppingCart.resx">
+      <DependentUpon>201703280849262_AddShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703280917029_AddGroupFilter.resx">
+      <DependentUpon>201703280917029_AddGroupFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.resx">
+      <DependentUpon>201703280932248_AddFilterItemCreateRelationBetweenGroupFilterAndFilterItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290858047_AddProcutFiltersRelationship.resx">
+      <DependentUpon>201703290858047_AddProcutFiltersRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290911068_AddRelationBetweenCategoryAndGroupFilter.resx">
+      <DependentUpon>201703290911068_AddRelationBetweenCategoryAndGroupFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290917566_AddSlidesTable.resx">
+      <DependentUpon>201703290917566_AddSlidesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703292119175_ChangeUserIdTypeInProcuct.resx">
+      <DependentUpon>201703292119175_ChangeUserIdTypeInProcuct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703300708171_AddImageToProduct.resx">
+      <DependentUpon>201703300708171_AddImageToProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

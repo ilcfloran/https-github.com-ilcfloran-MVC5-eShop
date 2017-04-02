@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TreeUtility;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class GroupFilterVM : ITreeNode<GroupFilterVM>
     {

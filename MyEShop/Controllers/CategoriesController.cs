@@ -1,34 +1,34 @@
-﻿using System;
+﻿using MyEShop.Core.Models;
+using MyEShop.DataAccess.ModelConfigs;
+using MyEShop.Web.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using MyEShop.Models;
-using Web.ModelConfigs;
 using TreeUtility;
 
-namespace MyEShop.Controllers
+namespace MyEShop.Web.Controllers
 {
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        private List<Category> GetListOfNodes()
+        private List<CategoryVM> GetListOfNodes()
         {
             List<Category> sourceCategories = db.Categories.ToList();
-            List<Category> categories = new List<Category>();
+
+            List<CategoryVM> categories = new List<CategoryVM>();
             foreach (Category sourceCategory in sourceCategories)
             {
-                Category c = new Category();
+                CategoryVM c = new CategoryVM();
                 c.Id = sourceCategory.Id;
                 c.CategoryName = sourceCategory.CategoryName;
                 if (sourceCategory.ParentCategoryId != null)
                 {
-                    c.Parent = new Category();
+                    c.Parent = new CategoryVM();
                     c.Parent.Id = (int)sourceCategory.ParentCategoryId;
                 }
                 categories.Add(c);
@@ -37,7 +37,7 @@ namespace MyEShop.Controllers
         }
 
 
-        private string EnumerateNodes(Category parent)
+        private string EnumerateNodes(ICategory parent)
         {
             // Init an empty string
             string content = String.Empty;
@@ -59,7 +59,7 @@ namespace MyEShop.Controllers
                 // call this function recursively
                 if (numberOfChildren > 0 && i < numberOfChildren)
                 {
-                    Category child = parent.Children[i];
+                    ICategory child = parent.Children[i];
                     content += EnumerateNodes(child);
                 }
 
@@ -76,9 +76,9 @@ namespace MyEShop.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            
-            IEnumerable<Category> listOfNodes = GetListOfNodes();
-            IList<Category> topLevelCategories = TreeHelper.ConvertToForest(listOfNodes);
+
+            IEnumerable<CategoryVM> listOfNodes = GetListOfNodes();
+            IList<CategoryVM> topLevelCategories = TreeHelper.ConvertToForest(listOfNodes);
 
             return PartialView("_CategoryProducts", topLevelCategories);
         }
@@ -144,7 +144,7 @@ namespace MyEShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ParentCategoryId,CategoryName")] Category category)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ParentCategoryId,CategoryName")] CategoryVM category)
         {
             if (ModelState.IsValid)
             {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class ProductImageVM
     {

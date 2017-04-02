@@ -5,10 +5,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using MyEShop.Models;
-using Web.ModelConfigs;
+using MyEShop.Core.Models;
+using MyEShop.DataAccess.ModelConfigs;
 
-namespace MyEShop
+namespace MyEShop.Web
 {
     public partial class Startup
     {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MyEShop.DataAccess.ModelConfigs;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Web.ModelConfigs;
 
-namespace MyEShop.Controllers
+namespace MyEShop.Web.Controllers
 {
     public class HomeController : Controller
     {

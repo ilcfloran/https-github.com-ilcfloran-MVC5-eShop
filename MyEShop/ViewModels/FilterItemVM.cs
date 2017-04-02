@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class FilterItemVM
     {

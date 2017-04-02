@@ -1,17 +1,14 @@
-﻿using MyEShop.Models;
+﻿using MyEShop.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class SaleVM
     {
         public int Id { get; set; }
-        
+
         public decimal Price { get; set; }
-        
+
         public DateTime Date { get; set; }
 
         public int GroupNo { get; set; }

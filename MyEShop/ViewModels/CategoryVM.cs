@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using TreeUtility;
 
-namespace MyEShop.ViewModels
+namespace MyEShop.Web.ViewModels
 {
     public class CategoryVM : ITreeNode<CategoryVM>
     {
@@ -34,5 +32,6 @@ namespace MyEShop.ViewModels
         public virtual CategoryVM Parent { get; set; }
 
         public IList<CategoryVM> Children { get; set; }
+
     }
 }
