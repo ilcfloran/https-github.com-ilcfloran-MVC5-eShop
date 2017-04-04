@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using TreeUtility;
 
 namespace MyEShop.Core.Models
 {
-    public interface IFilterItem
+    public interface IFilterItem : ITreeNode<FilterItem>
     {
-        IGroupFilter GroupFilter { get; set; }
+        GroupFilter GroupFilter { get; set; }
         int GroupFilterId { get; set; }
         int Id { get; set; }
         ICollection<Product> Products { get; set; }

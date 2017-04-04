@@ -37,6 +37,8 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new CommentConfiguration());
             modelBuilder.Configurations.Add(new SaleConfiguration());
             modelBuilder.Configurations.Add(new PaymentConfiguration());
+            modelBuilder.Configurations.Add(new FilterItemConfiguration());
+            modelBuilder.Configurations.Add(new GroupFilterConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

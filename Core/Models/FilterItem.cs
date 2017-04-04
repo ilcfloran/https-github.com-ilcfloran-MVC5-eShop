@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MyEShop.Core.Models
 {
@@ -10,8 +11,31 @@ namespace MyEShop.Core.Models
 
         public int GroupFilterId { get; set; }
 
-        public IGroupFilter GroupFilter { get; set; }
+        public GroupFilter GroupFilter { get; set; }
 
         public ICollection<Product> Products { get; set; }
+
+
+
+        private int? _parentFilterItemId;
+
+        public int? ParentFilterItemId
+        {
+            get { return _parentFilterItemId; }
+            set
+            {
+                if (Id == value)
+                    throw new InvalidOperationException("A category cannot have itself as its parent.");
+
+                _parentFilterItemId = value;
+            }
+        }
+
+
+        public virtual FilterItem Parent { get; set; }
+
+        public IList<FilterItem> Children { get; set; }
+
+        public ICollection<GroupFilter> GroupFilters { get; set; }
     }
 }

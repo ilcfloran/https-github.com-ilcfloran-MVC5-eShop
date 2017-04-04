@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MyEShop.Core.Models;
+using MyEShop.DataAccess.ModelConfigs;
+using MyEShop.Web.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using MyEShop.Core.Models;
-using MyEShop.DataAccess.ModelConfigs;
+using TreeUtility;
 
 namespace MyEShop.Controllers
 {
@@ -16,10 +16,79 @@ namespace MyEShop.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: FilterItems
+
+        private List<FilterItemVM> GetListOfNodes()
+        {
+            List<FilterItem> sourcefilterItems = db.FilterItems.ToList();
+
+            List<FilterItemVM> filterItems = new List<FilterItemVM>();
+            foreach (FilterItem sourceFilterItems in sourcefilterItems)
+            {
+                FilterItemVM c = new FilterItemVM();
+                c.Id = sourceFilterItems.Id;
+                c.Title = sourceFilterItems.Title;
+                if (sourceFilterItems.ParentFilterItemId != null)
+                {
+                    c.Parent = new FilterItemVM();
+                    c.Parent.Id = (int)sourceFilterItems.ParentFilterItemId;
+                }
+                filterItems.Add(c);
+            }
+            return filterItems;
+        }
+
+
+        private string EnumerateNodes(IFilterItem parent)
+        {
+            // Init an empty string
+            string content = String.Empty;
+
+            // Add <li> category name
+            content += "<li class=\"treenode\">";
+            content += parent.Title;
+
+            if (parent.Children.Count == 0)
+                content += "</li>";
+            else   // If there are children, start a <ul>
+                content += "<ul>";
+
+            // Loop one past the number of children
+            int numberOfChildren = parent.Children.Count;
+            for (int i = 0; i <= numberOfChildren; i++)
+            {
+                // If this iteration's index points to a child,
+                // call this function recursively
+                if (numberOfChildren > 0 && i < numberOfChildren)
+                {
+                    IFilterItem child = parent.Children[i];
+                    content += EnumerateNodes(child);
+                }
+
+                // If this iteration's index points past the children, end the </ul>
+                if (numberOfChildren > 0 && i == numberOfChildren)
+                    content += "</ul>";
+            }
+
+            // Return the content
+            return content;
+        }
+
+
+
+
         public async Task<ActionResult> Index()
         {
             return View(await db.FilterItems.ToListAsync());
+        }
+
+
+
+        public ActionResult FiltersByCategory()
+        {
+            IEnumerable<FilterItemVM> listOfNodes = GetListOfNodes();
+            IList<FilterItemVM> filterItems = TreeHelper.ConvertToForest(listOfNodes);
+
+            return View("_FiltersByCategory", filterItems);
         }
 
         // GET: FilterItems/Details/5

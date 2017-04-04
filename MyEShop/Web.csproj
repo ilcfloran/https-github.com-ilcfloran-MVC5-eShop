@@ -174,8 +174,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FilterItemsController.cs" />
+    <Compile Include="Controllers\GroupFiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -301,6 +303,18 @@
     <Content Include="Views\FilterItems\Details.cshtml" />
     <Content Include="Views\FilterItems\Edit.cshtml" />
     <Content Include="Views\FilterItems\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\CategoryItems.cshtml" />
+    <Content Include="Views\FilterItems\_FiltersByCategory.cshtml" />
+    <Content Include="Views\GroupFilters\Create.cshtml" />
+    <Content Include="Views\GroupFilters\Delete.cshtml" />
+    <Content Include="Views\GroupFilters\Details.cshtml" />
+    <Content Include="Views\GroupFilters\Edit.cshtml" />
+    <Content Include="Views\GroupFilters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

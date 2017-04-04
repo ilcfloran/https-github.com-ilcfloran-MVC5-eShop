@@ -1,0 +1,13 @@
+﻿@model IEnumerable<MyEShop.Core.Models.FilterItem>
+
+@foreach (var item in Model)
+{
+    if (item.Children != null)
+    {
+
+    }
+    else
+    {
+        <li><a href="#"> <span class="pull-right"></span></a></li>
+    }
+}
