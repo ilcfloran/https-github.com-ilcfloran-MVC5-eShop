@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using DataAccess.ModelConfigs;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MyEShop.Core.Models;
 using System.Data.Entity;
 
@@ -24,9 +25,7 @@ namespace MyEShop.DataAccess.ModelConfigs
         public DbSet<GroupFilter> GroupFilter { get; set; }
         public DbSet<Slide> Slides { get; set; }
         public DbSet<FilterItem> FilterItems { get; set; }
-
-
-
+        public DbSet<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,6 +38,7 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new PaymentConfiguration());
             modelBuilder.Configurations.Add(new FilterItemConfiguration());
             modelBuilder.Configurations.Add(new GroupFilterConfiguration());
+            modelBuilder.Configurations.Add(new CategoriesGroupFiltersConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

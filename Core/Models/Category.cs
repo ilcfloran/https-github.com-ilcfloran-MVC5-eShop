@@ -6,6 +6,11 @@ namespace MyEShop.Core.Models
 {
     public class Category : ITreeNode<Category>, ICategory
     {
+        public Category()
+        {
+            IList<Category> Children = new List<Category>();
+        }
+
         public int Id { get; set; }
 
         private int? _parentCategoryId;
@@ -28,7 +33,10 @@ namespace MyEShop.Core.Models
 
         public IList<Category> Children { get; set; }
 
-        public ICollection<GroupFilter> GroupFilters { get; set; }
+        public List<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
+
+
+        // public ICollection<GroupFilter> GroupFilters { get; set; }
 
     }
 }

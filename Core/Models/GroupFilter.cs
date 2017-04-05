@@ -6,6 +6,11 @@ namespace MyEShop.Core.Models
 {
     public class GroupFilter : ITreeNode<GroupFilter>, IGroupFilter
     {
+        public GroupFilter()
+        {
+            IList<GroupFilter> Children = new List<GroupFilter>();
+        }
+
         public int Id { get; set; }
 
         private int? _parentId;
@@ -24,12 +29,15 @@ namespace MyEShop.Core.Models
 
         public string Title { get; set; }
 
-        public virtual GroupFilter Parent { get; set; }
+        public GroupFilter Parent { get; set; }
 
         public IList<GroupFilter> Children { get; set; }
 
-        public ICollection<FilterItem> FilterItems { get; set; }
+        public virtual ICollection<FilterItem> FilterItems { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public List<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
+
+
+        //public ICollection<Category> Categories { get; set; }
     }
 }

@@ -174,6 +174,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FilterItemsController.cs" />
+    <Compile Include="Controllers\FiltersController.cs" />
     <Compile Include="Controllers\GroupFiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="ViewModels\CategoryVM.cs" />
     <Compile Include="ViewModels\CommentVM.cs" />
     <Compile Include="ViewModels\FilterItemVM.cs" />
+    <Compile Include="ViewModels\FiltersVM.cs" />
     <Compile Include="ViewModels\GroupFilter.cs" />
     <Compile Include="ViewModels\ITreeNodeDotNet3.cs" />
     <Compile Include="ViewModels\PaymentVM.cs" />
@@ -315,6 +317,7 @@
     <Content Include="Views\GroupFilters\Details.cshtml" />
     <Content Include="Views\GroupFilters\Edit.cshtml" />
     <Content Include="Views\GroupFilters\Index.cshtml" />
+    <Content Include="Views\Filters\_FiltersByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

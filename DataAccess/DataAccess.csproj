@@ -171,10 +171,19 @@
     <Compile Include="Migrations\201704040839236_AddFilters.Designer.cs">
       <DependentUpon>201704040839236_AddFilters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704041920075_ChangeManyToManyRelationshipBetweenCategoryAndGroupFilters.cs" />
+    <Compile Include="Migrations\201704041920075_ChangeManyToManyRelationshipBetweenCategoryAndGroupFilters.Designer.cs">
+      <DependentUpon>201704041920075_ChangeManyToManyRelationshipBetweenCategoryAndGroupFilters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704041949325_AddCategoriesGroupFilters.cs" />
+    <Compile Include="Migrations\201704041949325_AddCategoriesGroupFilters.Designer.cs">
+      <DependentUpon>201704041949325_AddCategoriesGroupFilters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
     <Compile Include="ModelConfigs\AuctionConfiguration.cs" />
+    <Compile Include="ModelConfigs\CategoriesGroupFiltersConfiguration.cs" />
     <Compile Include="ModelConfigs\CategoryConfiguration.cs" />
     <Compile Include="ModelConfigs\CommentConfiguration.cs" />
     <Compile Include="ModelConfigs\FilterItemConfiguration.cs" />
@@ -278,6 +287,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704040839236_AddFilters.resx">
       <DependentUpon>201704040839236_AddFilters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704041920075_ChangeManyToManyRelationshipBetweenCategoryAndGroupFilters.resx">
+      <DependentUpon>201704041920075_ChangeManyToManyRelationshipBetweenCategoryAndGroupFilters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704041949325_AddCategoriesGroupFilters.resx">
+      <DependentUpon>201704041949325_AddCategoriesGroupFilters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,7 +6,7 @@ namespace MyEShop.Core.Models
     {
         string CategoryName { get; set; }
         IList<Category> Children { get; set; }
-        ICollection<GroupFilter> GroupFilters { get; set; }
+        //ICollection<GroupFilter> GroupFilters { get; set; }
         int Id { get; set; }
         Category Parent { get; set; }
         int? ParentCategoryId { get; set; }

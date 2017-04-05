@@ -1,0 +1,15 @@
+﻿
+@model IEnumerable<MyEShop.Core.Models.GroupFilter>
+
+@foreach (var item in Model)
+{
+    <span>@item.Title</span>
+    <ul>
+        
+            @foreach (var f in item.FilterItems)
+            {
+                <li>@f.Title</li>
+            }
+    
+    </ul>
+}

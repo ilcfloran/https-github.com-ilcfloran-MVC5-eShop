@@ -82,7 +82,7 @@
                         <h2>Filters</h2>
                         <div class="brands-name">
                             <ul class="nav nav-pills nav-stacked">
-                                @{Html.Action("FiltersByCategory", "FilterItem", new { categoryId = Model.ElementAt(0).CategoryId });}
+                                @Html.Action("FiltersByCategory", "Filters", new { categoryId = Model.ElementAt(0).CategoryId })
                             </ul>
                         </div>
                     </div><!--/brands_products-->

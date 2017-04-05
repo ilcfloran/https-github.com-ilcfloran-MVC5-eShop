@@ -5,7 +5,9 @@ namespace MyEShop.Core.Models
 {
     public interface IGroupFilter : ITreeNode<GroupFilter>
     {
-        ICollection<Category> Categories { get; set; }
+
+
+        //ICollection<Category> Categories { get; set; }
         IList<GroupFilter> Children { get; set; }
         ICollection<FilterItem> FilterItems { get; set; }
         int Id { get; set; }
