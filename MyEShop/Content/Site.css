@@ -2559,3 +2559,8 @@ h2.title {
 #productImageCarousel .item img{
 	height: 416px;
 }
+
+#productsPagination {
+	display: block;
+	clear: both;
+}

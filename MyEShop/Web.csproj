@@ -318,6 +318,7 @@
     <Content Include="Views\GroupFilters\Edit.cshtml" />
     <Content Include="Views\GroupFilters\Index.cshtml" />
     <Content Include="Views\Filters\_FiltersByCategory.cshtml" />
+    <Content Include="Views\Products\_ProductItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

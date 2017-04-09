@@ -1,6 +1,5 @@
-﻿@model IEnumerable<MyEShop.Core.Models.Product>
-@{
-    ViewBag.Title = "CategoryItems";
+﻿@{
+    ViewBag.Title = "Products";
 }
 
 
@@ -74,87 +73,79 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <div class="left-sidebar">
+            <div class="col-sm-3" id="filtersDivId">
+                @using (Html.BeginForm("", "", FormMethod.Get, new { id = "filterForm" }))
+                {
+                    <input type="hidden" name="CategoryId" value="@ViewBag.CategoryId" />
+                    <input type="hidden" id="pageNumber" name="page" value="1" />
 
-                    <div class="brands_products">
-                        <!--brands_products-->
-                        <h2>Filters</h2>
-                        <div class="brands-name">
-                            <ul class="nav nav-pills nav-stacked">
-                                @Html.Action("FiltersByCategory", "Filters", new { categoryId = Model.ElementAt(0).CategoryId })
-                            </ul>
-                        </div>
-                    </div><!--/brands_products-->
-
-                    <div class="price-range">
-                        <!--price-range-->
-                        <h2>Price Range</h2>
-                        <div class="well">
-                            <div class="slider slider-horizontal" style="width: 174px;"><div class="slider-track"><div class="slider-selection" style="left: 41.6667%; width: 33.3333%;"></div><div class="slider-handle round left-round" style="left: 41.6667%;"></div><div class="slider-handle round" style="left: 75%;"></div></div><div class="tooltip top" style="top: -30px; left: 68px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div></div><input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"></div><br>
-                            <b>$ 0</b> <b class="pull-right">$ 600</b>
-                        </div>
-                    </div><!--/price-range-->
-
-                    <div class="shipping text-center">
-                        <!--shipping-->
-                        <img src="images/home/shipping.jpg" alt="">
-                    </div><!--/shipping-->
-
-                </div>
-            </div>
-
-
-            <div class="col-sm-9 padding-right">
-                <div class="features_items">
-                    <!--features_items-->
-                    <h2 class="title text-center">Features Items</h2>
-                    @foreach (var item in Model)
-                    {
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="~/Content/Product-Pictures/@item.Image" alt="">
-                                <p id="productName">@item.Name</p>
-                                <h2>@item.Price</h2>
-                                <p id="productDescription">@item.Text</p>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                    <div class="left-sidebar">
+                        <div class="brands_products">
+                            <!--brands_products-->
+                            <h2>Filters</h2>
+                            <div class="brands-name">
+                                <ul class="nav nav-pills nav-stacked">
+                                    @Html.Action("FiltersByCategory", "Filters", new { categoryId = ViewBag.CategoryId })
+                                </ul>
                             </div>
-                            <div class="product-overlay">
-                                <div class="overlay-content">
-                                    <h2>@item.Price</h2>
-                                    <p id="productDescription">@item.Description</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                            </div>
-                            @if (item.Onsale)
-                                    {
-                                    <img src="~/Content/Product-Pictures/sale.png" class="new" alt="">
-                                    }
-                            @if (item.EndDate != null)
-                                    {
-                                    <img src="~/Content/Product-Pictures/auction.png" class="new" alt="">
-                                    }
+                        </div><!--/brands_products-->
 
-                        </div>
-                        <div class="choose">
-                            <ul class="nav nav-pills nav-justified text-center">
-                                <li><i class="fa fa-plus-square ">@Html.ActionLink("Go to product", "Details", "Products", new { id = item.Id }, new { id = "gotoproduct" })</i> </li>
-                            </ul>
-                        </div>
+                        <div class="price-range">
+                            <!--price-range-->
+                            <h2>Price Range</h2>
+                            <div class="well">
+                                <span style="display:block;">Min Price: </span> <input type="text" class="priceId" name="minPrice" value="5" />
+                                <span>Max Price: </span> <input type="text" class="priceId" name="maxPrice" value="" />
+                            </div>
+                        </div><!--/price-range-->
                     </div>
+                }
+            </div>
+            <div class="col-sm-9 padding-right">
+                <div class="features_items" id="productItemsPlaceHolder">
+                    @Html.Action("Filter", "Products", new { CategoryId = ViewBag.CategoryId })
                 </div>
-                    }
-
-
-
-                </div><!--features_items-->
-
-
-
             </div>
         </div>
     </div>
 </section>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var form = $("#filterForm");
+            var productsPlaceHolder = $("#productItemsPlaceHolder")
+
+            var sendFormfunc = function (miliseconds) {
+                var currentTime = new Date().getTime();
+                while (currentTime + miliseconds >= new Date().getTime()) {
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Filter", "Products")',
+                    type: 'GET',
+                    dataType: "html",
+                    data: form.serialize()
+                }).done(function (data) {
+                    productsPlaceHolder.html(data);
+                });
+            };
+
+            $(" :checkbox").on('change', function (e) {
+                $("#pageNumber").val(1);
+                sendFormfunc();
+            });
+
+            $(".priceId").on('keyup', function (e) {
+                $("#pageNumber").val(1);
+                sendFormfunc(4);
+            });
+
+            $(document).on('click', '.page_number', function (e) {
+                $("#pageNumber").val($(this).text());
+                sendFormfunc();
+            });
+
+        });
+    </script>
+}

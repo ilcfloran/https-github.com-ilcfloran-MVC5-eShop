@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MyEShop.Core.Models.Product>
+
+    <!--features_items-->
+    <h2 class="title text-center">Features Items</h2>
+    @if (Model.Count() > 0)
+    {
+
+        foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img src="~/Content/Product-Pictures/@item.Image" alt="">
+                            <p id="productName">@item.Name</p>
+                            <h2>@item.Price</h2>
+                            <p id="productDescription">@item.Text</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                        <div class="product-overlay">
+                            <div class="overlay-content">
+                                <h2>@item.Price</h2>
+                                <p id="productDescription">@item.Description</p>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
+                        </div>
+                        @if (item.Onsale)
+                        {
+                            <img src="~/Content/Product-Pictures/sale.png" class="new" alt="">
+                        }
+                        @if (item.EndDate != null)
+                        {
+                            <img src="~/Content/Product-Pictures/auction.png" class="new" alt="">
+                        }
+
+                    </div>
+                    <div class="choose">
+                        <ul class="nav nav-pills nav-justified text-center">
+                            <li><i class="fa fa-plus-square ">@Html.ActionLink("Go to product", "Details", "Products", new { id = item.Id }, new { id = "gotoproduct" })</i> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+        <ul class="pagination" id="productsPagination">
+            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+            {
+                if (i == (int)ViewBag.Page)
+                {
+                    <li class="active"><a class="page_number">@i.ToString()</a></li>
+
+                }
+                else
+                {
+                    <li ><a class="page_number">@i.ToString()</a></li>
+                }
+            }
+            @*<li><a>&raquo;</a></li>*@
+        </ul>
+    }
+    else
+    {
+        <p>No item found.</p>
+    }
+
+
+<!--features_items-->
+

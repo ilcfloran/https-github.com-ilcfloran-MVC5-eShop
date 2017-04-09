@@ -1,5 +1,6 @@
 ﻿using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace MyEShop.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Products
         public async Task<ActionResult> Index()
         {
             return View(await db.Products.ToListAsync());
@@ -33,17 +33,88 @@ namespace MyEShop.Controllers
             return View(product);
         }
 
+        public ActionResult Filter(List<int> filterItemschk, decimal maxPrice = 100000, int CategoryId = 0, decimal minPrice = 5, int page = 1)
+        {
+            List<Product> productsVM = new List<Product>();
+
+            var _minPrice = minPrice >= 5 ? minPrice : 5;
+            var _maxPrice = maxPrice >= 10 ? maxPrice : 100000;
+
+
+            if (CategoryId == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var products = db.Products.Include("FilterItems").Where(p => p.CategoryId == CategoryId);
+
+            if (filterItemschk != null)
+            {
+                if (filterItemschk.Count() > 0)
+                {
+                    var filterItems = db.FilterItems.Where(f => filterItemschk.Contains(f.Id));
+                    foreach (var item in products)
+                    {
+                        if (item.FilterItems.Intersect(filterItems).Any())
+                        {
+                            productsVM.Add(item);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                productsVM.AddRange(products);
+            }
+
+            if (_minPrice > 5 && _maxPrice > 10)
+            {
+                var q = productsVM.Where(p => p.Price >= _minPrice && p.Price <= _maxPrice).ToList();
+
+                productsVM.Clear();
+                productsVM.AddRange(q);
+            }
+
+            int take = 1;
+            var count = productsVM.Count();
+
+            int skip = 0;
+            if (count > take)
+            {
+                skip = (take * page) - take;
+            }
+
+
+            var TotalPages = Math.Ceiling((decimal)(count / take));
+            ViewBag.TotalPages = TotalPages;
+
+            var _page = page <= TotalPages ? page : TotalPages;
+
+            ViewBag.Page = _page;
+            ViewBag.CategoryId = CategoryId;
+
+            return PartialView("_ProductItems", productsVM.OrderBy(p => p.Id).Skip(skip).Take(take));
+        }
+
         public ActionResult CategoryItems(int id)
         {
-            IEnumerable<Product> items = db.Products.Where(p => p.CategoryId == id).ToList();
-
-            if (items == null)
-            {
-                return HttpNotFound();
-            }
-            return View(items);
+            ViewBag.CategoryId = id;
+            return View();
 
         }
+
+        //public ActionResult ProductItems(int id)
+        //{
+        //    IEnumerable<Product> items = db.Products.Where(p => p.CategoryId == id).ToList();
+        //    ViewBag.CategoryId = id;
+
+        //    if (items == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return PartialView("_ProductItems", items);
+
+        //}
 
         public ActionResult Create()
         {
@@ -80,9 +151,6 @@ namespace MyEShop.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,Name,Text,Description,Image,Price,Visit,date,EndDate,weight,Onsale,OnSalePrice,CategoryId,Count")] Product product)
