@@ -122,6 +122,35 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult Search(string searchText, int searchPage = 1)
+        {
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            List<Product> productsVM = new List<Product>();
+
+            productsVM = db.Products.Where(p => p.Name.Contains(searchText) || p.Text.Contains(searchText)).ToList();
+
+            int take = 1;
+            var count = productsVM.Count();
+
+            int skip = 0;
+            if (count > take)
+            {
+                skip = (take * searchPage) - take;
+            }
+
+            var TotalPages = Math.Ceiling((decimal)(count / take));
+            ViewBag.TotalPages = TotalPages;
+            var _page = searchPage <= TotalPages ? searchPage : TotalPages;
+            ViewBag.SearchPage = _page;
+            ViewBag.SearchTerm = searchText;
+
+            return View(productsVM.OrderBy(p => p.Id).Skip(skip).Take(take));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Name,Text,Description,Image,Price,Visit,date,EndDate,weight,Onsale,OnSalePrice,CategoryId,Count")] Product product)
