@@ -55,7 +55,7 @@ namespace MyEShop.Controllers
                     var filterItems = db.FilterItems.Where(f => filterItemschk.Contains(f.Id));
                     foreach (var item in products)
                     {
-                        if (item.FilterItems.Intersect(filterItems).Any())
+                        if (item.FilterItems.Intersect(filterItems).Count() == filterItems.Count())
                         {
                             productsVM.Add(item);
                         }
@@ -67,7 +67,7 @@ namespace MyEShop.Controllers
                 productsVM.AddRange(products);
             }
 
-            if (_minPrice > 5 && _maxPrice > 10)
+            if (_minPrice >= 5 && _maxPrice >= 10)
             {
                 var q = productsVM.Where(p => p.Price >= _minPrice && p.Price <= _maxPrice).ToList();
 
