@@ -40,7 +40,6 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new GroupFilterConfiguration());
             modelBuilder.Configurations.Add(new CategoriesGroupFiltersConfiguration());
 
-
             base.OnModelCreating(modelBuilder);
         }
 

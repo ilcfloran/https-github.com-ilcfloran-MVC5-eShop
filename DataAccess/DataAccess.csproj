@@ -183,6 +183,14 @@
     <Compile Include="Migrations\201704101049314_AddUserToProduct.Designer.cs">
       <DependentUpon>201704101049314_AddUserToProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704101303562_AddMemberSinceFieldToApplicationUser.cs" />
+    <Compile Include="Migrations\201704101303562_AddMemberSinceFieldToApplicationUser.Designer.cs">
+      <DependentUpon>201704101303562_AddMemberSinceFieldToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704101322007_AddMemberSinceFieldToApplicationUser2.cs" />
+    <Compile Include="Migrations\201704101322007_AddMemberSinceFieldToApplicationUser2.Designer.cs">
+      <DependentUpon>201704101322007_AddMemberSinceFieldToApplicationUser2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -300,6 +308,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704101049314_AddUserToProduct.resx">
       <DependentUpon>201704101049314_AddUserToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101303562_AddMemberSinceFieldToApplicationUser.resx">
+      <DependentUpon>201704101303562_AddMemberSinceFieldToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101322007_AddMemberSinceFieldToApplicationUser2.resx">
+      <DependentUpon>201704101322007_AddMemberSinceFieldToApplicationUser2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

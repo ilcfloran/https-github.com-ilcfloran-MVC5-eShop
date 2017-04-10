@@ -7,6 +7,7 @@ namespace MyEShop.DataAccess.ModelConfigs
     {
         public ApplicationUserConfiguration()
         {
+            //ToTable("AspNetUsers");
             Property(au => au.FirstName).HasMaxLength(20).IsRequired();
             Property(au => au.LastName).HasMaxLength(30).IsRequired();
             Property(au => au.ProfilePicture).IsOptional();

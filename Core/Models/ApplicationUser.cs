@@ -1,9 +1,10 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MyEShop.Core.Models
@@ -16,7 +17,12 @@ namespace MyEShop.Core.Models
 
             return userIdentity;
         }
-        
+
+        public ApplicationUser()
+        {
+            MemberSince = DateTime.Now;
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte[] ProfilePicture { get; set; }
@@ -27,6 +33,7 @@ namespace MyEShop.Core.Models
         public string Mobile { get; set; }
         public string BankName { get; set; }
         public string BankAcount { get; set; }
+        public DateTime MemberSince { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName
