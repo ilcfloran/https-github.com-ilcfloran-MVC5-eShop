@@ -97,7 +97,8 @@
                 {
                     <div class="search_box pull-right">
                         <input type="text" name="searchText" value="@(ViewBag.SearchTerm ?? "")" placeholder="Search">
-                        <input type="hidden" id="searchPageNo" name="searchPage" value="1" />
+                        @*<input type="hidden" id="searchPageNo" name="searchPage" value="1" />*@
+                        @*<input type="hidden" name="PageStatus" value="@(ViewBag.PageStatus ?? "1")" />*@
                     </div>
                 }
             </div>

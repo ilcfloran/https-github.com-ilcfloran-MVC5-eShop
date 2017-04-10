@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MyEShop.Web.ViewModels
 {
@@ -60,6 +58,9 @@ namespace MyEShop.Web.ViewModels
         public virtual IEnumerable<CommentVM> Comments { get; set; }
 
         public ICollection<FilterItemVM> FilterItems { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
+
 
     }
 }

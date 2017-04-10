@@ -117,11 +117,10 @@
             </div>
 
             <div class="col-sm-9 padding-right">
-                <div class="features_items">
-                    <h2 class="title text-center">Items</h2>
+                <div class="features_items"id="ajaxProducts">
+                    <h2 class="title text-center" >Items</h2>
                     @if (Model.Count() > 0)
                     {
-
                         foreach (var item in Model)
                         {
                             <div class="col-sm-4">
@@ -159,21 +158,28 @@
                                 </div>
                             </div>
                         }
-                        <ul class="pagination" id="productsPagination">
-                            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
-                            {
-                                if (i == (int)ViewBag.SearchPage)
-                                {
-                                    <li class="active"><a class="page_number">@i.ToString()</a></li>
+                        using (Ajax.BeginForm("Search", "Products", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxProducts", InsertionMode = InsertionMode.Replace }, new { id= "ajaxForm" }))
+                        {
+                            <input type="hidden" name="searchText" value="@(ViewBag.SearchTerm ?? "")">
+                            <input type="hidden" name="searchPage" id="searchPageNo" value="1" />
+                            <input type="hidden" name="PageStatus" value="@(ViewBag.PageStatus ?? "1")" />
 
-                                }
-                                else
+                            <ul class="pagination" id="productsPagination">
+                                @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
                                 {
-                                    <li><a class="page_number">@i.ToString()</a></li>
+                                    if (i == (int)ViewBag.SearchPage)
+                                    {
+                                        <li class="active"><a class="page_number">@i.ToString()</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a class="page_number">@i.ToString()</a></li>
+                                    }
                                 }
-                            }
-                            @*<li><a>&raquo;</a></li>*@
-                        </ul>
+                                @*<li><a>&raquo;</a></li>*@
+                            </ul>
+                        }
                     }
                     else
                     {
@@ -181,17 +187,20 @@
                     }
 
 
-                 </div><!--features_items-->
+                </div><!--features_items-->
             </div>
         </div>
     </div>
 </section>
 
 @section scripts{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
     <script type="text/javascript">
         $(document).on('click', '.page_number', function (e) {
             $("#searchPageNo").val($(this).text());
-            $("#searchForm").submit();
+            $("#ajaxForm").submit();
         });
     </script>
 }

@@ -245,6 +245,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.prettyPhoto.js" />
     <Content Include="Scripts\jquery.scrollUp.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -320,6 +322,7 @@
     <Content Include="Views\Filters\_FiltersByCategory.cshtml" />
     <Content Include="Views\Products\_ProductItems.cshtml" />
     <Content Include="Views\Products\Search.cshtml" />
+    <Content Include="Views\Products\_SearchItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

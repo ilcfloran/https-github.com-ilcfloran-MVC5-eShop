@@ -50,5 +50,8 @@ namespace MyEShop.Core.Models
 
         public ICollection<FilterItem> FilterItems { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
+
     }
 }

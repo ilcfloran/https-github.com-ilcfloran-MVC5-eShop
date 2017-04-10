@@ -122,7 +122,7 @@ namespace MyEShop.Controllers
         }
 
 
-        public ActionResult Search(string searchText, int searchPage = 1)
+        public ActionResult Search(string searchText, int searchPage = 1, int PageStatus = 1)
         {
             if (string.IsNullOrWhiteSpace(searchText))
             {
@@ -147,6 +147,12 @@ namespace MyEShop.Controllers
             var _page = searchPage <= TotalPages ? searchPage : TotalPages;
             ViewBag.SearchPage = _page;
             ViewBag.SearchTerm = searchText;
+            ViewBag.PageStatus = 2;
+
+            if (PageStatus == 2)
+            {
+                return PartialView("_SearchItems", productsVM.OrderBy(p => p.Id).Skip(skip).Take(take));
+            }
 
             return View(productsVM.OrderBy(p => p.Id).Skip(skip).Take(take));
         }

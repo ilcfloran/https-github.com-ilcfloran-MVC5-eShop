@@ -2522,6 +2522,18 @@ h2.title {
 
 /* My Added CSS*/
 
+.left-sidebar h3, .brands_products h3 {
+	color: #FE980F;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	margin: 20px auto 15px;
+	text-align: center;
+	text-transform: uppercase;
+	position: relative;
+	z-index: 3;
+}
+
 #productDescription {
 	text-overflow: ellipsis;
 	white-space: nowrap;
