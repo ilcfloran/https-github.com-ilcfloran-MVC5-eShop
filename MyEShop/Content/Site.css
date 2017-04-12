@@ -2576,3 +2576,12 @@ h2.title {
 	display: block;
 	clear: both;
 }
+
+.media, .media-body {
+	padding-left: 10px;
+}
+
+.response-area .second-media {
+	background-color: beige;
+}
+

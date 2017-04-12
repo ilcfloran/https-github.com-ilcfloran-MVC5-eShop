@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using TreeUtility;
 
 namespace MyEShop.Core.Models
 {
-    public class Comment : IComment
+    public class Comment : IComment, ITreeNode<Comment>
     {
         public Comment()
         {

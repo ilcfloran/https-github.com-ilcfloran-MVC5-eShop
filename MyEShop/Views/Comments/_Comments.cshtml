@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MyEShop.Web.ViewModels.CommentVM>
+
+@if (Model.Count() > 0)
+{
+    foreach (var comment in Model)
+    {
+        <div class="response-area">
+            <ul class="media-list">
+                <li class="media">
+                    <div class="media-body">
+                        <input type="hidden" id="commentId" name="commentId" value="@comment.Id" />
+                        <ul class="sinlge-post-meta">
+                            <li><i class="fa fa-user"></i>@comment.User.FullName</li>
+                            <li><i class="fa fa-clock-o"></i>@comment.date.TimeOfDay</li>
+                            <li><i class="fa fa-calendar"></i>@comment.date.ToShortDateString()</li>
+                        </ul>
+                        <p>@comment.Text</p>
+                        <a class="btn btn-primary" id="replyBtn"><i class="fa fa-reply"></i>Replay</a>
+                    </div>
+                </li>
+                @if (comment.Children.Count() > 0)
+                {
+                    foreach (var reply in comment.Children)
+                    {
+                        <li class="media second-media">
+                            <div class="media-body">
+                                <input type="hidden" id="commentId" name="commentId" value="@reply.Id" />
+                                <ul class="sinlge-post-meta">
+                                    <li><i class="fa fa-user"></i>@reply.User.FullName</li>
+                                    <li><i class="fa fa-clock-o"></i>@reply.date.TimeOfDay</li>
+                                    <li><i class="fa fa-calendar"></i>@reply.date.ToShortDateString()</li>
+                                </ul>
+                                <p>@reply.Text</p>
+                                <a class="btn btn-primary" id="replyBtn"><i class="fa fa-reply"></i>Replay</a>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+}
+
+@if (Request.IsAuthenticated)
+{
+    <div class="replay-box">
+        <div class="row">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { id = "postComment" }))
+            {
+                <input type="hidden" name="parentCommentId" value="" />
+                <div class="col-sm-4">
+                <h2>Leave a replay</h2>
+                <div class="blank-arrow">
+                    <label>Your Name</label>
+                </div>
+                <span>*</span>
+                <input type="text" id="nameCommentor" placeholder="write your name...">
+                <div class="blank-arrow">
+                    <label>Email Address</label>
+                </div>
+                <span>*</span>
+                <input type="email" placeholder="your email address...">
+                <div class="blank-arrow">
+                    <label>Web Site</label>
+                </div>
+                <input type="email" placeholder="current city...">
+            </div>
+            <div class="col-sm-8">
+                <div class="text-area">
+                    <div class="blank-arrow">
+                        <label>Your comment</label>
+                    </div>
+                    <span>*</span>
+                    <textarea name="message" rows="11"></textarea>
+                    <a class="btn btn-primary" href="">Post</a>
+                    <a class="btn btn-primary" href="">Cancel</a>
+
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+}else
+{
+    <p>Login to leave a comment.</p>
+}
