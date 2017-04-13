@@ -1,0 +1,22 @@
+﻿@model IEnumerable<MyEShop.Core.Models.Auction>
+
+<h3>Offers</h3>
+<div class="brands-name">
+    <ul class="nav nav-pills nav-stacked">
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                @*<li><a href=""> <span class="pull-right">(50)</span>Acne</a></li>*@
+                <li><span>@item.Price</span></li>
+
+            }
+        }
+        else
+        {
+            <p>Be the first one to bid.</p>
+        }
+    </ul>
+    <p>@ViewBag.AuctionCount people participated.</p>
+
+</div>

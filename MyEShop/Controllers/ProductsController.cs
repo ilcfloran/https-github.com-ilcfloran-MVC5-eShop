@@ -30,6 +30,7 @@ namespace MyEShop.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
 
