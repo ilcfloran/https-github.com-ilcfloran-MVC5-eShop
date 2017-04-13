@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace MyEShop.Web
 {
@@ -35,7 +34,8 @@ namespace MyEShop.Web
                       "~/Content/price-range.css",
                       "~/Content/animate.css",
                       "~/Content/site.css",
-                      "~/Content/responsive.css"));
+                      "~/Content/responsive.css",
+                      "~/Content/jquery.countdown.css.css"));
         }
     }
 }

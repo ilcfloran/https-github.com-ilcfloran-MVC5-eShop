@@ -27,11 +27,11 @@
                                 <div class="price-range">
                                     <!--price-range-->
                                     <h2>Your Offer</h2>
-                                    <div class="well">
-                                        <p>Remaining time: @{
+                                    <div class="well" id="countdownBid">
+                                        @*<p>Remaining time: @{
                                             TimeSpan span = (TimeSpan)(Model.EndDate - DateTime.Now);
                                             <span>@String.Format("{0} days, {1} hours, {2} minutes, {3} seconds", span.Days, span.Hours, span.Minutes, span.Seconds);</span>
-                                        }</p>
+                                        }</p>*@
                                         <span style="display:block;">Your offer: </span> <input type="text" class="bid" name="bid" value="">
                                         <button type="submit">Submit</button>
                                     </div>
@@ -320,34 +320,66 @@
 
 @section scripts{
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.plugin.min.js"></script>
+    <script src="~/Scripts/jquery.countdown.min.js"></script>
+
     <script>
         $(document).ready(function () {
 
             commentsSection = $("#commentsPlaceHolder");
 
-            $(document).on('click', '#replyBtn', function () {
-                var parentCommentId = $(this).closest('div').find('input').attr('value');
-                $("input[name='parentCommentId']").attr('value', parentCommentId);
-                $("textarea[name='message']").focus();
-            });
+            function countdownFunc() {
+                
+                //var date = new Date(Date.parse(@Model.EndDate..Day));
 
-            $(document).on('submit', "#postComment", function (e) {
+                @*@{TimeSpan span = (TimeSpan)(Model.EndDate - DateTime.Now);}
+                var days = @span.Days.ToString();
+                var hourse = @span.Hours.ToString(); 
+                var minutes = @span.Minutes.ToString(); 
+                var seconds = @span.Seconds.ToString();*@
 
-                e.preventDefault();
+                var date = new Date(@Model.EndDate.Value.Year.ToString() , @Model.EndDate.Value.Month - 1, 
+                    @Model.EndDate.Value.Day.ToString(), 
+                    @Model.EndDate.Value.Hour.ToString(), 
+                    @Model.EndDate.Value.Minute.ToString(), 
+                    @Model.EndDate.Value.Second.ToString(), 
+                    @Model.EndDate.Value.Millisecond.ToString());
+                
+                $("#countdownBid").countdown({ until: date, format: 'DHMS' });
+                //$("#countdownBid").countdown({ until: (days, hourse, minutes, seconds), format: 'dhmS' });
 
-                $("#commentProductId").val($("#tempProductId").attr('value'));
-                var form = $("#postComment");
-                $.ajax({
-                    url: '@Url.Action("CreateComment", "Comments")',
-                    type: 'POST',
-                    dataType: "html",
-                    cache: false,
-                    data: $(this).serialize()
-                }).done(function (data) {
-                    commentsSection.html(data);
+            }
+
+                function checkIfAutionTimeExists(){
+                    if (@Model.EndDate.Value.ToShortDateString() != null)
+                    {
+                       countdownFunc();
+                    }
+                }
+
+                $(document).on('click', '#replyBtn', function () {
+                    var parentCommentId = $(this).closest('div').find('input').attr('value');
+                    $("input[name='parentCommentId']").attr('value', parentCommentId);
+                    $("textarea[name='message']").focus();
                 });
-            });
 
-        });
+                $(document).on('submit', "#postComment", function (e) {
+                    e.preventDefault();
+                    $("#commentProductId").val($("#tempProductId").attr('value'));
+                    var form = $("#postComment");
+                    $.ajax({
+                        url: '@Url.Action("CreateComment", "Comments")',
+                        type: 'POST',
+                        dataType: "html",
+                        cache: false,
+                        data: $(this).serialize()
+                    }).done(function (data) {
+                        commentsSection.html(data);
+                    });
+                });
+
+                checkIfAutionTimeExists();
+
+            });
     </script>
 }
