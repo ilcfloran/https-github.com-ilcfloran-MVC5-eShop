@@ -1,6 +1,8 @@
-﻿using MyEShop.Core.Models;
+﻿using Microsoft.AspNet.Identity;
+using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
 using MyEShop.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -76,17 +78,63 @@ namespace MyEShop.Controllers
             return View(comment);
         }
 
-        // GET: Comments/Create
-        public ActionResult Create(string message, int? commentId)
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateComment(string message, int productId, string nameCommentor, int? parentCommentId)
         {
-            ViewBag.ParentId = new SelectList(db.Comments, "Id", "UserId");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
-            return View();
+            var comment = new Comment();
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                return RedirectToAction("CommentsByProduct", new { id = productId });
+            }
+
+            //if (string.IsNullOrWhiteSpace(nameCommentor))
+            //{
+            //    comment.User.FirstName = User.Identity.Name;
+            //}
+
+            if (!(parentCommentId > 0))
+            {
+                comment.ParentId = null;
+            }
+
+            var currentUserId = User.Identity.GetUserId();
+            comment.User = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+            comment.ParentId = parentCommentId;
+            comment.ProductId = productId;
+            comment.Text = message;
+            comment.date = DateTime.Now;
+
+            db.Comments.Add(comment);
+            db.SaveChanges();
+
+            //var retrievedComments = db.Comments.Include("User").Where(c => c.ProductId == productId);
+            //List<CommentVM> newComments = new List<CommentVM>();
+            //foreach (var item in retrievedComments)
+            //{
+            //    var tempComment = new CommentVM()
+            //    {
+            //        Id = item.Id,
+            //        Confirmed = item.Confirmed,
+            //        date = item.date,
+            //        ParentId = item.ParentId,
+            //        ProductId = item.ProductId,
+            //        Text = item.Text,
+            //        UserId = item.UserId,
+            //        User = new ApplicationUser()
+            //        {
+            //            UserName = item.User.UserName,
+            //            FirstName = item.User.FirstName,
+            //            LastName = item.User.LastName,
+            //        }
+            //    };
+
+            //    newComments.Add(tempComment);
+            //}
+
+            return RedirectToAction("CommentsByProduct", new { id = productId });
         }
 
-        // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Email,Text,date,Confirmed,ProductId,ParentId")] Comment comment)
@@ -120,9 +168,6 @@ namespace MyEShop.Controllers
             return View(comment);
         }
 
-        // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,Email,Text,date,Confirmed,ProductId,ParentId")] Comment comment)
