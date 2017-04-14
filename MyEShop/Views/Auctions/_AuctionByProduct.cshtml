@@ -1,5 +1,15 @@
 ﻿@model IEnumerable<MyEShop.Core.Models.Auction>
 
+
+<h3>About Seller</h3>
+<div class="brands-name">
+    <ul class="nav nav-pills nav-stacked">
+        <li>Seller: @ViewBag.UserName</li>
+        <li>Member Since: @ViewBag.MemberSince.ToShortDateString()</li>
+        <li>City: @ViewBag.City</li>
+    </ul>
+</div>
+
 <h3>Offers</h3>
 <div class="brands-name">
     <ul class="nav nav-pills nav-stacked">
@@ -20,3 +30,18 @@
     <p>@ViewBag.AuctionCount person(s) participated.</p>
 
 </div>
+@if (Request.IsAuthenticated)
+{
+
+    <div class="price-range" id="auctionDive">
+        <h2>Your Offer</h2>
+        <div class="well">
+            <div id="countdownBid"></div>
+            <span style="display:block;">Your offer: </span> <input type="text" class="bid" name="bid" value="">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+}else
+{
+    <p>Login to bid.</p>
+}

@@ -20,7 +20,6 @@ namespace MyEShop.Controllers
 
 
 
-
         public ActionResult AuctionByProduct(int id)
         {
 
@@ -30,7 +29,20 @@ namespace MyEShop.Controllers
             //    return Content("No bids yet.");
             //}
 
+            var user = db.Products.Include("User").Where(p => p.Id == id)
+                .Select(p => new
+                {
+                    FullName = p.User.FirstName + " " + p.User.LastName,
+                    MemberSince = p.User.MemberSince,
+                    City = p.User.City
+                })
+                .SingleOrDefault();
+
+            ViewBag.UserName = user.FullName;
+            ViewBag.MemberSince = user.MemberSince;
+            ViewBag.City = user.City;
             ViewBag.AuctionCount = auctions.Count();
+
             return PartialView("_AuctionByProduct", auctions.OrderByDescending(a => a.Price).Take(3));
         }
 
