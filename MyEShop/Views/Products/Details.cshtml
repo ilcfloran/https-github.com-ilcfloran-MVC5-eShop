@@ -24,7 +24,7 @@
                             @if (Request.IsAuthenticated)
                             {
                                 Html.RenderAction("AuctionByProduct", "Auctions", new { id = Model.Id });
-                                <div class="price-range">
+                                <div class="price-range" id="auctionDive">
                                     <!--price-range-->
                                     <h2>Your Offer</h2>
                                     <div class="well" id="countdownBid">
@@ -328,16 +328,11 @@
 
             commentsSection = $("#commentsPlaceHolder");
 
+            function removeAuctionDiv(){
+                $(auctionDive).html('<p>Time of auction is over.</p>');
+            }
+            
             function countdownFunc() {
-                
-                //var date = new Date(Date.parse(@Model.EndDate..Day));
-
-                @*@{TimeSpan span = (TimeSpan)(Model.EndDate - DateTime.Now);}
-                var days = @span.Days.ToString();
-                var hourse = @span.Hours.ToString(); 
-                var minutes = @span.Minutes.ToString(); 
-                var seconds = @span.Seconds.ToString();*@
-
                 var date = new Date(@Model.EndDate.Value.Year.ToString() , @Model.EndDate.Value.Month - 1, 
                     @Model.EndDate.Value.Day.ToString(), 
                     @Model.EndDate.Value.Hour.ToString(), 
@@ -345,9 +340,7 @@
                     @Model.EndDate.Value.Second.ToString(), 
                     @Model.EndDate.Value.Millisecond.ToString());
                 
-                $("#countdownBid").countdown({ until: date, format: 'DHMS' });
-                //$("#countdownBid").countdown({ until: (days, hourse, minutes, seconds), format: 'dhmS' });
-
+                $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
             }
 
                 function checkIfAutionTimeExists(){
