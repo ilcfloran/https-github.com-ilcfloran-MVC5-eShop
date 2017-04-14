@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<MyEShop.Core.Models.Auction>
 
-
 <h3>About Seller</h3>
 <div class="brands-name">
     <ul class="nav nav-pills nav-stacked">
@@ -17,14 +16,12 @@
         {
             foreach (var item in Model)
             {
-                @*<li><a href=""> <span class="pull-right">(50)</span>Acne</a></li>*@
                 <li><span>@item.Price</span></li>
-
             }
         }
         else
         {
-            <p>Be the first one to bid.</p>
+            <li>Be the first one to bid.</li>
         }
     </ul>
     <p>@ViewBag.AuctionCount person(s) participated.</p>
@@ -37,8 +34,13 @@
         <h2>Your Offer</h2>
         <div class="well">
             <div id="countdownBid"></div>
-            <span style="display:block;">Your offer: </span> <input type="text" class="bid" name="bid" value="">
-            <button type="submit">Submit</button>
+            @using (Html.BeginForm("","", FormMethod.Post, new { id = "bidForm"} ))
+            {
+                <span id="offerText" style="display:none; color:red">Your offer is being sent.</span>
+                <span style="display:block;">Your offer: <span> @(ViewBag.UserBid ?? 0)</span> </span> <input type="text" class="bid" name="bid" value="">
+                <input type="hidden" name="pId" value="@ViewBag.ProductId" />
+                <button type="submit">Submit</button>
+            }          
         </div>
     </div>
 }else

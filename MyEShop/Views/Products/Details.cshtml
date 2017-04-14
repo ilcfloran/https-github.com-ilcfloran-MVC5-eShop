@@ -10,7 +10,7 @@
                 <div class="left-sidebar">
                     @if (Model.EndDate != null)
                     {
-                        <div class="brands_products">
+                        <div class="brands_products" id="auctionDivs">
                             <!--brands_products-->
                             @{
                                 Html.RenderAction("AuctionByProduct", "Auctions", new { id = Model.Id });
@@ -305,6 +305,7 @@
         $(document).ready(function () {
 
             commentsSection = $("#commentsPlaceHolder");
+            auctionSection = $("#auctionDivs");
 
             function removeAuctionDiv(){
                 $(auctionDive).html("<p>Time of auction is over.</p>");
@@ -312,23 +313,29 @@
 
 
             function countdownFunc() {
-                if (@Model.EndDate.HasValue == true)
-                    var date = new Date( @( Model.EndDate.HasValue ? Model.EndDate.Value.Year.ToString() : ""),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Month - 1 : 0),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Day.ToString() : ""),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Hour.ToString() : ""),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Minute.ToString() : ""),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Second.ToString() : ""),
-                    @( Model.EndDate.HasValue ? @Model.EndDate.Value.Millisecond.ToString() : "")
+                alert("it has fucking been called");
+                if (@Json.Encode(@Model.EndDate.HasValue))
+                {
+                    var date = new Date( '@( Model.EndDate.HasValue ? Model.EndDate.Value.Year.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Month - 1 : 0)',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Day.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Hour.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Minute.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Second.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Millisecond.ToString() : "")'
                     );
-
+                }
                 $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
             }
 
+
             function checkIfAutionTimeExists() {
-                if (@Model.EndDate.HasValue = true)
+                if (@Json.Encode(@Model.EndDate.HasValue))
+                {
                     countdownFunc();
+                }
             }
+
 
             $(document).on('click', '#replyBtn', function () {
                 var parentCommentId = $(this).closest('div').find('input').attr('value');
@@ -351,8 +358,24 @@
                 });
             });
 
-            checkIfAutionTimeExists();
+            $(document).on('submit', "#bidForm", function(e){
+                e.preventDefault();
+                if (confirm('Are you sure you want to bid?')) {
+                    $("#offerText").show();
+                    $.ajax({
+                        url: '@Url.Action("Offer", "Auctions")',
+                        type: 'POST',
+                        dataType: "html",
+                        cache: false,
+                        data: $(this).serialize()
+                    }).done(function (data) {
+                        auctionSection.html(data);
+                    });
+                }
 
+            });
+
+            checkIfAutionTimeExists();
         });
     </script>
 }
