@@ -296,10 +296,9 @@
 
 
 @section scripts{
-
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    <script src="~/Scripts/jquery.plugin.min.js"></script>
-    <script src="~/Scripts/jquery.countdown.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.plugin.min.js"></script>
+<script src="~/Scripts/jquery.countdown.min.js"></script> 
 
     <script>
         $(document).ready(function () {
@@ -313,7 +312,6 @@
 
 
             function countdownFunc() {
-                alert("it has fucking been called");
                 if (@Json.Encode(@Model.EndDate.HasValue))
                 {
                     var date = new Date( '@( Model.EndDate.HasValue ? Model.EndDate.Value.Year.ToString() : "")',
@@ -325,7 +323,7 @@
                     '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Millisecond.ToString() : "")'
                     );
                 }
-                $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
+            $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
             }
 
 
@@ -362,6 +360,7 @@
                 e.preventDefault();
                 if (confirm('Are you sure you want to bid?')) {
                     $("#offerText").show();
+                    $("#countdownBid").countdown('destroy');
                     $.ajax({
                         url: '@Url.Action("Offer", "Auctions")',
                         type: 'POST',
@@ -370,6 +369,7 @@
                         data: $(this).serialize()
                     }).done(function (data) {
                         auctionSection.html(data);
+                        checkIfAutionTimeExists();
                     });
                 }
 
