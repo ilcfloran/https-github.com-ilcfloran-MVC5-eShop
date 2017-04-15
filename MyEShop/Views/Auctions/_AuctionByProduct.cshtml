@@ -33,6 +33,7 @@
     <div class="price-range" id="auctionDive">
         <h2>Your Offer</h2>
         <div class="well">
+            <span style="display:@ViewBag.ErrorDisplay; color:red">@ViewBag.BidError</span>
             <div id="countdownBid"></div>
             @using (Html.BeginForm("","", FormMethod.Post, new { id = "bidForm"} ))
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -52,42 +53,87 @@ namespace MyEShop.Controllers
             ViewBag.City = user.City;
             ViewBag.AuctionCount = auctions.Count();
             ViewBag.ProductId = id;
-
+            ViewBag.BidError = "";
+            ViewBag.ErrorDisplay = "none";
+            if (TempData["bidError"] != null)
+            {
+                ViewBag.BidError = TempData["bidError"];
+                ViewBag.ErrorDisplay = "block";
+            }
 
 
             return PartialView("_AuctionByProduct", auctions.OrderByDescending(a => a.Price).Take(3));
         }
 
-
+        [HttpPost]
         public ActionResult Offer(int bid, int pId)
         {
             // check if user previously bid for the same product, if did, update the data
             //check if the person who added the product for auction cannot bid
 
-            if (bid > 0)
+
+            var biderId = User.Identity.GetUserId();
+            var userBid = db.Auctions.Where(a => a.UserId == biderId && a.ProductId == pId).SingleOrDefault();
+            var product = db.Products.Where(p => p.Id == pId).SingleOrDefault();
+            var topOffer = db.Auctions.OrderByDescending(a => a.Price).FirstOrDefault();
+
+
+            if (!(product.EndDate > DateTime.Now))
             {
-                var biderId = User.Identity.GetUserId();
-                var userBid = db.Auctions.Where(a => a.UserId == biderId && a.ProductId == pId).SingleOrDefault();
-                if (userBid != null)
+                return RedirectToAction("AuctionByProduct", new { id = pId });
+            }
+
+            if (product.UserId == biderId)
+            {
+                // add the proper error/info message
+                return RedirectToAction("AuctionByProduct", new { id = pId });
+            }
+
+            if (topOffer != null)
+            {
+                if (bid - topOffer.Price > 5)
                 {
-                    userBid.Price = bid;
-                    db.Entry(userBid).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
+                    if (userBid != null)
+                    {
+                        userBid.Price = bid;
+                        db.Entry(userBid).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        var newAuction = new Auction()
+                        {
+                            Price = bid,
+                            ProductId = pId,
+                            User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
+                            UserId = biderId,
+                            Win = false
+                        };
+                        db.Auctions.Add(newAuction);
+                        db.SaveChanges();
+                    }
                 }
                 else
                 {
-                    var newAuction = new Auction()
-                    {
-                        Price = bid,
-                        ProductId = pId,
-                        User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
-                        UserId = biderId,
-                        Win = false
-                    };
-                    db.Auctions.Add(newAuction);
-                    db.SaveChanges();
+                    TempData["bidError"] = "your offer should be 5 NOK higher than the top offer.";
                 }
+
             }
+            else
+            {
+                var newAuction = new Auction()
+                {
+                    Price = bid,
+                    ProductId = pId,
+                    User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
+                    UserId = biderId,
+                    Win = false
+                };
+                db.Auctions.Add(newAuction);
+                db.SaveChanges();
+            }
+
+
 
             return RedirectToAction("AuctionByProduct", new { id = pId });
         }
