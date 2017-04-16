@@ -1,5 +1,7 @@
-﻿using MyEShop.Core.Models;
+﻿using Microsoft.AspNet.Identity;
+using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
+using MyEShop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -157,6 +159,100 @@ namespace MyEShop.Controllers
 
             return View(productsVM.OrderBy(p => p.Id).Skip(skip).Take(take));
         }
+
+        public ActionResult DisplayShoppingCart()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                var items = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
+
+                CartVM cart = new CartVM();
+
+                cart.Count = items.Count();
+
+                foreach (var item in items)
+                {
+                    cart.TotalPrice += item.Price * item.Count;
+                }
+
+                foreach (var cartitem in items)
+                {
+                    CartItemVM cartItem = new CartItemVM()
+                    {
+                        Count = cartitem.Count,
+                        Price = cartitem.Price,
+                        ProductName = cartitem.ProductName
+                    };
+                    cart.CartItems.Add(cartItem);
+                }
+
+
+                return View();
+
+            }
+
+            // return to index
+            return View();
+        }
+
+
+        public JsonResult ItemsInCart()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId).Count();
+                return Json(new { ItemsInCart = itemsInCart }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public JsonResult AddToCart(int pId = 0, int count = 0)
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+
+                if (pId == 0)
+                {
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
+
+                var userId = User.Identity.GetUserId();
+                var product = db.Products.Where(p => p.Id == pId).SingleOrDefault();
+
+                ShoppingCart shoppingCart = new ShoppingCart()
+                {
+                    Count = count,
+                    Date = DateTime.Now,
+                    ProductId = pId,
+                    UserId = userId,
+                    Status = false,
+                    Price = product.Price,
+                    ProductName = product.Name
+                };
+
+                db.ShoppingCart.Add(shoppingCart);
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    redirectUrl = Url.Action("ItemsInCart", "Products"),
+                });
+            }
+
+            return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -23,3 +23,31 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+        itemsNo = $("#itemsInCart");
+
+        function FetchItemsInCart() {
+            $.ajax({
+                url: '@Url.Action("ItemsInCart", "Products")',
+                type: 'GET',
+                dataType: "json",
+                cache: false,
+                error: function (err) {
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('Message')) {
+                    alert(data.Message);
+                    return;
+                }
+                if (data.hasOwnProperty('ItemsInCart')) {
+                    itemsNo.html(data.ItemsInCart);
+                }
+            });
+        }
+
+        if (true) {
+            FetchItemsInCart();
+        }
+</script>

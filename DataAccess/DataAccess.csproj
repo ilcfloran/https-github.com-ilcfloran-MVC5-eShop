@@ -199,6 +199,14 @@
     <Compile Include="Migrations\201704151046327_AddDefaultValueToCountInShoppingCart.Designer.cs">
       <DependentUpon>201704151046327_AddDefaultValueToCountInShoppingCart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704160816199_AddPriceToShoppingCart.cs" />
+    <Compile Include="Migrations\201704160816199_AddPriceToShoppingCart.Designer.cs">
+      <DependentUpon>201704160816199_AddPriceToShoppingCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704160851337_AddProductNameToShoppingCart.cs" />
+    <Compile Include="Migrations\201704160851337_AddProductNameToShoppingCart.Designer.cs">
+      <DependentUpon>201704160851337_AddProductNameToShoppingCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -328,6 +336,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704151046327_AddDefaultValueToCountInShoppingCart.resx">
       <DependentUpon>201704151046327_AddDefaultValueToCountInShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704160816199_AddPriceToShoppingCart.resx">
+      <DependentUpon>201704160816199_AddPriceToShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704160851337_AddProductNameToShoppingCart.resx">
+      <DependentUpon>201704160851337_AddProductNameToShoppingCart.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

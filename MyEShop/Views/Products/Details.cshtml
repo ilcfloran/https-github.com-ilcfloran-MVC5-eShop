@@ -115,12 +115,20 @@
                             {
                                 <span>
                                     <span>US $@Model.Price</span>
-                                    <label>Quantity:</label>
-                                    <input type="number" name="count" id="productCount" value="1" />
-                                    <button type="button" id="addToCart" class="btn btn-fefault cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        Add to cart
-                                    </button>
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                        <label>Quantity:</label>
+                                        <input type="number" name="count" id="productCount" value="1" />
+                                        <button type="button" id="addToCart" class="btn btn-fefault cart">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            Add to cart
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                       <span>Login to order.</span>
+                                    }
+
                                 </span>
                             }
 
@@ -309,6 +317,7 @@
 
             commentsSection = $("#commentsPlaceHolder");
             auctionSection = $("#auctionDivs");
+            itemsNo = $("#itemsInCart");
 
             function removeAuctionDiv(){
                 $(auctionDive).html("<p>Time of auction is over.</p>");
@@ -378,11 +387,30 @@
 
         });
 
+
+        function getNumberOfItemsInCart(redirectUrl) {
+            $.ajax({
+                url: redirectUrl,
+                type: 'GET',
+                dataType: "json",
+                cache: false,
+                error: function(err){
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('ItemsInCart')) {
+                    itemsNo.html(data.ItemsInCart);
+                }
+            });
+        }
+
+
         $(document).on('click', "#addToCart", function (e) {
             e.preventDefault();
             var pcount = document.getElementById('productCount');
-
+            var productId = @Model.Id;
             var maxCount = @Model.Count;
+
             if (pcount.value > maxCount) {
                 alert("we do not have that many items available.");
                 return;
@@ -391,8 +419,29 @@
                 alert("item counts can not be less than 1.");
                 return;
             }
-        });
 
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Products")',
+                type: 'POST',
+                dataType: "json",
+                cache: false,
+                data: {
+                    pId: productId,
+                    count: pcount.value
+                },
+                error: function(err){
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('Message')) {
+                    alert(data.Message);
+                    return;
+                }
+                if (data.hasOwnProperty('redirectUrl')) {
+                    getNumberOfItemsInCart(data.redirectUrl);
+                }
+            });
+        });
 
 
         checkIfAutionTimeExists();
