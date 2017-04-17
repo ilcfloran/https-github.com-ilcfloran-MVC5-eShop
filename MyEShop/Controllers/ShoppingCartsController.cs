@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using MyEShop.Core.Models;
+using MyEShop.DataAccess.ModelConfigs;
+using MyEShop.Web.ViewModels;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using MyEShop.Core.Models;
-using MyEShop.DataAccess.ModelConfigs;
 
 namespace MyEShop.Controllers
 {
@@ -15,13 +14,47 @@ namespace MyEShop.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: ShoppingCarts
         public ActionResult Index()
         {
+
             return View(db.ShoppingCart.ToList());
         }
 
-        // GET: ShoppingCarts/Details/5
+
+
+        public ActionResult GetShoppingCartItems()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                CartVM cart = new CartVM();
+                //List<CartItemVM> cartItemList = new List<CartItemVM>();
+
+                var userId = User.Identity.GetUserId();
+                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId).ToList();
+
+                foreach (var item in itemsInCart)
+                {
+                    CartItemVM itm = new CartItemVM();
+                    itm.Count = item.Count;
+                    itm.Price = item.Price;
+                    itm.ProductName = item.ProductName;
+                    itm.WebId = item.Id;
+
+                    cart.TotalPrice += item.Count * item.Price;
+                    if (cart.CartItems == null)
+                    {
+                        cart.CartItems = new List<CartItemVM>();
+                    }
+                    cart.CartItems.Add(itm);
+                }
+                return View(cart);
+            }
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,15 +69,11 @@ namespace MyEShop.Controllers
             return View(shoppingCart);
         }
 
-        // GET: ShoppingCarts/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ShoppingCarts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,ProductId,ProductName,UserId,Date,Status,Count,Price")] ShoppingCart shoppingCart)
@@ -59,7 +88,6 @@ namespace MyEShop.Controllers
             return View(shoppingCart);
         }
 
-        // GET: ShoppingCarts/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,9 +102,6 @@ namespace MyEShop.Controllers
             return View(shoppingCart);
         }
 
-        // POST: ShoppingCarts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ProductId,ProductName,UserId,Date,Status,Count,Price")] ShoppingCart shoppingCart)
@@ -90,7 +115,6 @@ namespace MyEShop.Controllers
             return View(shoppingCart);
         }
 
-        // GET: ShoppingCarts/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)

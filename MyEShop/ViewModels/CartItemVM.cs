@@ -1,4 +1,4 @@
-﻿namespace MyEShop.ViewModels
+﻿namespace MyEShop.Web.ViewModels
 {
     public class CartItemVM
     {
@@ -7,5 +7,7 @@
         public int Count { get; set; }
 
         public decimal Price { get; set; }
+
+        public int WebId { get; set; }
     }
 }

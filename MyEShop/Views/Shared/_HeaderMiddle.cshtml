@@ -39,7 +39,7 @@
                         <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li><a href="@Url.Action("DisplayShoppingCart", "Products")"><i class="fa fa-shopping-cart"></i>
+                            <li><a href="@Url.Action("GetShoppingCartItems", "ShoppingCarts")"><i class="fa fa-shopping-cart"></i>
                                 <span id="itemsInCart" style="color:tomato">0</span> Item(s) in Cart</a></li>
                             <li><a href=@Url.Action("Index", "Manage")><i class="fa fa-lock"></i><span>Hello </span>@User.Identity.Name</a></li>
                             <li><a href=@Url.Action("LogOff","Account")>Log off</a></li>

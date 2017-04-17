@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
-using MyEShop.ViewModels;
+using MyEShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -183,10 +183,12 @@ namespace MyEShop.Controllers
                     {
                         Count = cartitem.Count,
                         Price = cartitem.Price,
-                        ProductName = cartitem.ProductName
+                        ProductName = cartitem.ProductName,
+                        WebId = cartitem.Id
                     };
-                    cart.CartItems.Add(cartItem);
+                    //cart.CartItems.Add(cartitem);
                 }
+
 
 
                 return View();
