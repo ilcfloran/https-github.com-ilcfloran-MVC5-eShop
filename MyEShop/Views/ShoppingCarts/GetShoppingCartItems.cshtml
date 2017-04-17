@@ -31,17 +31,18 @@
                                 <a href=""><img src="images/cart/one.png" alt=""></a>
                             </td>
                             <td class="cart_description">
-                                <h4><a href="">@item.ProductName</a></h4>
+                                <h4><a>@item.ProductName</a></h4>
                                 <p>Web ID: @item.WebId</p>
                             </td>
+
                             <td class="cart_price">
                                 <p>$@item.Price</p>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.Count" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
+                                    <a class="cart_quantity_up"> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" data-webId="@item.WebId" value="@item.Count" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down"> - </a>
                                 </div>
                             </td>
                             <td class="cart_total">
@@ -133,3 +134,64 @@
         </div>
     </div>
 </section>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            function UpdateItem(id, op, element) {
+                //update the item price and total price in json format using ajax
+
+                var elem = $(element);
+                //cart_total_price
+
+                
+
+                $.ajax({
+                    url: '@Url.Action("UpdateItems", "ShoppingCarts")',
+                    type: 'GET',
+                    dataType: "json",
+                    cache: false,
+                    data: {
+                        itemId: elem.attr("data-webId"),
+                        operation: op,
+                    },
+                    error: function (err) {
+                        alert(err.status);
+                    }
+                }).done(function (data) {
+                    if (data.hasOwnProperty('Message')) {
+                        alert(data.Message);
+                        return;
+                    } else {
+                        elem.closest('tr').find('.cart_total_price').text("$"+ parseFloat(data.itemPrice).toFixed(2));
+                    }
+                });
+            }
+
+
+            $(document).on('click', '.cart_quantity_up', function () {
+                var itemCount = $(this).closest('Div').find('input');
+                var currentCount = parseInt(itemCount.val());
+                itemCount.val(currentCount + 1);
+                UpdateItem(2, 1, itemCount);
+            });
+
+            $(document).on('click', '.cart_quantity_down', function () {
+                var itemCount = $(this).closest('Div').find('input');
+                var currentCount = parseInt(itemCount.val());
+                if (currentCount > 1) {
+                    itemCount.val(currentCount - 1);
+                    UpdateItem(2, 0, itemCount);
+                } else {
+                    itemCount.val(0);
+                }
+
+            });
+
+
+        });
+    </script>
+
+}

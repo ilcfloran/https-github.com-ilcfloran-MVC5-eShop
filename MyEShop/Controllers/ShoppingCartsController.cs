@@ -30,7 +30,7 @@ namespace MyEShop.Controllers
                 //List<CartItemVM> cartItemList = new List<CartItemVM>();
 
                 var userId = User.Identity.GetUserId();
-                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId).ToList();
+                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
 
                 foreach (var item in itemsInCart)
                 {
@@ -53,6 +53,58 @@ namespace MyEShop.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public JsonResult UpdateItems(int itemId, int operation)
+        {
+
+
+            if (itemId > 0)
+            {
+                var userId = User.Identity.GetUserId();
+                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
+                var item = itemsInCart.Where(i => i.Id == itemId).SingleOrDefault();
+
+
+                decimal total = 0;
+                foreach (var x in itemsInCart)
+                {
+                    total += x.Count * x.Price;
+                }
+
+
+                if (operation == 1)
+                {
+                    item.Count += 1;
+                    db.Entry(item).State = EntityState.Modified;
+                    db.SaveChanges();
+                    total += item.Price;
+
+                }
+                else if (operation == 0)
+                {
+                    if (item.Count > 0)
+                    {
+                        item.Count -= 1;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                        total -= item.Price;
+                    }
+                }
+                else
+                {
+                    return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet);
+                }
+
+                //calculate item price and total price
+                var itemFee = (item.Count * item.Price);
+
+
+                return Json(new { itemPrice = itemFee, totalPrice = total }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet); ;
+        }
+
 
 
         public ActionResult Details(int? id)
