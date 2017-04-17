@@ -181,7 +181,7 @@
             $(document).on('click', '.cart_quantity_down', function () {
                 var itemCount = $(this).closest('Div').find('input');
                 var currentCount = parseInt(itemCount.val());
-                if (currentCount > 1) {
+                if (currentCount >= 1) {
                     itemCount.val(currentCount - 1);
                     UpdateItem(2, 0, itemCount);
                 } else {
@@ -189,8 +189,6 @@
                 }
 
             });
-
-
         });
     </script>
 

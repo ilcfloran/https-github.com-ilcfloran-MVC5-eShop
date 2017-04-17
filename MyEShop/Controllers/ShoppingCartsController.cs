@@ -82,7 +82,7 @@ namespace MyEShop.Controllers
                 }
                 else if (operation == 0)
                 {
-                    if (item.Count > 0)
+                    if (item.Count >= 0)
                     {
                         item.Count -= 1;
                         db.Entry(item).State = EntityState.Modified;
