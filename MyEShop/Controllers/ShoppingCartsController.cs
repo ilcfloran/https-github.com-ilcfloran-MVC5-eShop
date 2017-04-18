@@ -57,53 +57,90 @@ namespace MyEShop.Controllers
         public JsonResult UpdateItems(int itemId, int operation)
         {
 
-
-            if (itemId > 0)
+            if (User.Identity.IsAuthenticated)
             {
-                var userId = User.Identity.GetUserId();
-                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
-                var item = itemsInCart.Where(i => i.Id == itemId).SingleOrDefault();
-
-
-                decimal total = 0;
-                foreach (var x in itemsInCart)
+                if (itemId > 0)
                 {
-                    total += x.Count * x.Price;
-                }
+                    var userId = User.Identity.GetUserId();
+                    var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
+                    var item = itemsInCart.Where(i => i.Id == itemId).SingleOrDefault();
 
 
-                if (operation == 1)
-                {
-                    item.Count += 1;
-                    db.Entry(item).State = EntityState.Modified;
-                    db.SaveChanges();
-                    total += item.Price;
-
-                }
-                else if (operation == 0)
-                {
-                    if (item.Count >= 0)
+                    decimal total = 0;
+                    foreach (var x in itemsInCart)
                     {
-                        item.Count -= 1;
+                        total += x.Count * x.Price;
+                    }
+
+
+                    if (operation == 1)
+                    {
+                        item.Count += 1;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
-                        total -= item.Price;
+                        total += item.Price;
+
                     }
+                    else if (operation == 0)
+                    {
+                        if (item.Count >= 0)
+                        {
+                            item.Count -= 1;
+                            db.Entry(item).State = EntityState.Modified;
+                            db.SaveChanges();
+                            total -= item.Price;
+                        }
+                    }
+                    else
+                    {
+                        return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet);
+                    }
+
+                    //calculate item price and total price
+                    var itemFee = (item.Count * item.Price);
+
+
+                    return Json(new { itemPrice = itemFee, totalPrice = total }, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet);
-                }
-
-                //calculate item price and total price
-                var itemFee = (item.Count * item.Price);
-
-
-                return Json(new { itemPrice = itemFee, totalPrice = total }, JsonRequestBehavior.AllowGet);
             }
+
 
             return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet); ;
         }
+
+
+
+        public JsonResult DeleteItem(int itemId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (itemId > 0)
+                {
+                    var userId = User.Identity.GetUserId();
+                    var itemInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false && s.Id == itemId).SingleOrDefault();
+
+                    var count = itemInCart.Count;
+                    var price = itemInCart.Price;
+
+                    var itemTotal = count * price;
+
+                    db.ShoppingCart.Remove(itemInCart);
+                    db.SaveChanges();
+
+                    return Json(new { priceSubtract = itemTotal }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet); ;
+
+        }
+
+
+
+
+
+
+
 
 
 
