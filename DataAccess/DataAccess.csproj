@@ -207,6 +207,14 @@
     <Compile Include="Migrations\201704160851337_AddProductNameToShoppingCart.Designer.cs">
       <DependentUpon>201704160851337_AddProductNameToShoppingCart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704181416108_AddCountToSales.cs" />
+    <Compile Include="Migrations\201704181416108_AddCountToSales.Designer.cs">
+      <DependentUpon>201704181416108_AddCountToSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704181435421_AddTrackingCodeToSales.cs" />
+    <Compile Include="Migrations\201704181435421_AddTrackingCodeToSales.Designer.cs">
+      <DependentUpon>201704181435421_AddTrackingCodeToSales.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -342,6 +350,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704160851337_AddProductNameToShoppingCart.resx">
       <DependentUpon>201704160851337_AddProductNameToShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181416108_AddCountToSales.resx">
+      <DependentUpon>201704181416108_AddCountToSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181435421_AddTrackingCodeToSales.resx">
+      <DependentUpon>201704181435421_AddTrackingCodeToSales.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

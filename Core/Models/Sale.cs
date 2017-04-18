@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MyEShop.Core.Models
 {
@@ -27,7 +24,10 @@ namespace MyEShop.Core.Models
 
         public ApplicationUser User { get; set; }
 
-        
+        public int Count { get; set; }
+
+        public int TrackingCode { get; set; }
+
     }
 
 
