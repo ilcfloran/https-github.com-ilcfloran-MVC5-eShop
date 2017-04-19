@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MyEShop.Core.Models
 {
@@ -16,5 +13,11 @@ namespace MyEShop.Core.Models
         public string BankGetNo { get; set; }
 
         public bool Status { get; set; }
+
+        public int Count { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int ProductId { get; set; }
     }
 }

@@ -215,6 +215,22 @@
     <Compile Include="Migrations\201704181435421_AddTrackingCodeToSales.Designer.cs">
       <DependentUpon>201704181435421_AddTrackingCodeToSales.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704181452389_AddCountToTempSale.cs" />
+    <Compile Include="Migrations\201704181452389_AddCountToTempSale.Designer.cs">
+      <DependentUpon>201704181452389_AddCountToTempSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704181454508_AddPriceToTempSale.cs" />
+    <Compile Include="Migrations\201704181454508_AddPriceToTempSale.Designer.cs">
+      <DependentUpon>201704181454508_AddPriceToTempSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704181456586_AddProductIdToTempSale.cs" />
+    <Compile Include="Migrations\201704181456586_AddProductIdToTempSale.Designer.cs">
+      <DependentUpon>201704181456586_AddProductIdToTempSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704190804366_AddUserConfiguration.cs" />
+    <Compile Include="Migrations\201704190804366_AddUserConfiguration.Designer.cs">
+      <DependentUpon>201704190804366_AddUserConfiguration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -356,6 +372,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704181435421_AddTrackingCodeToSales.resx">
       <DependentUpon>201704181435421_AddTrackingCodeToSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181452389_AddCountToTempSale.resx">
+      <DependentUpon>201704181452389_AddCountToTempSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181454508_AddPriceToTempSale.resx">
+      <DependentUpon>201704181454508_AddPriceToTempSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181456586_AddProductIdToTempSale.resx">
+      <DependentUpon>201704181456586_AddProductIdToTempSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704190804366_AddUserConfiguration.resx">
+      <DependentUpon>201704190804366_AddUserConfiguration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

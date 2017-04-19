@@ -39,6 +39,8 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new FilterItemConfiguration());
             modelBuilder.Configurations.Add(new GroupFilterConfiguration());
             modelBuilder.Configurations.Add(new CategoriesGroupFiltersConfiguration());
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }
