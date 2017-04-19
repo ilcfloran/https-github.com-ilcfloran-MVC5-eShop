@@ -13,6 +13,8 @@ namespace MyEShop.DataAccess.ModelConfigs
 
             Property(t => t.ShoppingCartId).IsRequired().HasColumnAnnotation("Index",
                 new IndexAnnotation(new IndexAttribute("IX_TempSale_ShoppingCartId") { IsUnique = false }));
+
+
         }
     }
 }

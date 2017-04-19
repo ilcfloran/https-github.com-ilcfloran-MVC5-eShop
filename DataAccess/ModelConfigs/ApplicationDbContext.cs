@@ -19,7 +19,7 @@ namespace MyEShop.DataAccess.ModelConfigs
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentModel> Payments { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<TempSale> TempSale { get; set; }
         public DbSet<GroupFilter> GroupFilter { get; set; }

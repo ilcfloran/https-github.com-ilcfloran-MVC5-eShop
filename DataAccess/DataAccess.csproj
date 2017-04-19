@@ -231,6 +231,14 @@
     <Compile Include="Migrations\201704190804366_AddUserConfiguration.Designer.cs">
       <DependentUpon>201704190804366_AddUserConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704191551476_AddTransIdToSale.cs" />
+    <Compile Include="Migrations\201704191551476_AddTransIdToSale.Designer.cs">
+      <DependentUpon>201704191551476_AddTransIdToSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704191651397_UpdateChanges2.cs" />
+    <Compile Include="Migrations\201704191651397_UpdateChanges2.Designer.cs">
+      <DependentUpon>201704191651397_UpdateChanges2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -384,6 +392,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704190804366_AddUserConfiguration.resx">
       <DependentUpon>201704190804366_AddUserConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704191551476_AddTransIdToSale.resx">
+      <DependentUpon>201704191551476_AddTransIdToSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704191651397_UpdateChanges2.resx">
+      <DependentUpon>201704191651397_UpdateChanges2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

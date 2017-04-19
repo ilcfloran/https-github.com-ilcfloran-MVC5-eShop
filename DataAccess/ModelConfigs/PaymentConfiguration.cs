@@ -1,19 +1,16 @@
 ﻿using MyEShop.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Web;
 
 namespace MyEShop.DataAccess.ModelConfigs
 {
-    public class PaymentConfiguration : EntityTypeConfiguration<Payment>
+    public class PaymentConfiguration : EntityTypeConfiguration<PaymentModel>
     {
 
         public PaymentConfiguration()
         {
+            ToTable("Payments");
             Property(p => p.TransNo).HasMaxLength(15);
 
             Property(p => p.BankGetNo).HasMaxLength(15);

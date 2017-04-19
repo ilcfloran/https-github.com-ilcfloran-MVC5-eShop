@@ -24,6 +24,8 @@ namespace MyEShop.Core.Models
 
         public ApplicationUser User { get; set; }
 
+        public int TransId { get; set; }
+
         public int Count { get; set; }
 
         public int TrackingCode { get; set; }
@@ -33,8 +35,10 @@ namespace MyEShop.Core.Models
 
     public enum SalesStatus
     {
-        notpayed = 1,
-        payed = 2
+        OnHold = 1,
+        Preparing = 2,
+        Sent = 3,
+        Delivered = 4
     }
 
 }

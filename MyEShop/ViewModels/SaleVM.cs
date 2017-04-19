@@ -24,5 +24,21 @@ namespace MyEShop.Web.ViewModels
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public int TransId { get; set; }
+
+        public int Count { get; set; }
+
+        public int TrackingCode { get; set; }
     }
+
+    public enum SalesVMStatus
+    {
+        OnHold = 1,
+        Preparing = 2,
+        Sent = 3,
+        Delivered = 4
+    }
+
+
 }

@@ -130,7 +130,8 @@
                         <li >Total <span id="totalPrice">$@Model.TotalPrice</span></li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    @*<a class="btn btn-default check_out" href="">Check Out</a>*@
+                    @Html.ActionLink("Check Out", "Payment", null, new { @class= "btn btn-default check_out" })
                 </div>
             </div>
         </div>

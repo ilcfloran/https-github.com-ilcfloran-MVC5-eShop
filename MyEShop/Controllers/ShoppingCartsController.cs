@@ -2,6 +2,8 @@
 using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
 using MyEShop.Web.ViewModels;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -136,11 +138,159 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult Payment()
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
+
+                // the gateway does not accepts amount less than 1000 Rials
+                decimal totalPrice = 1000;
+                foreach (var item in itemsInCart)
+                {
+                    totalPrice += item.Count * item.Price;
+                }
+
+                try
+                {
+                    Payment ob = new Payment();
+                    string result = ob.pay(totalPrice.ToString());
+                    JsonParameters parameters = JsonConvert.DeserializeObject<JsonParameters>(result);
+
+                    if (parameters.status == 1)
+                    {
+                        List<TempSale> LstTempSales = new List<TempSale>();
+                        foreach (var x in itemsInCart)
+                        {
+                            TempSale t = new TempSale()
+                            {
+                                ShoppingCartId = x.Id,
+                                BankGetNo = parameters.transId,
+                                Date = DateTime.Now,
+                                Status = false,
+                                Count = x.Count,
+                                Price = x.Price,
+                                ProductId = x.ProductId,
+                                ProductName = x.ProductName
+                            };
+                            LstTempSales.Add(t);
+                        }
+                        db.TempSale.AddRange(LstTempSales);
+                        db.SaveChanges();
+
+                        Response.Redirect("https://pay.ir/payment/test/gateway/" + parameters.transId);
+                    }
+                    else
+                    {
+                        //lblresult.text = "کدخطا : " + parmeters.errorcode + "<br />" + "پیغام خطا : " + parmeters.errormessage;
+                    }
+                }
+                catch (Exception e)
+                {
+                    //lblresult.text = "خطا در اتصال به درگاه پرداخت";
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
 
 
+        [HttpPost]
+        public ActionResult PaymentComplete(string transId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                if (!string.IsNullOrEmpty(transId))
+                {
+                    Payment ob = new Payment();
+                    string result = ob.verify(transId.ToString());
+                    JsonParameters Parmeters = JsonConvert.DeserializeObject<JsonParameters>(result);
+
+                    if (Parmeters.status == 1)
+                    {
+                        var tmpSales = db.TempSale.Where(t => t.BankGetNo == transId).ToList();
+
+                        foreach (var i in tmpSales)
+                        {
+                            i.Status = true;
+                            db.TempSale.Attach(i);
+                            db.Entry(i).State = EntityState.Modified;
+                        }
+
+                        db.SaveChanges();
+                        List<Sale> LstSale = new List<Sale>();
+
+                        foreach (var j in tmpSales)
+                        {
+                            Sale s = new Sale()
+                            {
+                                TrackingCode = 0,
+                                Count = j.Count,
+                                Date = DateTime.Now,
+                                GroupNo = 0,
+                                Payed = true,
+                                Price = j.Price,
+                                ProductId = j.ProductId,
+                                StatusId = SalesStatus.OnHold,
+                                UserId = userId,
+                                TransId = Convert.ToInt32(transId)
+                            };
+                            LstSale.Add(s);
+
+                        }
+                        db.Sales.AddRange(LstSale);
+                        db.SaveChanges();
+
+                        List<ShoppingCart> tmpShop = new List<ShoppingCart>();
+                        foreach (var n in tmpSales)
+                        {
+                            db.ShoppingCart.RemoveRange(db.ShoppingCart.Where(sh => sh.Id == n.ShoppingCartId));
+                            db.TempSale.Remove(n);
+                        }
+
+                        db.SaveChanges();
+
+                        return RedirectToAction("GetSalesItemByTrasnId", new { tId = transId, price = Parmeters.amount.ToString() });
+                    }
+                    else
+                    {
+                        return Content("error");
+                    }
+                }
 
 
+            }
 
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult GetSalesItemByTrasnId(int tId, int price)
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.TransID = tId;
+                ViewBag.PaidPrice = price;
+
+                var userId = User.Identity.GetUserId();
+
+                var saleItems = db.Sales.Include("Product").Where(s => s.TransId == tId && s.UserId == userId && s.Payed == true).ToList();
+
+                return View("PaymentComplete", saleItems);
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
