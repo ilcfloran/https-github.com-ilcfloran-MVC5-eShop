@@ -188,15 +188,10 @@ namespace MyEShop.Controllers
                     };
                     //cart.CartItems.Add(cartitem);
                 }
-
-
-
                 return View();
-
             }
-
             // return to index
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
 

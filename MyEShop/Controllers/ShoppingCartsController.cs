@@ -292,6 +292,43 @@ namespace MyEShop.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult MyPurchaseHistory()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                var items = db.Sales.Include("Product").Where(s => s.UserId == userId && s.Payed == true).ToList();
+
+                CartVM cart = new CartVM();
+
+                cart.Count = items.Count();
+
+                foreach (var item in items)
+                {
+                    cart.TotalPrice += item.Price * item.Count;
+                }
+
+                foreach (var cartitem in items)
+                {
+                    CartItemVM cartItem = new CartItemVM();
+                    cartItem.Count = cartitem.Count;
+                    cartItem.Price = cartitem.Price;
+                    cartItem.ProductName = cartitem.Product.Name;
+                    cartItem.WebId = cartitem.Id;
+                    cartItem.Date = cartitem.Date;
+
+                    if (cart.CartItems == null)
+                    {
+                        cart.CartItems = new List<CartItemVM>();
+                    }
+                    cart.CartItems.Add(cartItem);
+                }
+                return View(cart);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
 
 
         public ActionResult Details(int? id)

@@ -354,6 +354,8 @@
     <Content Include="Views\ShoppingCarts\Index.cshtml" />
     <Content Include="Views\ShoppingCarts\GetShoppingCartItems.cshtml" />
     <Content Include="Views\ShoppingCarts\PaymentComplete.cshtml" />
+    <Content Include="Views\Products\MyProducts.cshtml" />
+    <Content Include="Views\ShoppingCarts\MyPurchaseHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
