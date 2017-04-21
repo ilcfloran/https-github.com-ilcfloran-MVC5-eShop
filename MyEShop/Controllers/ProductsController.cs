@@ -33,6 +33,15 @@ namespace MyEShop.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.ShowBidBox = "false";
+
+            var userId = User.Identity.GetUserId();
+            if (product.UserId == userId)
+            {
+                ViewBag.ShowBidBox = "true";
+
+            }
+
             return View(product);
         }
 
@@ -229,18 +238,30 @@ namespace MyEShop.Controllers
         }
 
 
-        public ActionResult MyProducts()
+        public ActionResult MyProducts(int page = 1)
         {
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-
                 var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate == null).ToList();
 
+                int take = 1;
+                var count = myProducts.Count();
+                int skip = 0;
+                if (count > take)
+                {
+                    skip = (take * page) - take;
+                }
 
+                var TotalPages = Math.Ceiling((decimal)(count / take));
+                ViewBag.TotalPages = TotalPages;
+                var _page = page <= TotalPages ? page : TotalPages;
+                ViewBag.Page = _page;
+
+                return View("MyProductsForSale", myProducts.OrderBy(p => p.Id).Skip(skip).Take(take));
             }
 
-            return View();
+            return RedirectToAction("Index", "Manage");
         }
 
         public ActionResult ProductsForAuction()

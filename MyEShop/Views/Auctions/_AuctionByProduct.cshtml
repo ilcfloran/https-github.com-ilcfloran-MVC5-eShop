@@ -35,13 +35,13 @@
         <div class="well">
             <span style="display:@ViewBag.ErrorDisplay; color:red">@ViewBag.BidError</span>
             <div id="countdownBid"></div>
-            @using (Html.BeginForm("","", FormMethod.Post, new { id = "bidForm"} ))
-            {
-                <span id="offerText" style="display:none; color:red">Your offer is being sent.</span>
-                <span style="display:block;">Your offer: <span> @(ViewBag.UserBid ?? 0)</span> </span> <input type="text" class="bid" name="bid" value="">
-                <input type="hidden" name="pId" value="@ViewBag.ProductId" />
-                <button type="submit" id="btnSubmitForm">Submit</button>
-            }          
+                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "bidForm" }))
+                {
+                    <span id="offerText" style="display:none; color:red">Your offer is being sent.</span>
+                    <span style="display:block;" class="btnSubmitForm">Your offer: <span class="btnSubmitForm"> @(ViewBag.UserBid ?? 0)</span> </span> <input type="text" class="bid btnSubmitForm" name="bid" value="">
+                    <input type="hidden"  name="pId" value="@ViewBag.ProductId" />
+                    <button type="submit" class="btnSubmitForm">Submit</button>
+                }
         </div>
     </div>
 }else

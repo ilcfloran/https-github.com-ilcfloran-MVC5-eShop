@@ -86,6 +86,7 @@ namespace MyEShop.Controllers
             if (product.UserId == biderId)
             {
                 // add the proper error/info message
+                TempData["bidError"] = "your cannot bid on your own product.";
                 return RedirectToAction("AuctionByProduct", new { id = pId });
             }
 

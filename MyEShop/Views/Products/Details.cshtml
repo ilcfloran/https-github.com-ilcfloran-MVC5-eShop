@@ -350,11 +350,20 @@
                     countdownFunc();
                 }else {
                     $("#countdownBid").append("<p>The time of auction has passed.<p/>");
-                    $("#btnSubmitForm").hide();
+                    $(".btnSubmitForm").hide();
                 }
             }
             return;
         }
+
+
+            function checkIfAauctionOwner() {
+                var g = @ViewBag.ShowBidBox;
+
+                if (g) {
+                    $(".btnSubmitForm").hide();
+                }
+            }
 
         $(document).on('click', '#replyBtn', function () {
             var parentCommentId = $(this).closest('div').find('input').attr('value');
@@ -454,7 +463,7 @@
 
 
         checkIfAutionTimeExists();
-
+        checkIfAauctionOwner();
         });
     </script>
 }

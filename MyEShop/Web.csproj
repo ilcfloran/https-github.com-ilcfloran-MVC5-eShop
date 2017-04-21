@@ -400,6 +400,7 @@
     <Content Include="Views\Products\MyProducts.cshtml" />
     <Content Include="Views\ShoppingCarts\MyPurchaseHistory.cshtml" />
     <Content Include="Views\Auctions\Auctions.cshtml" />
+    <Content Include="Views\Products\MyProductsForSale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
