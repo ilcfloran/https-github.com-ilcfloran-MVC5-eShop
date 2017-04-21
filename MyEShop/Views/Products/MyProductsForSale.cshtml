@@ -50,7 +50,7 @@
                             }
                         </tbody>
                     </table>
-                    using (Html.BeginForm("MyProducts", "Products", FormMethod.Get, new { id = "pageForm" }))
+                    using (Html.BeginForm((string)ViewBag.MethodName, "Products", FormMethod.Get, new { id = "pageForm" }))
                     {
                         <input type="hidden" id="pageNumber" name="page" value="" />
                         <ul class="pagination" id="productsPagination">

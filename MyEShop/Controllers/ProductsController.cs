@@ -257,25 +257,40 @@ namespace MyEShop.Controllers
                 ViewBag.TotalPages = TotalPages;
                 var _page = page <= TotalPages ? page : TotalPages;
                 ViewBag.Page = _page;
-
+                ViewBag.MethodName = "MyProducts";
                 return View("MyProductsForSale", myProducts.OrderBy(p => p.Id).Skip(skip).Take(take));
             }
+
 
             return RedirectToAction("Index", "Manage");
         }
 
-        public ActionResult ProductsForAuction()
+        public ActionResult ProductsForAuction(int page = 1)
         {
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-
                 var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate != null).ToList();
 
 
+                int take = 1;
+                var count = myProducts.Count();
+                int skip = 0;
+                if (count > take)
+                {
+                    skip = (take * page) - take;
+                }
+
+                var TotalPages = Math.Ceiling((decimal)(count / take));
+                ViewBag.TotalPages = TotalPages;
+                var _page = page <= TotalPages ? page : TotalPages;
+                ViewBag.Page = _page;
+                ViewBag.MethodName = "ProductsForAuction";
+                return View("MyProductsForSale", myProducts.OrderBy(p => p.Id).Skip(skip).Take(take));
             }
 
-            return View();
+            return RedirectToAction("Index", "Manage");
+
         }
 
 
@@ -320,7 +335,11 @@ namespace MyEShop.Controllers
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
-
+                ViewBag.Categories = db.Categories.Select(c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.Id.ToString()
+                }).ToList();
                 return View(product);
             }
             return RedirectToAction("Index", "Manage");
