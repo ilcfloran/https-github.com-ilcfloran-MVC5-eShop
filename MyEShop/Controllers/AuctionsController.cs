@@ -75,7 +75,7 @@ namespace MyEShop.Controllers
             var biderId = User.Identity.GetUserId();
             var userBid = db.Auctions.Where(a => a.UserId == biderId && a.ProductId == pId).SingleOrDefault();
             var product = db.Products.Where(p => p.Id == pId).SingleOrDefault();
-            var topOffer = db.Auctions.OrderByDescending(a => a.Price).FirstOrDefault();
+            var topOffer = db.Auctions.Where(p => p.ProductId == pId).OrderByDescending(a => a.Price).FirstOrDefault();
 
 
             if (!(product.EndDate > DateTime.Now))
@@ -107,7 +107,8 @@ namespace MyEShop.Controllers
                             ProductId = pId,
                             User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
                             UserId = biderId,
-                            Win = false
+                            Win = false,
+                            Date = DateTime.Now
                         };
                         db.Auctions.Add(newAuction);
                         db.SaveChanges();
@@ -127,7 +128,8 @@ namespace MyEShop.Controllers
                     ProductId = pId,
                     User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
                     UserId = biderId,
-                    Win = false
+                    Win = false,
+                    Date = DateTime.Now
                 };
                 db.Auctions.Add(newAuction);
                 db.SaveChanges();
@@ -139,6 +141,30 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult AuctionsIWon()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var auctionsIWon = db.Auctions.Include("Product").Where(a => a.UserId == userId && a.Win == true).ToList();
+                return View("Auctions", auctionsIWon);
+
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult MyAuctions()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var auctions = db.Auctions.Include("Product").Where(a => a.UserId == userId && a.Win == false).ToList();
+                return View("Auctions", auctions);
+
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
 
         public async Task<ActionResult> Details(int? id)
         {

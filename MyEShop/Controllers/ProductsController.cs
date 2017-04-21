@@ -106,23 +106,6 @@ namespace MyEShop.Controllers
 
         }
 
-        //public ActionResult ProductItems(int id)
-        //{
-        //    IEnumerable<Product> items = db.Products.Where(p => p.CategoryId == id).ToList();
-        //    ViewBag.CategoryId = id;
-
-        //    if (items == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return PartialView("_ProductItems", items);
-
-        //}
-
-        public ActionResult Create()
-        {
-            return View();
-        }
 
 
         public ActionResult Search(string searchText, int searchPage = 1, int PageStatus = 1)
@@ -246,26 +229,86 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult MyProducts()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate == null).ToList();
+
+
+            }
+
+            return View();
+        }
+
+        public ActionResult ProductsForAuction()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate != null).ToList();
+
+
+            }
+
+            return View();
+        }
 
 
 
+        public ActionResult Create()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Seller"))
+                {
+                    ViewBag.Categories = db.Categories.Select(c => new SelectListItem
+                    {
+                        Text = c.CategoryName,
+                        Value = c.Id.ToString()
+                    }).ToList();
+                    return View();
+                }
+                else
+                {
+                    return Content("You are not a seller.");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+
+        }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,Name,Text,Description,Image,Price,Visit,date,EndDate,weight,Onsale,OnSalePrice,CategoryId,Count")] Product product)
+        public async Task<ActionResult> Create(Product product)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                db.Products.Add(product);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+                var userId = User.Identity.GetUserId();
+                if (ModelState.IsValid)
+                {
+                    product.UserId = userId;
+                    product.Visit = 0;
+                    product.date = DateTime.Now;
+                    db.Products.Add(product);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
 
-            return View(product);
+                return View(product);
+            }
+            return RedirectToAction("Index", "Manage");
+
         }
 
-        // GET: Products/Edit/5
+
+
+
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)

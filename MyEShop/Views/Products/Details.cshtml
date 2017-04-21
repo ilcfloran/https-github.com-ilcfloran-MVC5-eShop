@@ -126,7 +126,7 @@
                                     }
                                     else
                                     {
-                                       <span>Login to order.</span>
+                                        <span>Login to order.</span>
                                     }
 
                                 </span>
@@ -339,13 +339,22 @@
         }
 
 
-        function checkIfAutionTimeExists(){
-            if ("@Json.Encode(@Model.EndDate.HasValue)")
-            {
-                countdownFunc();
-            }
-        }
+        function checkIfAutionTimeExists() {
 
+            if (@Json.Encode(@Model.EndDate.HasValue))
+            {
+                    
+        var x =  @(Model.EndDate > DateTime.Now ? "true" : "false");
+           
+                if (x) {
+                    countdownFunc();
+                }else {
+                    $("#countdownBid").append("<p>The time of auction has passed.<p/>");
+                    $("#btnSubmitForm").hide();
+                }
+            }
+            return;
+        }
 
         $(document).on('click', '#replyBtn', function () {
             var parentCommentId = $(this).closest('div').find('input').attr('value');
@@ -445,6 +454,7 @@
 
 
         checkIfAutionTimeExists();
+
         });
     </script>
 }

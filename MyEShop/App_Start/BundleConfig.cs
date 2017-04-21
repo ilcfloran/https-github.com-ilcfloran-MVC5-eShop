@@ -10,6 +10,9 @@ namespace MyEShop.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                        "~/Scripts/jquery-ui-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -35,7 +38,11 @@ namespace MyEShop.Web
                       "~/Content/animate.css",
                       "~/Content/site.css",
                       "~/Content/responsive.css",
-                      "~/Content/jquery.countdown.css.css"));
+                      "~/Content/jquery.countdown.css.css"
+                      ));
+
+            bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
+                      "~/Content/themes/base/jquery-ui.css"));
         }
     }
 }
