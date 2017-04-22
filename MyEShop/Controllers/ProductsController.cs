@@ -215,25 +215,34 @@ namespace MyEShop.Controllers
 
                 var userId = User.Identity.GetUserId();
                 var product = db.Products.Where(p => p.Id == pId).SingleOrDefault();
+                var numberAvailable = product.Count;
 
-                ShoppingCart shoppingCart = new ShoppingCart()
+                if (numberAvailable >= count)
                 {
-                    Count = count,
-                    Date = DateTime.Now,
-                    ProductId = pId,
-                    UserId = userId,
-                    Status = false,
-                    Price = product.Price,
-                    ProductName = product.Name
-                };
 
-                db.ShoppingCart.Add(shoppingCart);
-                db.SaveChanges();
+                    ShoppingCart shoppingCart = new ShoppingCart()
+                    {
+                        Count = count,
+                        Date = DateTime.Now,
+                        ProductId = pId,
+                        UserId = userId,
+                        Status = false,
+                        Price = product.Price,
+                        ProductName = product.Name
+                    };
 
-                return Json(new
+                    db.ShoppingCart.Add(shoppingCart);
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        redirectUrl = Url.Action("ItemsInCart", "Products")
+                    });
+                }
+                else
                 {
-                    redirectUrl = Url.Action("ItemsInCart", "Products"),
-                });
+                    return Json(new { Message = "There is not enough items available." }, JsonRequestBehavior.AllowGet);
+                }
             }
 
             return Json(new { Message = "Something went wrong, Try again." }, JsonRequestBehavior.AllowGet);

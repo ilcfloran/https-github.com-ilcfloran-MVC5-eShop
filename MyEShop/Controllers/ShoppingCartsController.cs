@@ -67,6 +67,8 @@ namespace MyEShop.Controllers
                     var itemsInCart = db.ShoppingCart.Where(s => s.UserId == userId && s.Status == false).ToList();
                     var item = itemsInCart.Where(i => i.Id == itemId).SingleOrDefault();
 
+                    var productInStock = db.Products.Where(p => p.Id == itemId).SingleOrDefault();
+                    var numberAvailable = productInStock.Count;
 
                     decimal total = 0;
                     foreach (var x in itemsInCart)
@@ -74,13 +76,24 @@ namespace MyEShop.Controllers
                         total += x.Count * x.Price;
                     }
 
-
+                    //add one to the count of the item
                     if (operation == 1)
                     {
-                        item.Count += 1;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                        total += item.Price;
+                        if (numberAvailable > 0)
+                        {
+                            item.Count += 1;
+                            productInStock.Count -= 1;
+                            db.Entry(productInStock).State = EntityState.Modified;
+                            db.Entry(item).State = EntityState.Modified;
+                            db.SaveChanges();
+                            total += item.Price;
+
+                        }
+                        else
+                        {
+                            return Json(new { Message = "There is not enough item in stock." }, JsonRequestBehavior.AllowGet);
+
+                        }
 
                     }
                     else if (operation == 0)
@@ -88,6 +101,8 @@ namespace MyEShop.Controllers
                         if (item.Count >= 0)
                         {
                             item.Count -= 1;
+                            productInStock.Count += 1;
+                            db.Entry(productInStock).State = EntityState.Modified;
                             db.Entry(item).State = EntityState.Modified;
                             db.SaveChanges();
                             total -= item.Price;
@@ -123,9 +138,11 @@ namespace MyEShop.Controllers
 
                     var count = itemInCart.Count;
                     var price = itemInCart.Price;
-
                     var itemTotal = count * price;
 
+                    var pId = itemInCart.ProductId;
+                    var productInStock = db.Products.Where(p => p.Id == pId).SingleOrDefault();
+                    db.Entry(productInStock).State = EntityState.Modified;
                     db.ShoppingCart.Remove(itemInCart);
                     db.SaveChanges();
 
