@@ -231,6 +231,8 @@ namespace MyEShop.Controllers
                         ProductName = product.Name
                     };
 
+                    product.Count -= count;
+                    db.Entry(product).State = EntityState.Modified;
                     db.ShoppingCart.Add(shoppingCart);
                     db.SaveChanges();
 

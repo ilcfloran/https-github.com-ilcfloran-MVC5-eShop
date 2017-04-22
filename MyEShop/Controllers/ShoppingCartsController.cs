@@ -142,6 +142,7 @@ namespace MyEShop.Controllers
 
                     var pId = itemInCart.ProductId;
                     var productInStock = db.Products.Where(p => p.Id == pId).SingleOrDefault();
+                    productInStock.Count += count;
                     db.Entry(productInStock).State = EntityState.Modified;
                     db.ShoppingCart.Remove(itemInCart);
                     db.SaveChanges();
