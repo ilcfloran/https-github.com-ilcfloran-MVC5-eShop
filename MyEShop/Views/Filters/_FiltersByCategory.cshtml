@@ -1,15 +1,23 @@
 ﻿
 @model IEnumerable<MyEShop.Core.Models.GroupFilter>
 
-@foreach (var item in Model)
+@if (Model.Count() > 0)
 {
-    <span>@item.Title</span>
-    <ul>
-        
+    foreach (var item in Model)
+    {
+        <span>@item.Title</span>
+        <ul>
+
             @foreach (var f in item.FilterItems)
             {
                 <li><input type="checkbox" id="chkItem" name="filterItemschk" value="@f.Id" />@f.Title</li>
             }
-    
-    </ul>
+
+        </ul>
+    }
+
+}
+else
+{
+    <p>No filters are available.</p>
 }

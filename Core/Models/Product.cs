@@ -52,6 +52,5 @@ namespace MyEShop.Core.Models
 
         public virtual ApplicationUser User { get; set; }
 
-
     }
 }

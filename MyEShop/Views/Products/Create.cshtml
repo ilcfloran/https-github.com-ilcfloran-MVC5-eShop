@@ -92,9 +92,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, "Please select a category", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, "Please select a category", new { @class = "form-control" , id = "selectCategory"})
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        <div id="filtersDiv" class="form-group">
+            
         </div>
 
         <div class="form-group">
@@ -125,6 +129,7 @@
     <script type="text/javascript">
 
      $(document).ready(function () {
+
          $('input[type=datetime]').datepicker({
              dateFormat: "dd/M/yy",
              changeMonth: true,
@@ -132,7 +137,24 @@
              yearRange: "-60:+0"
          });
 
+
+         
+
+
+         $(document).on('change', "#selectCategory", function () {
+             //alert($(this).val());
+             var self = $(this);
+             $.ajax({
+                 url: '@Url.Action("FiltersByCategory", "Filters")',
+                 type: 'GET',
+                 dataType: "html",
+                 data: {categoryId: self.val()}
+             }).done(function (data) {
+                 $("#filtersDiv").html(data);
+             });
+             //};
+         });
+
      });
     </script>
-
 }  

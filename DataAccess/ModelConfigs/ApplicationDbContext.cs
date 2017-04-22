@@ -26,6 +26,8 @@ namespace MyEShop.DataAccess.ModelConfigs
         public DbSet<Slide> Slides { get; set; }
         public DbSet<FilterItem> FilterItems { get; set; }
         public DbSet<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
+        //public DbSet<ProductsFilterItems> ProductsFilterItems { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +42,7 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new GroupFilterConfiguration());
             modelBuilder.Configurations.Add(new CategoriesGroupFiltersConfiguration());
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            //modelBuilder.Configurations.Add(new ProductsFilterItemsConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

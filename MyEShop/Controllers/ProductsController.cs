@@ -4,6 +4,7 @@ using MyEShop.DataAccess.ModelConfigs;
 using MyEShop.Web.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -18,6 +19,7 @@ namespace MyEShop.Controllers
 
         public async Task<ActionResult> Index()
         {
+
             return View(await db.Products.ToListAsync());
         }
 
@@ -299,6 +301,7 @@ namespace MyEShop.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+
                 if (User.IsInRole("Seller"))
                 {
                     ViewBag.Categories = db.Categories.Select(c => new SelectListItem
@@ -321,18 +324,31 @@ namespace MyEShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Product product)
+        public async Task<ActionResult> Create(Product product, List<int> filterItemschk)
         {
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
                 if (ModelState.IsValid)
                 {
+                    var filterItems = db.FilterItems.Where(f => filterItemschk.Any(fi => fi == f.Id));
+
                     product.UserId = userId;
                     product.Visit = 0;
                     product.date = DateTime.Now;
+                    if (product.FilterItems == null)
+                    {
+                        product.FilterItems = new Collection<FilterItem>();
+                    }
+                    foreach (var fi in filterItems)
+                    {
+                        product.FilterItems.Add(fi);
+                    }
                     db.Products.Add(product);
                     await db.SaveChangesAsync();
+
+
+
                     return RedirectToAction("Index");
                 }
                 ViewBag.Categories = db.Categories.Select(c => new SelectListItem
