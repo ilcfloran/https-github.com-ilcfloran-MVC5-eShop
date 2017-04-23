@@ -213,6 +213,12 @@
     <Content Include="Content\jquery.countdown.css" />
     <Content Include="Content\prettyPhoto.css" />
     <Content Include="Content\price-range.css" />
+    <Content Include="Content\Product-Carousel\142166818.jpg" />
+    <Content Include="Content\Product-Carousel\1424574436.jpg" />
+    <Content Include="Content\Product-Carousel\1436861388.jpg" />
+    <Content Include="Content\Product-Carousel\1486985056.jpg" />
+    <Content Include="Content\Product-Carousel\1622433700.jpg" />
+    <Content Include="Content\Product-Carousel\921299948.jpg" />
     <Content Include="Content\Product-Pictures\auction.png" />
     <Content Include="Content\Product-Pictures\new.png" />
     <Content Include="Content\Product-Pictures\product1.jpg" />

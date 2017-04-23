@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MyEShop.Controllers
@@ -43,6 +45,14 @@ namespace MyEShop.Controllers
                 ViewBag.ShowBidBox = "true";
 
             }
+
+            var pId = product.Id;
+            var LstImage = db.ProductImages.Where(p => p.ProductId == pId).ToList();
+            if (LstImage != null)
+            {
+                ViewBag.ProductImages = LstImage;
+            }
+
 
             return View(product);
         }
@@ -335,10 +345,12 @@ namespace MyEShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Product product, List<int> filterItemschk)
+        public async Task<ActionResult> Create(Product product, HttpPostedFileBase Image, HttpPostedFileBase[] carouselImage, List<int?> filterItemschk)
         {
             if (User.Identity.IsAuthenticated)
             {
+                var randomNameGenerate = new Random();
+
                 var userId = User.Identity.GetUserId();
                 if (ModelState.IsValid)
                 {
@@ -355,10 +367,46 @@ namespace MyEShop.Controllers
                     {
                         product.FilterItems.Add(fi);
                     }
+
+                    //check image is valid
+                    product.Image = randomNameGenerate.Next().ToString() + ".jpg";
+                    Image.SaveAs(Server.MapPath("~") + "Content/Product-Pictures/" + product.Image);
+                    //product.Image = Image.FileName;
+
                     db.Products.Add(product);
                     await db.SaveChangesAsync();
 
+                    var productId = product.Id;
 
+                    //if (carouselImage.Count() > 0)
+                    //{
+                    //    foreach (var c in carouselImage)
+                    //    {
+                    //        //Image Validation goes here
+
+                    //    }
+
+                    //}
+
+                    if (carouselImage.Count() > 0)
+                    {
+                        List<ProductImage> lstImage = new List<ProductImage>();
+                        foreach (var c in carouselImage)
+                        {
+                            if (c != null)
+                            {
+                                ProductImage img = new ProductImage();
+                                img.ImageName = randomNameGenerate.Next().ToString() + ".jpg";
+                                c.SaveAs(Path.Combine(Server.MapPath("~") + "Content/Product-Carousel/" + img.ImageName));
+                                img.ProductId = productId;
+
+                                lstImage.Add(img);
+                            }
+                        }
+
+                        db.ProductImages.AddRange(lstImage);
+                        db.SaveChanges();
+                    }
 
                     return RedirectToAction("Index");
                 }
@@ -403,7 +451,6 @@ namespace MyEShop.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -415,10 +462,11 @@ namespace MyEShop.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(product);
         }
 
-        // POST: Products/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

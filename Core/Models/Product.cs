@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyEShop.Core.Models
 {
@@ -24,6 +25,7 @@ namespace MyEShop.Core.Models
 
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "You have to select an image for the product.")]
         public string Image { get; set; }
 
         public decimal Price { get; set; }
