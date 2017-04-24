@@ -43,8 +43,11 @@
                                     <td class="cart_total">
                                         <p class="cart_total_price">$@(item.Count * item.Price)</p>
                                     </td>
-                                    <td class="cart_delete">
-                                        <a class="cart_quantity_delete"><i class="fa fa-times"></i></a>
+                                    <td class="">
+                                        @*<a class="cart_quantity_delete"><i class="fa fa-times"></i></a>*@
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                     </td>
                                 </tr>
                             }
