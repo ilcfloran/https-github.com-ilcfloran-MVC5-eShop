@@ -40,8 +40,28 @@ namespace MyEShop.Controllers
             //    // other assignments
             //};
 
+
             return PartialView("_FiltersByCategory", groupFilters);
         }
+
+        public ActionResult FiltersByCategoryAndProduct(int categoryId, int ProductId)
+        {
+
+            var groupFilters = from c in db.CategoriesGroupFilters
+                               join g in db.GroupFilter on c.GroupFilterId equals g.ParentId
+                               join f in db.FilterItems on g.Id equals f.GroupFilterId
+                               where c.CategoryId == categoryId
+                               select g;
+
+            groupFilters = groupFilters.Distinct();
+
+            var filterItems = db.Products.Include("FilterItems").Where(p => p.Id == ProductId).Select(p => p.FilterItems).SingleOrDefault();
+
+            ViewBag.Filters = filterItems;
+
+            return PartialView("_FiltersByCategoryAndProduct", groupFilters);
+        }
+
 
     }
 }

@@ -434,52 +434,106 @@ namespace MyEShop.Controllers
 
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Product product = db.Products.Include("FilterItems").SingleOrDefault(p => p.Id == id);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Categories = db.Categories.Select(c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.Id.ToString()
+                }).ToList();
+                return View(product);
             }
-            Product product = await db.Products.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Categories = db.Categories.Select(c => new SelectListItem
-            {
-                Text = c.CategoryName,
-                Value = c.Id.ToString()
-            }).ToList();
-            return View(product);
+
+            return RedirectToAction("Index", "Manage");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Product product, HttpPostedFileBase Image, List<int?> filterItemschk)
+        public async Task<ActionResult> Edit(Product product, HttpPostedFileBase NewImage, List<int?> filterItemschk)
         {
             if (User.Identity.IsAuthenticated)
             {
 
                 if (ModelState.IsValid)
                 {
+                    var userId = User.Identity.GetUserId();
+                    var seller = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+
+                    product.UserId = userId;
+                    product.User = seller;
+
+                    var tmpItems = db.Products.Include("FilterItems").Where(p => p.Id == product.Id).SingleOrDefault();
+                    var tmpFilters = tmpItems.FilterItems.ToList();
+
+                    tmpItems.Name = product.Name;
+                    tmpItems.Onsale = product.Onsale;
+                    tmpItems.OnSalePrice = product.OnSalePrice;
+                    tmpItems.CategoryId = product.CategoryId;
+                    tmpItems.Count = product.Count;
+                    tmpItems.Description = product.Description;
+                    tmpItems.EndDate = product.EndDate;
+                    tmpItems.Price = product.Price;
+                    tmpItems.Text = product.Text;
+                    tmpItems.weight = product.weight;
+
+
+                    //db.FilterItems.RemoveRange(tmpItems);
+                    foreach (var item in tmpFilters)
+                    {
+                        tmpItems.FilterItems.Remove(item);
+
+                    }
+
                     if (filterItemschk != null)
                     {
                         var filterItems = db.FilterItems.Where(f => filterItemschk.Any(fi => fi == f.Id));
-                        product.FilterItems = new Collection<FilterItem>();
+                        tmpItems.FilterItems = new Collection<FilterItem>();
                         foreach (var fi in filterItems)
                         {
-                            product.FilterItems.Add(fi);
+                            //if already exists do not change, else add/remove child items
+                            //db.FilterItems.Add(fi);
+                            tmpItems.FilterItems.Add(fi);
                         }
                     }
 
                     var randomNameGenerate = new Random();
-                    if (Image != null)
+                    if (NewImage != null)
                     {
-                        product.Image = randomNameGenerate.Next().ToString() + ".jpg";
-                        Image.SaveAs(Server.MapPath("~") + "Content/Product-Pictures/" + product.Image);
+                        tmpItems.Image = randomNameGenerate.Next().ToString() + ".jpg";
+                        NewImage.SaveAs(Server.MapPath("~") + "Content/Product-Pictures/" + product.Image);
                     }
 
-                    db.Entry(product).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    //db.Products.Attach(product);
+                    //db.Entry(product).State = EntityState.Modified;
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                    }
+                    catch (Exception e)
+                    {
+
+                        return Content(e.Message);
+                    }
+                    //if (Convert.ToBoolean(await db.SaveChangesAsync()))
+                    //{
+                    //    ViewBag.Message = "Item Created Successfully.";
+                    //}
+                    //else
+                    //{
+                    //    return View(product);
+                    //}
+                    return RedirectToAction("MyProducts", "Products");
                 }
                 ViewBag.Categories = db.Categories.Select(c => new SelectListItem
                 {

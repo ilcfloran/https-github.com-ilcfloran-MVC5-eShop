@@ -263,6 +263,18 @@
     <Compile Include="Migrations\201704230924419_CatchUp01.Designer.cs">
       <DependentUpon>201704230924419_CatchUp01.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704250803409_Temp02.cs" />
+    <Compile Include="Migrations\201704250803409_Temp02.Designer.cs">
+      <DependentUpon>201704250803409_Temp02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704250821197_Temp03.cs" />
+    <Compile Include="Migrations\201704250821197_Temp03.Designer.cs">
+      <DependentUpon>201704250821197_Temp03.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704250846023_AddedProductIdToFilterItems.cs" />
+    <Compile Include="Migrations\201704250846023_AddedProductIdToFilterItems.Designer.cs">
+      <DependentUpon>201704250846023_AddedProductIdToFilterItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -441,6 +453,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704230924419_CatchUp01.resx">
       <DependentUpon>201704230924419_CatchUp01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704250803409_Temp02.resx">
+      <DependentUpon>201704250803409_Temp02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704250821197_Temp03.resx">
+      <DependentUpon>201704250821197_Temp03.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704250846023_AddedProductIdToFilterItems.resx">
+      <DependentUpon>201704250846023_AddedProductIdToFilterItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

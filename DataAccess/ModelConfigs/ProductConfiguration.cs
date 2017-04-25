@@ -24,9 +24,9 @@ namespace MyEShop.DataAccess.ModelConfigs
                 .WithMany(f => f.Products)
                 .Map(pf =>
                 {
-                    pf.MapLeftKey("ProductId");
-                    pf.MapRightKey("FilterItemId");
-                    pf.ToTable("Products_FilterItems");
+                    pf.MapLeftKey("Product_Id");
+                    pf.MapRightKey("FilterItem_Id");
+                    pf.ToTable("FilterItemProducts");
                 });
 
         }

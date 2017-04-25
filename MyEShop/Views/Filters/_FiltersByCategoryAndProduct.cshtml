@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<MyEShop.Core.Models.GroupFilter>
+
+@if (Model.Count() > 0)
+{
+
+    //HashSet<MyEShop.Core.Models.FilterItem> cond = ViewBag.Filters;
+
+    foreach (var item in Model)
+    {
+        <span>@item.Title</span>
+        <ul>
+            @foreach (var f in item.FilterItems)
+            {
+
+                if (ViewBag.Filters.Contains(f))
+                {
+                    <li><input type="checkbox" id="chkItem" checked name="filterItemschk" value="@f.Id" />@f.Title</li>
+                }
+                else
+                {
+                    <li><input type="checkbox" id="chkItem" name="filterItemschk" value="@f.Id" />@f.Title</li>
+                }
+            }
+
+        </ul>
+    }
+
+}
+else
+{
+    <p>No filters are available.</p>
+}

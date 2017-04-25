@@ -13,6 +13,8 @@ namespace MyEShop.Core.Models
 
         public GroupFilter GroupFilter { get; set; }
 
+        public int ProductId { get; set; }
+
         public ICollection<Product> Products { get; set; }
 
 

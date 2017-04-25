@@ -43,8 +43,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBox("Image", null, new { @class = "form-control", type = "file" })
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                <img  src="~/Content/Product-Pictures/@Model.Image" alt="@Model.Name" />
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBox("NewImage", null, new { @class = "form-control", type = "file" })
             </div>
         </div>
 
@@ -151,7 +158,6 @@
             });
 
             $(document).on('change', "#selectCategory", function () {
-                //alert($(this).val());
                 var self = $(this);
                 $.ajax({
                     url: '@Url.Action("FiltersByCategory", "Filters")',
@@ -164,6 +170,20 @@
                 //};
             });
 
+            var getFilterItems = function () {
+                var self = $("#selectCategory");
+                $.ajax({
+                    url: '@Url.Action("FiltersByCategoryAndProduct", "Filters")',
+                    type: 'GET',
+                    dataType: "html",
+                    data: { categoryId: self.val(), productId: @Model.Id }
+                }).done(function (data) {
+                    $("#filtersDiv").html(data);
+                });
+                //};
+            };
+
+            getFilterItems();
         });
     </script>
 }
