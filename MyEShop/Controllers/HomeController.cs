@@ -1,4 +1,5 @@
 ﻿using MyEShop.DataAccess.ModelConfigs;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,7 +11,7 @@ namespace MyEShop.Web.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            var products = db.Products.ToList();
+            var products = db.Products.Where(p => p.EndDate == null || p.EndDate > DateTime.Now).Take(6).ToList();
 
             return View(products);
         }

@@ -70,7 +70,7 @@ namespace MyEShop.Controllers
                 return RedirectToAction("Index");
             }
 
-            var products = db.Products.Include("FilterItems").Where(p => p.CategoryId == CategoryId);
+            var products = db.Products.Include("FilterItems").Where(p => (p.CategoryId == CategoryId) && (p.EndDate == null || p.EndDate > DateTime.Now));
 
             if (filterItemschk != null)
             {
@@ -138,7 +138,8 @@ namespace MyEShop.Controllers
 
             List<Product> productsVM = new List<Product>();
 
-            productsVM = db.Products.Where(p => p.Name.Contains(searchText) || p.Text.Contains(searchText)).ToList();
+            productsVM = db.Products
+                .Where(p => (p.Name.Contains(searchText) || p.Text.Contains(searchText)) && (p.EndDate == null || p.EndDate > DateTime.Now)).ToList();
 
             int take = 1;
             var count = productsVM.Count();

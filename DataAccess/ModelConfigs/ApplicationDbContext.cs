@@ -1,4 +1,5 @@
-﻿using DataAccess.ModelConfigs;
+﻿using Core.Models;
+using DataAccess.ModelConfigs;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MyEShop.Core.Models;
 using System.Data.Entity;
@@ -27,6 +28,8 @@ namespace MyEShop.DataAccess.ModelConfigs
         public DbSet<FilterItem> FilterItems { get; set; }
         public DbSet<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
         //public DbSet<ProductsFilterItems> ProductsFilterItems { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -43,6 +46,7 @@ namespace MyEShop.DataAccess.ModelConfigs
             modelBuilder.Configurations.Add(new CategoriesGroupFiltersConfiguration());
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
             //modelBuilder.Configurations.Add(new ProductsFilterItemsConfiguration());
+            modelBuilder.Configurations.Add(new MessageConfiguration());
 
 
             base.OnModelCreating(modelBuilder);

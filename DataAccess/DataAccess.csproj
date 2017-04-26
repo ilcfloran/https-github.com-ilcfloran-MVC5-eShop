@@ -275,6 +275,10 @@
     <Compile Include="Migrations\201704250846023_AddedProductIdToFilterItems.Designer.cs">
       <DependentUpon>201704250846023_AddedProductIdToFilterItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704260736145_AddMessageClass.cs" />
+    <Compile Include="Migrations\201704260736145_AddMessageClass.Designer.cs">
+      <DependentUpon>201704260736145_AddMessageClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
@@ -284,6 +288,7 @@
     <Compile Include="ModelConfigs\CommentConfiguration.cs" />
     <Compile Include="ModelConfigs\FilterItemConfiguration.cs" />
     <Compile Include="ModelConfigs\GroupFilterConfiguration.cs" />
+    <Compile Include="ModelConfigs\MessageConfiguration.cs" />
     <Compile Include="ModelConfigs\PaymentConfiguration.cs" />
     <Compile Include="ModelConfigs\ProductConfiguration.cs" />
     <Compile Include="ModelConfigs\ProductImageConfiguration.cs" />
@@ -462,6 +467,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704250846023_AddedProductIdToFilterItems.resx">
       <DependentUpon>201704250846023_AddedProductIdToFilterItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704260736145_AddMessageClass.resx">
+      <DependentUpon>201704260736145_AddMessageClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

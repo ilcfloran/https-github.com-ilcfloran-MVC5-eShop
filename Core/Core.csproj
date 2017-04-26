@@ -130,6 +130,7 @@
     <Compile Include="Models\IProductImage.cs" />
     <Compile Include="Models\ITreeNodeDotNet3.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductImage.cs" />
