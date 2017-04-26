@@ -1,21 +1,22 @@
-﻿@model IEnumerable<MyEShop.Core.Models.Product>
+﻿@model IEnumerable<MyEShop.Core.Models.Message>
+@{
+    ViewBag.Title = "GetMessages";
+}
 
 <section>
     <div class="container">
         <div class="row">
             <div class="features_items" id="productItemsPlaceHolder">
-                <h2 class="title text-center">Items</h2>
-                <p style="color:orange">Auctions in orange are passed.</p>
+                <h2 class="title text-center">Your Messages</h2>
+                <p style="color:orange">Messages in orange are already read.</p>
                 @if (Model.Count() > 0)
                 {
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
-                                <td class="image">Item</td>
-                                <td class="description">Name</td>
-                                <td class="price">Price</td>
-                                <td class="quantity">Quantity</td>
-                                <td class="total">Total</td>
+                                
+                                <td class="description">Title</td>
+                                <td class="total">Date</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -23,41 +24,21 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="image">
-                                        <a href=""><img src="images/cart/one.png" alt=""></a>
-                                    </td>
+                                    
                                     <td class="description">
-                                        @if (item.EndDate != null && item.EndDate < DateTime.Now)
+                                        @if (item.IsRead)
                                         {
-                                            <h4><a style="color:orange">@item.Name</a></h4>
+                                            <h4>@Html.ActionLink(@item.Title, "ReadMessage", "Auctions", new { id = @item.Id } , new { style = "color:orange" })</h4>
                                         }
                                         else
                                         {
-                                            <h4><a>@item.Name</a></h4>
+                                            <h4>@Html.ActionLink(@item.Title,"ReadMessage", "Auctions", new { id = @item.Id}, null)</h4>
                                         }
-                                        <p>Web ID: @item.Id</p>
+                                        <p></p>
                                     </td>
-
-                                    <td class="price">
-                                        <p>$@item.Price</p>
-                                    </td>
-                                    @if (item.EndDate == null)
-                                    {
-                                        <td class="cart_quantity">
-                                            <div class="cart_quantity_button">
-                                                <a class="cart_quantity_up"> + </a>
-                                                <input class="cart_quantity_input" type="text" name="quantity" data-webId="@item.Id" value="@item.Count" autocomplete="off" size="2">
-                                                <a class="cart_quantity_down"> - </a>
-                                            </div>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>1</td>
-                                    }
 
                                     <td class="cart_total">
-                                        <p class="cart_total_price">$@(item.Count * item.Price)</p>
+                                        <p class="cart_total_price">@item.Date</p>
                                     </td>
                                     <td class="">
                                         @*<a class="cart_quantity_delete"><i class="fa fa-times"></i></a>*@
@@ -69,7 +50,7 @@
                             }
                         </tbody>
                     </table>
-                    using (Html.BeginForm((string)ViewBag.MethodName, "Products", FormMethod.Get, new { id = "pageForm" }))
+                    using (Html.BeginForm("GetMessages", "Auctions", FormMethod.Get, new { id = "pageForm" }))
                     {
                         <input type="hidden" id="pageNumber" name="page" value="" />
                         <ul class="pagination" id="productsPagination">
@@ -92,7 +73,7 @@
                 }
                 else
                 {
-                    <p>No item found.</p>
+                    <p>You have no new messages.</p>
                 }
 
             </div>

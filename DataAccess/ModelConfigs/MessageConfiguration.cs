@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using MyEShop.Core.Models;
 using System.Data.Entity.ModelConfiguration;
 
 namespace DataAccess.ModelConfigs

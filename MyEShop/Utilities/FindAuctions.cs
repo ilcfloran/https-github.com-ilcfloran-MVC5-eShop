@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using MyEShop.Core.Models;
+﻿using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
 using System;
 using System.Linq;
@@ -53,7 +52,7 @@ namespace MyEShop.Utilities
                         message.Date = DateTime.Now;
                         message.IsRead = false;
                         message.UserRecId = x.UserId;
-                        message.Title = "Auction result for" + x.Product.Name;
+                        message.Title = "Auction result for " + x.Product.Name;
 
                         db.Messages.Add(message);
                         db.Auctions.Remove(x);

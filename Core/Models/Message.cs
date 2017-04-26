@@ -1,7 +1,6 @@
-﻿using MyEShop.Core.Models;
-using System;
+﻿using System;
 
-namespace Core.Models
+namespace MyEShop.Core.Models
 {
     public class Message
     {

@@ -25,7 +25,10 @@
 </html>
 
 <script>
+
+    $(document).ready(function () {
         itemsNo = $("#itemsInCart");
+        messageNo = $("#userMessages");
 
         function FetchItemsInCart() {
             $.ajax({
@@ -47,7 +50,27 @@
             });
         }
 
-        if (true) {
-            FetchItemsInCart();
+        function FetchMessageNumbers() {
+            $.ajax({
+                url: '@Url.Action("GetNumberOfMessages", "Auctions")',
+                type: 'GET',
+                dataType: "json",
+                cache: false,
+                error: function (err) {
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('Message')) {
+                    alert(data.Message);
+                    return;
+                }
+                if (data.hasOwnProperty('NumberOfMessages')) {
+                    messageNo.html(data.NumberOfMessages);
+                }
+            });
         }
+
+        FetchMessageNumbers();
+        FetchItemsInCart();
+    });
 </script>

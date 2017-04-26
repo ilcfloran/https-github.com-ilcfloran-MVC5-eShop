@@ -1,0 +1,24 @@
+﻿@model MyEShop.Core.Models.Message
+@{
+    ViewBag.Title = "ReadMessage";
+}
+
+<h2>Message Text</h2>
+
+<div>
+    <h4>Auction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "GetMessages", "Auctions")
+</p>

@@ -20,8 +20,6 @@ namespace MyEShop.Controllers
             return View(await auctions.ToListAsync());
         }
 
-
-
         public ActionResult AuctionByProduct(int id)
         {
 
@@ -100,6 +98,7 @@ namespace MyEShop.Controllers
                         if (userBid != null)
                         {
                             userBid.Price = bid;
+                            userBid.Date = DateTime.Now;
                             db.Entry(userBid).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
                         }
@@ -170,6 +169,67 @@ namespace MyEShop.Controllers
 
             }
             return RedirectToAction("Index", "Home");
+
+        }
+
+        public JsonResult GetNumberOfMessages()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var noMessages = db.Messages.Where(m => m.UserRecId == userId && m.IsRead == false).Count();
+                return Json(new { NumberOfMessages = noMessages }, JsonRequestBehavior.AllowGet);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public ActionResult GetMessages(int page = 1)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var messages = db.Messages.Where(m => m.UserRecId == userId).OrderByDescending(m => m.Id).OrderBy(m => m.IsRead).ToList();
+                if (messages != null)
+                {
+
+                    int take = 1;
+                    var count = messages.Count();
+                    int skip = 0;
+                    if (count > take)
+                    {
+                        skip = (take * page) - take;
+                    }
+
+                    var TotalPages = Math.Ceiling((decimal)(count / take));
+                    ViewBag.TotalPages = TotalPages;
+                    var _page = page <= TotalPages ? page : TotalPages;
+                    ViewBag.Page = _page;
+
+
+                    return View(messages.Skip(skip).Take(take));
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+        public ActionResult ReadMessage(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (id > 0)
+                {
+                    var userId = User.Identity.GetUserId();
+                    var message = db.Messages.Where(m => m.Id == id).SingleOrDefault();
+
+                    message.IsRead = true;
+                    db.SaveChanges();
+                    return View(message);
+                }
+            }
+            return RedirectToAction("Index", "Manage");
 
         }
 
