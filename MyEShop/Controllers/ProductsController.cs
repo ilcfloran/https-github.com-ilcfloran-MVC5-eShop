@@ -53,8 +53,7 @@ namespace MyEShop.Controllers
                 ViewBag.ProductImages = LstImage;
             }
 
-            product.Visit += 1;
-            db.Products.Attach(product);
+            product.Visit++;
             db.SaveChanges();
 
             return View(product);

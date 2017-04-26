@@ -89,54 +89,60 @@ namespace MyEShop.Controllers
                 TempData["bidError"] = "your cannot bid on your own product.";
                 return RedirectToAction("AuctionByProduct", new { id = pId });
             }
-
-            if (topOffer != null)
+            if (bid > product.Price)
             {
-                if (bid - topOffer.Price > 5)
+                if (topOffer != null)
                 {
-                    if (userBid != null)
+
+
+                    if (bid - topOffer.Price > 5)
                     {
-                        userBid.Price = bid;
-                        db.Entry(userBid).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
+                        if (userBid != null)
+                        {
+                            userBid.Price = bid;
+                            db.Entry(userBid).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            var newAuction = new Auction()
+                            {
+                                Price = bid,
+                                ProductId = pId,
+                                User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
+                                UserId = biderId,
+                                Win = false,
+                                Date = DateTime.Now
+                            };
+                            db.Auctions.Add(newAuction);
+                            db.SaveChanges();
+                        }
                     }
                     else
                     {
-                        var newAuction = new Auction()
-                        {
-                            Price = bid,
-                            ProductId = pId,
-                            User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
-                            UserId = biderId,
-                            Win = false,
-                            Date = DateTime.Now
-                        };
-                        db.Auctions.Add(newAuction);
-                        db.SaveChanges();
+                        TempData["bidError"] = "your offer should be 5 NOK higher than the top offer.";
                     }
                 }
                 else
                 {
-                    TempData["bidError"] = "your offer should be 5 NOK higher than the top offer.";
+                    var newAuction = new Auction()
+                    {
+                        Price = bid,
+                        ProductId = pId,
+                        User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
+                        UserId = biderId,
+                        Win = false,
+                        Date = DateTime.Now
+                    };
+                    db.Auctions.Add(newAuction);
+                    db.SaveChanges();
                 }
 
             }
             else
             {
-                var newAuction = new Auction()
-                {
-                    Price = bid,
-                    ProductId = pId,
-                    User = db.Users.Where(u => u.Id == biderId).SingleOrDefault(),
-                    UserId = biderId,
-                    Win = false,
-                    Date = DateTime.Now
-                };
-                db.Auctions.Add(newAuction);
-                db.SaveChanges();
+                TempData["bidError"] = "your offer should be higher than the product base price.";
             }
-
-
 
             return RedirectToAction("AuctionByProduct", new { id = pId });
         }

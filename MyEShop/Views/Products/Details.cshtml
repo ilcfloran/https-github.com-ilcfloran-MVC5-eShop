@@ -9,20 +9,20 @@
                 <div class="left-sidebar">
                     @if (Model.EndDate != null)
                     {
-                        <div class="brands_products" id="auctionDivs">
-                            <!--brands_products-->
-                            @{
+                    <div class="brands_products" id="auctionDivs">
+                        <!--brands_products-->
+                        @{
                                 Html.RenderAction("AuctionByProduct", "Auctions", new { id = Model.Id });
-                            }
-                        </div><!--/brands_products-->
+                        }
+                    </div><!--/brands_products-->
                                 }
                                 else
                                 {
-                                    <div class="panel-group category-products" id="accordian">
-                                        @{
+                    <div class="panel-group category-products" id="accordian">
+                        @{
                                             Html.RenderAction("Index", "Categories");
-                                        }
-                                    </div>
+                        }
+                    </div>
                                             }
 
                     <div class="shipping text-center">
@@ -59,117 +59,184 @@
                                     <div class="item active">
                                         <img src="~/Content/Product-Pictures/@Model.Image" alt="" />
                                     </div>
-                                        @if (ViewBag.ProductImages.Count >0 )
+                                    @if (ViewBag.ProductImages.Count > 0)
+                                    {
+                                        var items = (List<MyEShop.Core.Models.ProductImage>)ViewBag.ProductImages;
+                                        foreach (var item in items)
                                         {
-                                            var items = (List<MyEShop.Core.Models.ProductImage>)ViewBag.ProductImages;
-                                            foreach (var item in items)
-                                            {
-                                                <div class="item ">
-                                                    <img src="~/Content/Product-Carousel/@item.ImageName" alt="" />
-                                                </div>
-                                            }
-
+                                            <div class="item ">
+                                                <img src="~/Content/Product-Carousel/@item.ImageName" alt="" />
+                                            </div>
                                         }
 
-                                    </div>
-
-
-
-                                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
-
-
-                                <h3>ZOOM</h3>
-                            </div>
-                            <div id="similar-product" class="carousel slide" data-ride="carousel">
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
+                                    }
 
                                 </div>
 
-                                <!-- Controls -->
-                                <a class="left item-control" href="#similar-product" data-slide="prev">
+
+
+                                <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
-                                <a class="right item-control" href="#similar-product" data-slide="next">
+                                <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </div>
 
+
+                            <h3>ZOOM</h3>
                         </div>
-                        <div class="col-sm-7">
-                            <div class="product-information">
-                                <!--/product-information-->
-                                <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                                <h2>@Model.Text</h2>
-                                <p>Web ID: @Model.Id</p>
-                                <p>Visited: @Model.Visit</p>
-                                <img src="images/product-details/rating.png" alt="" />
+                        <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+                                    <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                </div>
+
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left item-control" href="#similar-product" data-slide="prev">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a class="right item-control" href="#similar-product" data-slide="next">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <!--/product-information-->
+                            <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                            <h2>@Model.Text</h2>
+                            <p>Web ID: @Model.Id</p>
+                            <p>Visited: @Model.Visit</p>
+                            <img src="images/product-details/rating.png" alt="" />
+
+                            <span>
+                                <span>US $@Model.Price</span>
                                 @if (Model.EndDate == null)
                                 {
-                                    <span>
-                                        <span>US $@Model.Price</span>
-                                        @if (Request.IsAuthenticated)
-                                        {
-                                            <label>Quantity:</label>
+                                    if (Request.IsAuthenticated)
+                                    {
+                                        <label>Quantity:</label>
                                             <input type="number" name="count" id="productCount" value="1" />
                                             <button type="button" id="addToCart" class="btn btn-fefault cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Add to cart
                                             </button>
-                                        }
-                                        else
-                                        {
-                                            <span>Login to order.</span>
-                                        }
-
-                                    </span>
+                                    }
+                                    else
+                                    {
+                                        <span>Login to order.</span>
+                                    }
                                 }
+                            </span>
 
-                                <p><b>Availability:</b> @Model.Count</p>
-                                <p><b>Condition:</b> New</p>
-                                <p><b>Brand:</b> E-SHOPPER</p>
-                                <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
-                            </div><!--/product-information-->
-                        </div>
-                    </div><!--/product-details-->
 
-                    <div class="category-tab shop-details-tab">
-                        <!--category-tab-->
-                        <div class="col-sm-12">
-                            <ul class="nav nav-tabs">
-                                <li><a href="#details" data-toggle="tab">Details</a></li>
-                                <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
-                            </ul>
+                            <p><b>Availability:</b> @Model.Count</p>
+                            <p><b>Condition:</b> New</p>
+                            <p><b>Brand:</b> E-SHOPPER</p>
+                            <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
+                        </div><!--/product-information-->
+                    </div>
+                </div><!--/product-details-->
+
+                <div class="category-tab shop-details-tab">
+                    <!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li><a href="#details" data-toggle="tab">Details</a></li>
+                            <li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="details">
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="images/home/gallery1.jpg" alt="" />
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="images/home/gallery2.jpg" alt="" />
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="images/home/gallery3.jpg" alt="" />
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img src="images/home/gallery4.jpg" alt="" />
+                                            <h2>$56</h2>
+                                            <p>Easy Polo Black Edition</p>
+                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-content">
-                            <div class="tab-pane fade" id="details">
-                                <div class="col-sm-3">
+
+                        <div class="tab-pane fade active in" id="reviews">
+                            <div class="col-sm-12" id="commentsPlaceHolder">
+                                @Html.Action("CommentsByProduct", "Comments", new { id = Model.Id })
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!--/category-tab-->
+
+                <div class="recommended_items">
+                    <!--recommended_items-->
+                    <h2 class="title text-center">recommended items</h2>
+
+                    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-4">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="images/home/gallery1.jpg" alt="" />
+                                                <img src="images/home/recommend1.jpg" alt="" />
                                                 <h2>$56</h2>
                                                 <p>Easy Polo Black Edition</p>
                                                 <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
@@ -177,11 +244,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="images/home/gallery2.jpg" alt="" />
+                                                <img src="images/home/recommend2.jpg" alt="" />
                                                 <h2>$56</h2>
                                                 <p>Easy Polo Black Edition</p>
                                                 <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
@@ -189,23 +256,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <div class="product-image-wrapper">
                                         <div class="single-products">
                                             <div class="productinfo text-center">
-                                                <img src="images/home/gallery3.jpg" alt="" />
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img src="images/home/gallery4.jpg" alt="" />
+                                                <img src="images/home/recommend3.jpg" alt="" />
                                                 <h2>$56</h2>
                                                 <p>Easy Polo Black Edition</p>
                                                 <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
@@ -214,271 +269,217 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="tab-pane fade active in" id="reviews">
-                                <div class="col-sm-12" id="commentsPlaceHolder">
-                                    @Html.Action("CommentsByProduct", "Comments", new { id = Model.Id })
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!--/category-tab-->
-
-                    <div class="recommended_items">
-                        <!--recommended_items-->
-                        <h2 class="title text-center">recommended items</h2>
-
-                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
+                            <div class="item">
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="images/home/recommend1.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="images/home/recommend2.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/recommend3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="images/home/recommend3.jpg" alt="" />
+                                                <h2>$56</h2>
+                                                <p>Easy Polo Black Edition</p>
+                                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         </div>
-                    </div><!--/recommended_items-->
+                        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div><!--/recommended_items-->
 
-                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
-    @section scripts{
-        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        <script src="~/Scripts/jquery.plugin.min.js"></script>
-        <script src="~/Scripts/jquery.countdown.min.js"></script>
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.plugin.min.js"></script>
+    <script src="~/Scripts/jquery.countdown.min.js"></script>
 
-        <script>
-            $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
-                commentsSection = $("#commentsPlaceHolder");
-                auctionSection = $("#auctionDivs");
-                itemsNo = $("#itemsInCart");
+            commentsSection = $("#commentsPlaceHolder");
+            auctionSection = $("#auctionDivs");
+            itemsNo = $("#itemsInCart");
 
-                function removeAuctionDiv(){
-                    $(auctionDive).html("<p>Time of auction is over.</p>");
-                }
-
-
-                function countdownFunc(){
-                    if (@Json.Encode(@Model.EndDate.HasValue))
-                    {
-                        var date = new Date( '@( Model.EndDate.HasValue ? Model.EndDate.Value.Year.ToString() : "")',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Month - 1 : 0)',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Day.ToString() : "")',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Hour.ToString() : "")',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Minute.ToString() : "")',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Second.ToString() : "")',
-                        '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Millisecond.ToString() : "")');
-                }
-                $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
+            function removeAuctionDiv(){
+                $(auctionDive).html("<p>Time of auction is over.</p>");
             }
 
 
-            function checkIfAutionTimeExists() {
-
+            function countdownFunc(){
                 if (@Json.Encode(@Model.EndDate.HasValue))
                 {
-
-            var x =  @(Model.EndDate > DateTime.Now ? "true" : "false");
-
-                    if (x) {
-                        countdownFunc();
-                    }else {
-                        $("#countdownBid").append("<p>The time of auction has passed.<p/>");
-                        $(".btnSubmitForm").hide();
-                    }
-                }
-                return;
+                    var date = new Date( '@( Model.EndDate.HasValue ? Model.EndDate.Value.Year.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Month - 1 : 0)',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Day.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Hour.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Minute.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Second.ToString() : "")',
+                    '@( Model.EndDate.HasValue ? @Model.EndDate.Value.Millisecond.ToString() : "")');
             }
+            $("#countdownBid").countdown({ until: date, format: 'DHMS', onExpiry: removeAuctionDiv });
+        }
 
 
-                function checkIfAauctionOwner() {
-                    var g = @ViewBag.ShowBidBox;
+        function checkIfAutionTimeExists() {
 
-                    if (g) {
-                        $(".btnSubmitForm").hide();
-                    }
-                }
+            if (@Json.Encode(@Model.EndDate.HasValue))
+            {
 
-            $(document).on('click', '#replyBtn', function () {
-                var parentCommentId = $(this).closest('div').find('input').attr('value');
-                $("input[name='parentCommentId']").attr('value', parentCommentId);
-                $("textarea[name='message']").focus();
+        var x =  @(Model.EndDate > DateTime.Now ? "true" : "false");
+
+                if (x) {
+                countdownFunc();
+            }else {
+                $("#countdownBid").append("<p>The time of auction has passed.<p/>");
+                $(".btnSubmitForm").hide();
+            }
+        }
+        return;
+        }
+
+
+        function checkIfAauctionOwner() {
+            var g = @ViewBag.ShowBidBox;
+
+            if (g) {
+                $(".btnSubmitForm").hide();
+            }
+        }
+
+        $(document).on('click', '#replyBtn', function () {
+            var parentCommentId = $(this).closest('div').find('input').attr('value');
+            $("input[name='parentCommentId']").attr('value', parentCommentId);
+            $("textarea[name='message']").focus();
+        });
+
+        $(document).on('submit', "#postComment", function (e) {
+            e.preventDefault();
+            $("#commentProductId").val($("#tempProductId").attr('value'));
+            var form = $("#postComment");
+            $.ajax({
+                url: '@Url.Action("CreateComment", "Comments")',
+                type: 'POST',
+                dataType: "html",
+                cache: false,
+                data: $(this).serialize()
+            }).done(function (data) {
+                commentsSection.html(data);
             });
+        });
 
-            $(document).on('submit', "#postComment", function (e) {
-                e.preventDefault();
-                $("#commentProductId").val($("#tempProductId").attr('value'));
-                var form = $("#postComment");
+        $(document).on('submit', "#bidForm", function(e){
+            e.preventDefault();
+            if (confirm('Are you sure you want to bid?')) {
+                $("#offerText").show();
+                $("#countdownBid").countdown('destroy');
                 $.ajax({
-                    url: '@Url.Action("CreateComment", "Comments")',
+                    url: '@Url.Action("Offer", "Auctions")',
                     type: 'POST',
                     dataType: "html",
                     cache: false,
                     data: $(this).serialize()
                 }).done(function (data) {
-                    commentsSection.html(data);
-                });
-            });
-
-            $(document).on('submit', "#bidForm", function(e){
-                e.preventDefault();
-                if (confirm('Are you sure you want to bid?')) {
-                    $("#offerText").show();
-                    $("#countdownBid").countdown('destroy');
-                    $.ajax({
-                        url: '@Url.Action("Offer", "Auctions")',
-                        type: 'POST',
-                        dataType: "html",
-                        cache: false,
-                        data: $(this).serialize()
-                    }).done(function (data) {
-                        auctionSection.html(data);
-                        checkIfAutionTimeExists();
-                    });
-                }
-
-            });
-
-
-            function getNumberOfItemsInCart(redirectUrl) {
-                $.ajax({
-                    url: redirectUrl,
-                    type: 'GET',
-                    dataType: "json",
-                    cache: false,
-                    error: function(err){
-                        alert(err.status);
-                    }
-                }).done(function (data) {
-                    if (data.hasOwnProperty('ItemsInCart')) {
-                        itemsNo.html(data.ItemsInCart);
-                    }
+                    auctionSection.html(data);
+                    checkIfAutionTimeExists();
                 });
             }
 
+        });
 
-            $(document).on('click', "#addToCart", function (e) {
-                e.preventDefault();
-                var pcount = document.getElementById('productCount');
-                var productId = @Model.Id;
-                var maxCount = @Model.Count;
 
-                if (pcount.value > maxCount) {
-                    alert("we do not have that many items available.");
+        function getNumberOfItemsInCart(redirectUrl) {
+            $.ajax({
+                url: redirectUrl,
+                type: 'GET',
+                dataType: "json",
+                cache: false,
+                error: function(err){
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('ItemsInCart')) {
+                    itemsNo.html(data.ItemsInCart);
+                }
+            });
+        }
+
+
+        $(document).on('click', "#addToCart", function (e) {
+            e.preventDefault();
+            var pcount = document.getElementById('productCount');
+            var productId = @Model.Id;
+            var maxCount = @Model.Count;
+
+            if (pcount.value > maxCount) {
+                alert("we do not have that many items available.");
+                return;
+            }
+            if (pcount.value < 1) {
+                alert("item counts can not be less than 1.");
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Products")',
+                type: 'POST',
+                dataType: "json",
+                cache: false,
+                data: {
+                    pId: productId,
+                    count: pcount.value
+                },
+                error: function(err){
+                    alert(err.status);
+                }
+            }).done(function (data) {
+                if (data.hasOwnProperty('Message')) {
+                    alert(data.Message);
                     return;
                 }
-                if (pcount.value < 1) {
-                    alert("item counts can not be less than 1.");
-                    return;
+                if (data.hasOwnProperty('redirectUrl')) {
+                    getNumberOfItemsInCart(data.redirectUrl);
                 }
-
-                $.ajax({
-                    url: '@Url.Action("AddToCart", "Products")',
-                    type: 'POST',
-                    dataType: "json",
-                    cache: false,
-                    data: {
-                        pId: productId,
-                        count: pcount.value
-                    },
-                    error: function(err){
-                        alert(err.status);
-                    }
-                }).done(function (data) {
-                    if (data.hasOwnProperty('Message')) {
-                        alert(data.Message);
-                        return;
-                    }
-                    if (data.hasOwnProperty('redirectUrl')) {
-                        getNumberOfItemsInCart(data.redirectUrl);
-                    }
-                });
             });
+        });
 
 
-            checkIfAutionTimeExists();
-            checkIfAauctionOwner();
-            });
-        </script>
-    }
+        checkIfAutionTimeExists();
+        checkIfAauctionOwner();
+        });
+    </script>
+}
