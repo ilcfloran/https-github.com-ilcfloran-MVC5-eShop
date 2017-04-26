@@ -13,7 +13,7 @@ namespace DataAccess.ModelConfigs
 
             HasRequired(m => m.UserRec).WithMany().HasForeignKey(m => m.UserRecId).WillCascadeOnDelete(false);
 
-            HasRequired(m => m.UserSend).WithMany().HasForeignKey(m => m.UserSendId).WillCascadeOnDelete(false);
+            //HasRequired(m => m.UserSend).WithMany().HasForeignKey(m => m.UserSendId).WillCascadeOnDelete(false);
 
 
         }

@@ -15,9 +15,9 @@ namespace Core.Models
 
         public ApplicationUser UserRec { get; set; }
 
-        public string UserSendId { get; set; }
+        //public string UserSendId { get; set; }
 
-        public ApplicationUser UserSend { get; set; }
+        //public ApplicationUser UserSend { get; set; }
 
         public string Title { get; set; }
 
