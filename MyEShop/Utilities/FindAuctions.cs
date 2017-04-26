@@ -1,4 +1,5 @@
-﻿using MyEShop.Core.Models;
+﻿using Core.Models;
+using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
 using System;
 using System.Linq;
@@ -11,27 +12,57 @@ namespace MyEShop.Utilities
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            var auctions = db.Products.Where(p => p.EndDate != null);
+            var auctionProducts = db.Products.Where(p => p.EndDate != null);
 
-            foreach (var item in auctions.Where(a => a.EndDate < DateTime.Now))
+            foreach (var item in auctionProducts.Where(a => a.EndDate < DateTime.Now))
             {
-                var AuctionWithMaxPrice = db.Auctions.Where(au => au.ProductId == item.Id).OrderByDescending(a => a.Price).SingleOrDefault();
-                Sale sales = new Sale()
+                var allAuctionsForTheProduct = db.Auctions.Where(au => au.ProductId == item.Id).ToList();
+                var AuctionWithMaxPrice = allAuctionsForTheProduct.OrderByDescending(a => a.Price).FirstOrDefault();
+                if (AuctionWithMaxPrice != null)
                 {
-                    TrackingCode = 0,
-                    Count = 1,
-                    Date = item.EndDate ?? DateTime.Now,
-                    Payed = false,
-                    Price = AuctionWithMaxPrice.Price,
-                    StatusId = SalesStatus.OnHold,
-                    TransId = 0,
-                    UserId = AuctionWithMaxPrice.UserId,
-                    ProductId = AuctionWithMaxPrice.ProductId,
-                    Product = AuctionWithMaxPrice.Product
-                };
+                    Sale sales = new Sale()
+                    {
+                        TrackingCode = 0,
+                        Count = 1,
+                        Date = item.EndDate ?? DateTime.Now,
+                        Payed = false,
+                        Price = AuctionWithMaxPrice.Price,
+                        StatusId = SalesStatus.OnHold,
+                        TransId = 0,
+                        UserId = AuctionWithMaxPrice.UserId,
+                        ProductId = AuctionWithMaxPrice.ProductId,
+                        Product = AuctionWithMaxPrice.Product
+                    };
+                    //AuctionWithMaxPrice.Win = true;
+                    db.Sales.Add(sales);
+                    //db.SaveChanges();
+
+                    foreach (var x in allAuctionsForTheProduct.ToList())
+                    {
+                        Message message = new Message();
+                        if (AuctionWithMaxPrice.Id == x.Id)
+                        {
+                            message.Text = "You won the auction for " + x.Product.Name + " ,Please proceed to payment.";
+                        }
+                        else
+                        {
+                            message.Text = "You did not win the auction for " + x.Product.Name;
+
+                        }
+
+                        message.Date = DateTime.Now;
+                        message.IsRead = false;
+                        message.UserRecId = x.UserId;
+                        message.Title = "Auction result for" + x.Product.Name;
+
+                        db.Messages.Add(message);
+                        db.Auctions.Remove(x);
+                    }
+                }
             }
-
+            db.SaveChanges();
+            auctionProducts = null;
+            db.Dispose();
         }
-
     }
 }
