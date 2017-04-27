@@ -433,6 +433,16 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult ProductsISold()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var items = db.Sales.Include("Product").Where(s => s.Product.UserId == userId).ToList();
+                return View(items);
+            }
+            return RedirectToAction("Index", "Manage");
+        }
 
 
         public async Task<ActionResult> Edit(int? id)

@@ -36,12 +36,21 @@ namespace MyEShop.Utilities
                     db.Sales.Add(sales);
                     //db.SaveChanges();
 
+
+                    Message messageToAuctionOwner = new Message();
+                    messageToAuctionOwner.Text = "Your product " + item.Name + "was sold " + AuctionWithMaxPrice.Price;
+                    messageToAuctionOwner.Date = DateTime.Now;
+                    messageToAuctionOwner.IsRead = false;
+                    messageToAuctionOwner.UserRecId = item.UserId;
+                    messageToAuctionOwner.Title = "Auction result for " + item.Name;
+                    db.Messages.Add(messageToAuctionOwner);
+
                     foreach (var x in allAuctionsForTheProduct.ToList())
                     {
                         Message message = new Message();
                         if (AuctionWithMaxPrice.Id == x.Id)
                         {
-                            message.Text = "You won the auction for " + x.Product.Name + " ,Please proceed to payment.";
+                            message.Text = "You won the auction for " + x.Product.Name + " ,Please proceed to payment by going to My Auctions section.";
                         }
                         else
                         {

@@ -265,6 +265,18 @@ namespace MyEShop.Controllers
                             LstSale.Add(s);
 
                         }
+
+                        foreach (var v in LstSale)
+                        {
+                            Message messageToSeller = new Message()
+                            {
+                                Date = DateTime.Now,
+                                IsRead = false,
+                                Text = "You Sold item " + v.Product.Name + " , Price: " + v.Price,
+                                Title = "Item Sold",
+                                UserRecId = v.Product.UserId
+                            };
+                        }
                         db.Sales.AddRange(LstSale);
                         db.SaveChanges();
 
@@ -335,6 +347,7 @@ namespace MyEShop.Controllers
                     cartItem.ProductName = cartitem.Product.Name;
                     cartItem.WebId = cartitem.Id;
                     cartItem.Date = cartitem.Date;
+                    cartItem.StatusId = cartitem.StatusId;
 
                     if (cart.CartItems == null)
                     {

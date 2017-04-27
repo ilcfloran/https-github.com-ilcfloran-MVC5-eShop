@@ -22,6 +22,8 @@
                             <td class="price">Price</td>
                             <td class="quantity">Quantity</td>
                             <td class="total">Total</td>
+                            <td class="description">Status</td>
+
                             <td></td>
                         </tr>
                     </thead>
@@ -49,6 +51,9 @@
                                 </td>
                                 <td class="cart_total">
                                     <p class="cart_total_price">$@(item.Count * item.Price)</p>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><a>@item.StatusId</a></h4>
                                 </td>
                             </tr>
                         }

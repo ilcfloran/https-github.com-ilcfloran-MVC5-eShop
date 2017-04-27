@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyEShop.Core.Models;
+using System;
 
 namespace MyEShop.Web.ViewModels
 {
@@ -13,5 +14,8 @@ namespace MyEShop.Web.ViewModels
         public int WebId { get; set; }
 
         public DateTime Date { get; set; }
+
+        public SalesStatus StatusId { get; set; }
+
     }
 }

@@ -411,6 +411,7 @@
     <Content Include="Views\Filters\_FiltersByCategoryAndProduct.cshtml" />
     <Content Include="Views\Auctions\GetMessages.cshtml" />
     <Content Include="Views\Auctions\ReadMessage.cshtml" />
+    <Content Include="Views\Products\ProductsISold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
