@@ -1,7 +1,7 @@
 ﻿using MyEShop.Core.Models;
 using System.Data.Entity.ModelConfiguration;
 
-namespace DataAccess.ModelConfigs
+namespace MyEShop.DataAccess.ModelConfigs
 {
     class CategoriesGroupFiltersConfiguration : EntityTypeConfiguration<CategoriesGroupFilters>
     {

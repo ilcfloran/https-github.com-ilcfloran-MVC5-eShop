@@ -445,6 +445,43 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult SaleDetails(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (id > 0)
+                {
+                    var userId = User.Identity.GetUserId();
+                    var item = db.Sales.Include("Product").Include("User").Where(s => s.Product.UserId == userId && s.Id == id).SingleOrDefault();
+
+                    ViewBag.OrderStatus = new SelectList(Enum.GetValues(typeof(SalesStatus)), item.StatusId);
+                    return View(item);
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+
+        }
+
+
+        public ActionResult ChangeStatus(int Id, SalesStatus StatusId, int TrackingCode)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var sale = db.Sales.Where(s => s.Id == Id && s.Product.UserId == userId).SingleOrDefault();
+
+                sale.StatusId = StatusId;
+                sale.TrackingCode = TrackingCode;
+
+                //db.Sales.Attach(sale);
+                db.SaveChanges();
+                return RedirectToAction("ProductsISold", "Products");
+            }
+            return RedirectToAction("Index", "Manage");
+
+        }
+
         public async Task<ActionResult> Edit(int? id)
         {
             if (User.Identity.IsAuthenticated)

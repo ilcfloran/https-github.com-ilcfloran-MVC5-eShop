@@ -1,0 +1,116 @@
+﻿@model MyEShop.Core.Models.Sale
+
+@{
+    ViewBag.Title = "SaleDetails";
+}
+
+<h2>SaleDetails</h2>
+
+<div>
+    <h4>Sale</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayName("Adress")
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.User.AddressBlock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupNo)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Payed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Count)
+        </dd>
+
+        @using (Html.BeginForm("ChangeStatus", "Products", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.Id)
+            <dt>
+                @Html.DisplayNameFor(model => model.StatusId)
+            </dt>
+
+            <dd>
+                @Html.DropDownListFor(model => model.StatusId, ViewBag.OrderStatus as SelectList, "Choose a status", new { @class = "form-control", id = "selectStatus" })
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TrackingCode)
+            </dt>
+
+            <dd>
+                @Html.TextBoxFor(model => model.TrackingCode, new { @class = " form-control" })
+            </dd>
+            
+            <dt></dt>
+            <dd><button type="submit" value="" class="btn btn-info" style="margin-top:5px;">Change Status</button></dd>
+        }
+
+
+    </dl>
+</div>
+<p>
+    <button type="button" class="btn btn-success btn-sm ">Print Receipt</button>
+    @Html.ActionLink("Back to List", "ProductsISold")
+</p>
