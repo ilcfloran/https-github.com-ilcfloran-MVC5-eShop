@@ -51,6 +51,29 @@
             @Html.DisplayFor(model => model.TimeOfLastRec)
         </dd>
 
+        @using (Html.BeginForm("PayMe", "Products", FormMethod.Post))
+        {
+            <dt>
+                @Html.DisplayName("Requested Payment?")
+            </dt>
+
+            <dd>
+                @Html.CheckBoxFor(model => model.PayMe)
+            </dd>
+            <dt>
+                @Html.DisplayName("Pay me")
+            </dt>
+
+            <dd>
+                @Html.TextBoxFor(model => model.PayMeAmount)
+            </dd>
+
+           <dt></dt>
+           <dd>
+               <button type="submit" class="btn btn-sm btn-success" style="margin-top:5px;">Pay</button>
+           </dd>
+        }
+
     </dl>
 </div>
 <p>

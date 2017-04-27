@@ -7,7 +7,7 @@ namespace DataAccess.ModelConfigs
     {
         public BillsConfiguration()
         {
-
+            //Property()
         }
     }
 }

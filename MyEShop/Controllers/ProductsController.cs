@@ -524,6 +524,44 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult PayMe(int PayMeAmount)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var myCurrent = db.Bills.Where(b => b.UserId == userId).SingleOrDefault();
+
+                if (myCurrent != null)
+                {
+                    var soldItems = db.Sales.Where(s => s.Product.UserId == userId && s.Payed == true).ToList();
+                    var totalPrice = soldItems.Sum(s => s.Price);
+
+                    if (totalPrice > PayMeAmount)
+                    {
+                        myCurrent.PayMeAmount = PayMeAmount;
+                        myCurrent.PayMe = true;
+
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        return Content("You Do not have enough money in your account.");
+                    }
+                    return RedirectToAction("MyBill", "Products");
+
+                }
+                else
+                {
+                    return Content("You Do not have enough money in your account.");
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
+
         public async Task<ActionResult> Edit(int? id)
         {
             if (User.Identity.IsAuthenticated)

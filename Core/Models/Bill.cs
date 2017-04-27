@@ -15,5 +15,9 @@ namespace MyEShop.Core.Models
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public bool PayMe { get; set; }
+
+        public int PayMeAmount { get; set; }
     }
 }
