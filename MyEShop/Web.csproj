@@ -193,6 +193,7 @@
     <Compile Include="Utilities\JsonParameters.cs" />
     <Compile Include="Utilities\Payment.cs" />
     <Compile Include="ViewModels\AuctionVM.cs" />
+    <Compile Include="ViewModels\BillVM.cs" />
     <Compile Include="ViewModels\CartItemVM.cs" />
     <Compile Include="ViewModels\CartVM.cs" />
     <Compile Include="ViewModels\CategoryVM.cs" />
@@ -415,6 +416,7 @@
     <Content Include="Views\Products\ProductsISold.cshtml" />
     <Content Include="Views\Products\SaleDetails.cshtml" />
     <Content Include="Views\Auctions\AuctionsIWon.cshtml" />
+    <Content Include="Views\Products\MyBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

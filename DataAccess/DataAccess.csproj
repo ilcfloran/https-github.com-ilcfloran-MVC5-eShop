@@ -287,10 +287,35 @@
     <Compile Include="Migrations\201704271428539_ChangeGroupNoToBankNoInSale.Designer.cs">
       <DependentUpon>201704271428539_ChangeGroupNoToBankNoInSale.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704271602113_AddBillClass.cs" />
+    <Compile Include="Migrations\201704271602113_AddBillClass.Designer.cs">
+      <DependentUpon>201704271602113_AddBillClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271607503_AddUserIdToBill.cs" />
+    <Compile Include="Migrations\201704271607503_AddUserIdToBill.Designer.cs">
+      <DependentUpon>201704271607503_AddUserIdToBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271641006_UpdateBillClass.cs" />
+    <Compile Include="Migrations\201704271641006_UpdateBillClass.Designer.cs">
+      <DependentUpon>201704271641006_UpdateBillClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271703375_AddAvailableToBill.cs" />
+    <Compile Include="Migrations\201704271703375_AddAvailableToBill.Designer.cs">
+      <DependentUpon>201704271703375_AddAvailableToBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271704470_DeleteAvailableToBill.cs" />
+    <Compile Include="Migrations\201704271704470_DeleteAvailableToBill.Designer.cs">
+      <DependentUpon>201704271704470_DeleteAvailableToBill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704271717545_MakeDateTimeNullableInBill.cs" />
+    <Compile Include="Migrations\201704271717545_MakeDateTimeNullableInBill.Designer.cs">
+      <DependentUpon>201704271717545_MakeDateTimeNullableInBill.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelConfigs\ApplicationDbContext.cs" />
     <Compile Include="ModelConfigs\ApplicationUserConfiguration.cs" />
     <Compile Include="ModelConfigs\AuctionConfiguration.cs" />
+    <Compile Include="ModelConfigs\BillsConfiguration.cs" />
     <Compile Include="ModelConfigs\CategoriesGroupFiltersConfiguration.cs" />
     <Compile Include="ModelConfigs\CategoryConfiguration.cs" />
     <Compile Include="ModelConfigs\CommentConfiguration.cs" />
@@ -484,6 +509,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704271428539_ChangeGroupNoToBankNoInSale.resx">
       <DependentUpon>201704271428539_ChangeGroupNoToBankNoInSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271602113_AddBillClass.resx">
+      <DependentUpon>201704271602113_AddBillClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271607503_AddUserIdToBill.resx">
+      <DependentUpon>201704271607503_AddUserIdToBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271641006_UpdateBillClass.resx">
+      <DependentUpon>201704271641006_UpdateBillClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271703375_AddAvailableToBill.resx">
+      <DependentUpon>201704271703375_AddAvailableToBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271704470_DeleteAvailableToBill.resx">
+      <DependentUpon>201704271704470_DeleteAvailableToBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271717545_MakeDateTimeNullableInBill.resx">
+      <DependentUpon>201704271717545_MakeDateTimeNullableInBill.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,58 @@
+﻿@model MyEShop.Web.ViewModels.BillVM
+
+@{
+    ViewBag.Title = "My Bills";
+}
+
+<h2>MyBill</h2>
+
+<div>
+    <h4> Bill</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Available)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Available)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Withdrawable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Withdrawable)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Last payed")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastRec)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total money received")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalRec)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Last receive money on")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfLastRec)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Manage")
+</p>

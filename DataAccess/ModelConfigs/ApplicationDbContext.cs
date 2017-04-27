@@ -27,6 +27,7 @@ namespace MyEShop.DataAccess.ModelConfigs
         public DbSet<CategoriesGroupFilters> CategoriesGroupFilters { get; set; }
         //public DbSet<ProductsFilterItems> ProductsFilterItems { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
 
 

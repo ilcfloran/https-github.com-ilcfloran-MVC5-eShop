@@ -482,6 +482,48 @@ namespace MyEShop.Controllers
 
         }
 
+
+        public ActionResult MyBill()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var soldItems = db.Sales.Where(s => s.Product.UserId == userId && s.Payed == true).ToList();
+
+                var myCurrent = db.Bills.Where(b => b.UserId == userId).SingleOrDefault();
+
+                if (myCurrent != null)
+                {
+                    var totalPrice = soldItems.Sum(s => s.Price);
+                    BillVM billVM = new BillVM()
+                    {
+                        LastRec = myCurrent.LastRec,
+                        TotalRec = myCurrent.TotalRec,
+                        Available = Convert.ToInt32(totalPrice) - myCurrent.TotalRec,
+                        Withdrawable = (Convert.ToInt32(totalPrice) - myCurrent.TotalRec) - 100,
+                        TimeOfLastRec = myCurrent.TimeOfLastRec ?? DateTime.Now
+                    };
+
+                    return View(billVM);
+                }
+                else
+                {
+                    BillVM billVM = new BillVM()
+                    {
+                        LastRec = 0,
+                        TotalRec = 0,
+                        Available = 0,
+                        Withdrawable = 0
+                    };
+
+                    return View(billVM);
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
         public async Task<ActionResult> Edit(int? id)
         {
             if (User.Identity.IsAuthenticated)
