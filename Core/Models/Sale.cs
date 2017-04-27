@@ -10,7 +10,7 @@ namespace MyEShop.Core.Models
 
         public DateTime Date { get; set; }
 
-        public int GroupNo { get; set; }
+        public string BankNo { get; set; }
 
         public SalesStatus StatusId { get; set; }
 

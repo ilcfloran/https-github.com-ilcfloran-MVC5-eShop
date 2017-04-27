@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\AuctionPayment\Payment.cs" />
     <Compile Include="Utilities\FindAuctions.cs" />
     <Compile Include="Utilities\JsonParameters.cs" />
     <Compile Include="Utilities\Payment.cs" />
@@ -413,6 +414,7 @@
     <Content Include="Views\Auctions\ReadMessage.cshtml" />
     <Content Include="Views\Products\ProductsISold.cshtml" />
     <Content Include="Views\Products\SaleDetails.cshtml" />
+    <Content Include="Views\Auctions\AuctionsIWon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

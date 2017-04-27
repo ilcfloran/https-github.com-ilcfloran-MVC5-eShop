@@ -254,7 +254,7 @@ namespace MyEShop.Controllers
                                 TrackingCode = 0,
                                 Count = j.Count,
                                 Date = DateTime.Now,
-                                GroupNo = 0,
+                                BankNo = "",
                                 Payed = true,
                                 Price = j.Price,
                                 ProductId = j.ProductId,
@@ -328,7 +328,7 @@ namespace MyEShop.Controllers
             {
                 var userId = User.Identity.GetUserId();
 
-                var items = db.Sales.Include("Product").Where(s => s.UserId == userId && s.Payed == true).ToList();
+                var items = db.Sales.Include("Product").Where(s => s.UserId == userId && s.Payed == true).OrderByDescending(a => a.Date).ToList();
 
                 CartVM cart = new CartVM();
 

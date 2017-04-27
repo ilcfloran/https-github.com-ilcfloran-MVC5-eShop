@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
+using Newtonsoft.Json;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -152,8 +153,8 @@ namespace MyEShop.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.Identity.GetUserId();
-                var auctionsIWon = db.Auctions.Include("Product").Where(a => a.UserId == userId && a.Win == true).ToList();
-                return View("Auctions", auctionsIWon);
+                var auctionsIWon = db.Sales.Include("Product").Where(a => a.UserId == userId && a.Payed == false).OrderByDescending(a => a.Date).ToList();
+                return View(auctionsIWon);
 
             }
             return RedirectToAction("Index", "Home");
@@ -231,6 +232,93 @@ namespace MyEShop.Controllers
             }
             return RedirectToAction("Index", "Manage");
 
+        }
+
+
+        public ActionResult Payment(int id)
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var itemsInCart = db.Sales.Where(s => s.UserId == userId && s.Id == id && s.Payed == false).SingleOrDefault();
+
+                if (itemsInCart == null)
+                {
+                    return Content("Could not find the auction.");
+                }
+                // the gateway does not accepts amount less than 1000 Rials
+                decimal totalPrice = 1000 + itemsInCart.Price;
+
+                try
+                {
+                    MyEShop.Utilities.AuctionPayment.Payment ob = new MyEShop.Utilities.AuctionPayment.Payment();
+                    string result = ob.pay(totalPrice.ToString());
+                    JsonParameters parameters = JsonConvert.DeserializeObject<JsonParameters>(result);
+
+                    if (parameters.status == 1)
+                    {
+                        itemsInCart.BankNo = parameters.transId;
+                        db.SaveChanges();
+
+                        Response.Redirect("https://pay.ir/payment/test/gateway/" + parameters.transId);
+                    }
+                    else
+                    {
+                        //lblresult.text = "کدخطا : " + parmeters.errorcode + "<br />" + "پیغام خطا : " + parmeters.errormessage;
+                    }
+                }
+                catch (Exception e)
+                {
+                    //lblresult.text = "خطا در اتصال به درگاه پرداخت";
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PaymentComplete(string transId)
+        {
+
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                if (!string.IsNullOrEmpty(transId))
+                {
+                    Payment ob = new Payment();
+                    string result = ob.verify(transId.ToString());
+                    JsonParameters Parmeters = JsonConvert.DeserializeObject<JsonParameters>(result);
+
+                    if (Parmeters.status == 1)
+                    {
+
+                        var itemsInCart = db.Sales.Where(s => s.UserId == userId && s.BankNo == transId && s.Payed == false).ToList();
+
+                        foreach (var item in itemsInCart)
+                        {
+                            item.Payed = true;
+                            item.TransId = Convert.ToInt32(transId);
+                        }
+                        db.SaveChanges();
+
+                        return RedirectToAction("GetSalesItemByTrasnId", "ShoppingCarts", new { tId = transId, price = Parmeters.amount.ToString() });
+                    }
+                    else
+                    {
+                        return Content("error");
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", "Manage");
         }
 
         public async Task<ActionResult> Details(int? id)

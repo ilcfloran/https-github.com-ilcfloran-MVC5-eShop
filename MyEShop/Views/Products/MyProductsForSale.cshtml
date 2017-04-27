@@ -1,108 +1,111 @@
 ﻿@model IEnumerable<MyEShop.Core.Models.Product>
 
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="features_items" id="productItemsPlaceHolder">
-                <h2 class="title text-center">Items</h2>
-                <p style="color:orange">Auctions in orange are passed.</p>
-                @if (Model.Count() > 0)
+@if (Model.Count() > 0)
+{
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="features_items" id="productItemsPlaceHolder">
+                    <h2 class="title text-center">Items</h2>
+                    <p style="color:orange">Auctions in orange are passed.</p>
+                    @if (Model.Count() > 0)
                 {
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr class="cart_menu">
-                                <td class="image">Item</td>
-                                <td class="description">Name</td>
-                                <td class="price">Price</td>
-                                <td class="quantity">Quantity</td>
-                                <td class="total">Total</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td class="image">
-                                        <a href=""><img src="images/cart/one.png" alt=""></a>
-                                    </td>
-                                    <td class="description">
-                                        @if (item.EndDate != null && item.EndDate < DateTime.Now)
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr class="cart_menu">
+                                    <td class="image">Item</td>
+                                    <td class="description">Name</td>
+                                    <td class="price">Price</td>
+                                    <td class="quantity">Quantity</td>
+                                    <td class="total">Total</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="image">
+                                            <a href=""><img src="images/cart/one.png" alt=""></a>
+                                        </td>
+                                        <td class="description">
+                                            @if (item.EndDate != null && item.EndDate < DateTime.Now)
+                                            {
+                                                <h4><a style="color:orange">@item.Name</a></h4>
+                                            }
+                                            else
+                                            {
+                                                <h4><a>@item.Name</a></h4>
+                                            }
+                                            <p>Web ID: @item.Id</p>
+                                        </td>
+
+                                        <td class="price">
+                                            <p>$@item.Price</p>
+                                        </td>
+                                        @if (item.EndDate == null)
                                         {
-                                            <h4><a style="color:orange">@item.Name</a></h4>
+                                            <td class="cart_quantity">
+                                                <div class="cart_quantity_button">
+                                                    <a class="cart_quantity_up"> + </a>
+                                                    <input class="cart_quantity_input" type="text" name="quantity" data-webId="@item.Id" value="@item.Count" autocomplete="off" size="2">
+                                                    <a class="cart_quantity_down"> - </a>
+                                                </div>
+                                            </td>
                                         }
                                         else
                                         {
-                                            <h4><a>@item.Name</a></h4>
+                                            <td>1</td>
                                         }
-                                        <p>Web ID: @item.Id</p>
-                                    </td>
 
-                                    <td class="price">
-                                        <p>$@item.Price</p>
-                                    </td>
-                                    @if (item.EndDate == null)
-                                    {
-                                        <td class="cart_quantity">
-                                            <div class="cart_quantity_button">
-                                                <a class="cart_quantity_up"> + </a>
-                                                <input class="cart_quantity_input" type="text" name="quantity" data-webId="@item.Id" value="@item.Count" autocomplete="off" size="2">
-                                                <a class="cart_quantity_down"> - </a>
-                                            </div>
+                                        <td class="cart_total">
+                                            <p class="cart_total_price">$@(item.Count * item.Price)</p>
                                         </td>
+                                        <td class="">
+                                            @*<a class="cart_quantity_delete"><i class="fa fa-times"></i></a>*@
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                            @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        using (Html.BeginForm((string)ViewBag.MethodName, "Products", FormMethod.Get, new { id = "pageForm" }))
+                        {
+                            <input type="hidden" id="pageNumber" name="page" value="" />
+                            <ul class="pagination" id="productsPagination">
+                                @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                                {
+                                    if (i == (int)ViewBag.Page)
+                                    {
+                                        <li class="active"><a class="page_number">@i.ToString()</a></li>
+
                                     }
                                     else
                                     {
-                                        <td>1</td>
+                                        <li><a class="page_number">@i.ToString()</a></li>
                                     }
+                                }
+                                @*<li><a>&raquo;</a></li>*@
+                            </ul>
+                        }
 
-                                    <td class="cart_total">
-                                        <p class="cart_total_price">$@(item.Count * item.Price)</p>
-                                    </td>
-                                    <td class="">
-                                        @*<a class="cart_quantity_delete"><i class="fa fa-times"></i></a>*@
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                        @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    using (Html.BeginForm((string)ViewBag.MethodName, "Products", FormMethod.Get, new { id = "pageForm" }))
+                    }
+                    else
                     {
-                        <input type="hidden" id="pageNumber" name="page" value="" />
-                        <ul class="pagination" id="productsPagination">
-                            @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
-                            {
-                                if (i == (int)ViewBag.Page)
-                                {
-                                    <li class="active"><a class="page_number">@i.ToString()</a></li>
-
-                                }
-                                else
-                                {
-                                    <li><a class="page_number">@i.ToString()</a></li>
-                                }
-                            }
-                            @*<li><a>&raquo;</a></li>*@
-                        </ul>
+                        <p>No item found.</p>
                     }
 
-                }
-                else
-                {
-                    <p>No item found.</p>
-                }
-
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-@section scripts{
-    <script>
+    @section scripts{
+        <script>
         $(document).ready(function () {
 
             $(document).on('click', ".page_number", function (e) {
@@ -111,5 +114,11 @@
                 $("#pageForm").submit();
             });
         });
-    </script>
+        </script>
+    }
+
+}
+else
+{
+    <p>No item found.</p>
 }
