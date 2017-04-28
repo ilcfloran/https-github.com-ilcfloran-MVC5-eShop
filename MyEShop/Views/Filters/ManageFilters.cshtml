@@ -15,9 +15,9 @@
     foreach (var item in Model)
     {
         <ul style="font-weight:bold;">
-            @item.Title @Html.ActionLink("Add Group Filter", "EditFilter", "Filters", null, new { id = item.Id }) |
-            @Html.ActionLink("Edit", "EditFilter", "Filters", null, new { id = item.Id }) |
-            @Html.ActionLink("Delete", "DeleteItem", "Filters", null, new { id = item.Id })
+            @item.Title @Html.ActionLink("Add Group Filter", "AddSubGroupFilters", "Filters", new { id = item.Id }, null) |
+            @Html.ActionLink("Edit", "EditFilterGroup", "Filters", new { id = item.Id },null) |
+            @Html.ActionLink("Delete", "DeleteFilterGroup", "Filters", new { id = item.Id }, null)
             @if (item.Children != null)
             {
                 foreach (var child in item.Children)

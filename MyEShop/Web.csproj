@@ -422,6 +422,8 @@
     <Content Include="Views\Filters\DeleteFilters.cshtml" />
     <Content Include="Views\Filters\AddFilters.cshtml" />
     <Content Include="Views\Filters\EditFilterGroup.cshtml" />
+    <Content Include="Views\Filters\DeleteFilterGroup.cshtml" />
+    <Content Include="Views\Filters\AddSubGroupFilters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

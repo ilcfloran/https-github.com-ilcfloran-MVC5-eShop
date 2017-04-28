@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Add Filter";
+}
+
+<h2>Add Filter</h2>
+
+@using (Html.BeginForm("AddSubGroupFilters", "Filters", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.Hidden("id", (object)@ViewBag.GroupFilterId)
+
+        <div class="form-group">
+            @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Title", null, new { @class = "form-control" })
+            </div>
+        </div>
+        <input type="submit" name="name" value="Add" />
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ManageFilters", "Filters")
+</div>
