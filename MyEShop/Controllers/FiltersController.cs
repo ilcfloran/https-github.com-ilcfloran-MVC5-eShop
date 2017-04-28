@@ -1,6 +1,9 @@
-﻿using MyEShop.DataAccess.ModelConfigs;
+﻿using MyEShop.Core.Models;
+using MyEShop.DataAccess.ModelConfigs;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TreeUtility;
 
 namespace MyEShop.Controllers
 {
@@ -12,6 +15,35 @@ namespace MyEShop.Controllers
         {
             return View();
         }
+
+
+        private List<GroupFilter> GetListOfNodes(List<GroupFilter> cmnt)
+        {
+            List<GroupFilter> allComments = cmnt;
+
+            List<GroupFilter> comments = new List<GroupFilter>();
+            foreach (GroupFilter sourceComment in allComments)
+            {
+                GroupFilter c = new GroupFilter();
+                c.Id = sourceComment.Id;
+                c.Title = sourceComment.Title;
+                if (sourceComment.ParentId != null)
+                {
+                    c.Parent = new GroupFilter();
+                    c.Parent.Id = (int)sourceComment.ParentId;
+                }
+                c.CategoriesGroupFilters = sourceComment.CategoriesGroupFilters;
+                c.FilterItems = new List<FilterItem>();
+                foreach (var item in sourceComment.FilterItems)
+                {
+                    c.FilterItems.Add(item);
+                }
+                c.FilterItems = sourceComment.FilterItems;
+                comments.Add(c);
+            }
+            return comments;
+        }
+
 
         public ActionResult FiltersByCategory(int categoryId)
         {
@@ -62,6 +94,52 @@ namespace MyEShop.Controllers
             return PartialView("_FiltersByCategoryAndProduct", groupFilters);
         }
 
+        [HttpGet]
+        public ActionResult ManageFilters()
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var groupFilters = db.GroupFilter.Include("FilterItems").ToList();
+
+
+                    IEnumerable<GroupFilter> listOfNodes = GetListOfNodes(groupFilters);
+                    IList<GroupFilter> gFilters = TreeHelper.ConvertToForest(listOfNodes);
+
+                    foreach (var item in gFilters)
+                    {
+                        foreach (var x in item.Children)
+                        {
+                            foreach (var node in listOfNodes)
+                            {
+                                if (node.Id == x.Id)
+                                {
+                                    node.FilterItems = x.FilterItems;
+                                }
+                            }
+                        }
+                    }
+
+                    //ViewBag.ProductId = id;
+                    return View(gFilters);
+                }
+            }
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
+
 
     }
 }
+
+
+
+
+
+

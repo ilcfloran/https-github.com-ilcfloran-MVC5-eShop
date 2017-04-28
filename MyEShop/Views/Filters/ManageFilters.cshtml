@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MyEShop.Core.Models.GroupFilter>
+
+@{
+    ViewBag.Title = "Manage Filters";
+}
+
+<h2>Manage Filters</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateFilters")
+</p>
+
+@if (Model != null && Model.Count() > 0)
+{
+
+    foreach (var item in Model)
+    {
+        <ul style="font-weight:bold;">
+            @item.Title
+            @if (item.Children != null)
+            {
+                foreach (var child in item.Children)
+                {
+                    <ul>
+                        <li style="font-weight:normal;">
+                            @if (child.FilterItems != null)
+                            {
+                                @child.Title
+                                <ul style="font-weight:bold;">
+
+                                    @foreach (var fi in child.FilterItems)
+                                {
+                                        <li style="font-weight:normal;">@fi.Title</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                @child.Title
+                            }
+                        </li>
+                    </ul>
+                }
+            }
+        </ul>
+    }
+}
+else
+{
+    <p>No item found.</p>
+}

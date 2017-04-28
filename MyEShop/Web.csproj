@@ -417,6 +417,7 @@
     <Content Include="Views\Products\SaleDetails.cshtml" />
     <Content Include="Views\Auctions\AuctionsIWon.cshtml" />
     <Content Include="Views\Products\MyBill.cshtml" />
+    <Content Include="Views\Filters\ManageFilters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

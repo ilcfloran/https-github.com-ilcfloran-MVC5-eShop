@@ -24,39 +24,42 @@
             ]
         </dd>
 
-        <dt style="text-align:left">@Html.ActionLink("My Messages", "GetMessages", "Auctions")</dt>
-        <dd></dd>
+        @if (User.IsInRole("Seller"))
+        {
 
-        <dt style="text-align:left">@Html.ActionLink("Auctions I Won", "AuctionsIWon", "Auctions")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("My Messages", "GetMessages", "Auctions")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("My Purchase History", "MyPurchaseHistory", "ShoppingCarts")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("Auctions I Won", "AuctionsIWon", "Auctions")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("My Auctions", "MyAuctions", "Auctions")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("My Purchase History", "MyPurchaseHistory", "ShoppingCarts")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("My products for sale", "MyProducts", "Products")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("My Auctions", "MyAuctions", "Auctions")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("My products for auction", "ProductsForAuction", "Products")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("My products for sale", "MyProducts", "Products")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("Sell Product", "Create", "Products")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("My products for auction", "ProductsForAuction", "Products")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("Products I Sold", "ProductsISold", "Products")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("Sell Product", "Create", "Products")</dt>
+            <dd></dd>
 
-        <dt style="text-align:left">@Html.ActionLink("Bills", "MyBill", "Products")</dt>
-        <dd></dd>
+            <dt style="text-align:left">@Html.ActionLink("Products I Sold", "ProductsISold", "Products")</dt>
+            <dd></dd>
 
+            <dt style="text-align:left">@Html.ActionLink("Bills", "MyBill", "Products")</dt>
+            <dd></dd>
 
-
-
-
-
-
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            <dt style="text-align:left">@Html.ActionLink("Manage Product Filters", "ManageFilters", "Filters")</dt>
+            <dd></dd>
+        }
 
 
         @*<dt>External Logins:</dt>

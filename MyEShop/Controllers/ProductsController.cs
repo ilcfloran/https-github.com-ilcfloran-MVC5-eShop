@@ -352,81 +352,86 @@ namespace MyEShop.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var randomNameGenerate = new Random();
 
-                var userId = User.Identity.GetUserId();
-                if (ModelState.IsValid)
+                if (User.IsInRole("Seller"))
                 {
-                    var filterItems = db.FilterItems.Where(f => filterItemschk.Any(fi => fi == f.Id));
 
-                    product.UserId = userId;
-                    product.Visit = 0;
-                    product.date = DateTime.Now;
-                    if (product.FilterItems == null)
+                    var randomNameGenerate = new Random();
+
+                    var userId = User.Identity.GetUserId();
+                    if (ModelState.IsValid)
                     {
-                        product.FilterItems = new Collection<FilterItem>();
-                    }
-                    foreach (var fi in filterItems)
-                    {
-                        product.FilterItems.Add(fi);
-                    }
+                        var filterItems = db.FilterItems.Where(f => filterItemschk.Any(fi => fi == f.Id));
 
-                    //check image is valid
-                    product.Image = randomNameGenerate.Next().ToString() + ".jpg";
-                    Image.SaveAs(Server.MapPath("~") + "Content/Product-Pictures/" + product.Image);
-                    //product.Image = Image.FileName;
-
-                    db.Products.Add(product);
-                    if (Convert.ToBoolean(await db.SaveChangesAsync()))
-                    {
-                        ViewBag.Message = "Item Created Successfully.";
-                    }
-                    else
-                    {
-                        return View(product);
-                    }
-
-
-                    var productId = product.Id;
-
-                    //if (carouselImage.Count() > 0)
-                    //{
-                    //    foreach (var c in carouselImage)
-                    //    {
-                    //        //Image Validation goes here
-
-                    //    }
-
-                    //}
-
-                    if (carouselImage.Count() > 0)
-                    {
-                        List<ProductImage> lstImage = new List<ProductImage>();
-                        foreach (var c in carouselImage)
+                        product.UserId = userId;
+                        product.Visit = 0;
+                        product.date = DateTime.Now;
+                        if (product.FilterItems == null)
                         {
-                            if (c != null)
-                            {
-                                ProductImage img = new ProductImage();
-                                img.ImageName = randomNameGenerate.Next().ToString() + ".jpg";
-                                c.SaveAs(Path.Combine(Server.MapPath("~") + "Content/Product-Carousel/" + img.ImageName));
-                                img.ProductId = productId;
-
-                                lstImage.Add(img);
-                            }
+                            product.FilterItems = new Collection<FilterItem>();
+                        }
+                        foreach (var fi in filterItems)
+                        {
+                            product.FilterItems.Add(fi);
                         }
 
-                        db.ProductImages.AddRange(lstImage);
-                        db.SaveChanges();
-                    }
+                        //check image is valid
+                        product.Image = randomNameGenerate.Next().ToString() + ".jpg";
+                        Image.SaveAs(Server.MapPath("~") + "Content/Product-Pictures/" + product.Image);
+                        //product.Image = Image.FileName;
 
-                    return RedirectToAction("Index");
+                        db.Products.Add(product);
+                        if (Convert.ToBoolean(await db.SaveChangesAsync()))
+                        {
+                            ViewBag.Message = "Item Created Successfully.";
+                        }
+                        else
+                        {
+                            return View(product);
+                        }
+
+
+                        var productId = product.Id;
+
+                        //if (carouselImage.Count() > 0)
+                        //{
+                        //    foreach (var c in carouselImage)
+                        //    {
+                        //        //Image Validation goes here
+
+                        //    }
+
+                        //}
+
+                        if (carouselImage.Count() > 0)
+                        {
+                            List<ProductImage> lstImage = new List<ProductImage>();
+                            foreach (var c in carouselImage)
+                            {
+                                if (c != null)
+                                {
+                                    ProductImage img = new ProductImage();
+                                    img.ImageName = randomNameGenerate.Next().ToString() + ".jpg";
+                                    c.SaveAs(Path.Combine(Server.MapPath("~") + "Content/Product-Carousel/" + img.ImageName));
+                                    img.ProductId = productId;
+
+                                    lstImage.Add(img);
+                                }
+                            }
+
+                            db.ProductImages.AddRange(lstImage);
+                            db.SaveChanges();
+                        }
+
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.Categories = db.Categories.Select(c => new SelectListItem
+                    {
+                        Text = c.CategoryName,
+                        Value = c.Id.ToString()
+                    }).ToList();
+                    return View(product);
                 }
-                ViewBag.Categories = db.Categories.Select(c => new SelectListItem
-                {
-                    Text = c.CategoryName,
-                    Value = c.Id.ToString()
-                }).ToList();
-                return View(product);
             }
             return RedirectToAction("Index", "Manage");
 
