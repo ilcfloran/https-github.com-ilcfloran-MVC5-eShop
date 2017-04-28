@@ -174,6 +174,50 @@ namespace MyEShop.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
+        [HttpGet]
+        public ActionResult DeleteFilters(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var filter = db.FilterItems.Where(f => f.Id == id).SingleOrDefault();
+                    if (filter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
+
+                    }
+
+                    return View(filter);
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFilters(int Id, string dummy)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var filter = db.FilterItems.Where(f => f.Id == Id).SingleOrDefault();
+                    if (filter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
+                    }
+
+                    db.FilterItems.Remove(filter);
+                    db.SaveChanges();
+                    return RedirectToAction("ManageFilters", "Filters");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
     }
 }
 
