@@ -11,11 +11,11 @@ namespace MyEShop.Controllers
     {
 
         ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
             return View();
         }
-
 
         private List<GroupFilter> GetListOfNodes(List<GroupFilter> cmnt)
         {
@@ -43,7 +43,6 @@ namespace MyEShop.Controllers
             }
             return comments;
         }
-
 
         public ActionResult FiltersByCategory(int categoryId)
         {
@@ -131,9 +130,49 @@ namespace MyEShop.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult EditFilters(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var filter = db.FilterItems.Where(f => f.Id == id).SingleOrDefault();
+                    if (filter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
 
+                    }
 
+                    return View(filter);
+                }
 
+            }
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        public ActionResult EditFilters(string Title, int Id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var filter = db.FilterItems.Where(f => f.Id == Id).SingleOrDefault();
+                    if (filter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
+                    }
+
+                    filter.Title = Title;
+                    db.SaveChanges();
+                    return RedirectToAction("ManageFilters", "Filters");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
 
     }
 }

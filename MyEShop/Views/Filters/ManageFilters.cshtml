@@ -12,11 +12,12 @@
 
 @if (Model != null && Model.Count() > 0)
 {
-
     foreach (var item in Model)
     {
         <ul style="font-weight:bold;">
-            @item.Title
+            @item.Title @Html.ActionLink("Add Group Filter", "EditFilter", "Filters", null, new { id = item.Id }) |
+            @Html.ActionLink("Edit", "EditFilter", "Filters", null, new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteItem", "Filters", null, new { id = item.Id })
             @if (item.Children != null)
             {
                 foreach (var child in item.Children)
@@ -25,14 +26,19 @@
                         <li style="font-weight:normal;">
                             @if (child.FilterItems != null)
                             {
-                                @child.Title
-                                <ul style="font-weight:bold;">
+                                @child.Title @Html.ActionLink("Add Filters", "AddFilter", "Filters", new { id = child.Id}, new { @class="filterMargin"}) @Html.ActionLink("Edit", "EditFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" }) @Html.ActionLink("Delete", "DeleteFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" })
+                                
+                            <ul style="font-weight:bold;">
 
                                     @foreach (var fi in child.FilterItems)
                                 {
-                                        <li style="font-weight:normal;">@fi.Title</li>
-                                    }
-                                </ul>
+                                        <li style="font-weight:normal;">
+                                            @fi.Title @Html.ActionLink("Edit", "EditFilters", "Filters", new { id = @fi.Id }, null
+                                                     ) |
+                                            @Html.ActionLink("Delete", "DeleteFilters", "Filters", new { id = @fi.Id }, null)
+                                        </li>
+                                }
+                            </ul>
                             }
                             else
                             {
