@@ -326,6 +326,15 @@ namespace MyEShop.Controllers
                         return RedirectToAction("Index", "Manage");
                     }
 
+                    var childFilters = db.GroupFilter.Where(g => g.ParentId == Id).ToList();
+                    if (childFilters != null)
+                    {
+                        foreach (var item in childFilters)
+                        {
+                            db.GroupFilter.Remove(item);
+                        }
+                        db.SaveChanges();
+                    }
                     db.GroupFilter.Remove(filter);
                     db.SaveChanges();
                     return RedirectToAction("ManageFilters", "Filters");
@@ -375,6 +384,37 @@ namespace MyEShop.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
+        [HttpGet]
+        public ActionResult CreateHeadGroupFilters()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        public ActionResult CreateHeadGroupFilters(string Title)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var gFilter = new GroupFilter();
+                    gFilter.Title = Title;
+                    gFilter.Parent = null;
+                    db.GroupFilter.Add(gFilter);
+                    db.SaveChanges();
+                    return RedirectToAction("ManageFilters", "Filters");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
 
 
     }
