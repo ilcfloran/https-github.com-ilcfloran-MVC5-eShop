@@ -218,6 +218,83 @@ namespace MyEShop.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult AddFilters(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    ViewBag.GroupFilterId = id;
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+        public ActionResult AddFilters(string Title, int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var groupFilter = db.GroupFilter.Where(f => f.Id == id).SingleOrDefault();
+                    if (groupFilter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
+                    }
+
+                    var filter = new FilterItem();
+                    filter.Title = Title;
+                    filter.GroupFilterId = id;
+                    filter.GroupFilter = groupFilter;
+                    db.FilterItems.Add(filter);
+                    db.SaveChanges();
+                    return RedirectToAction("ManageFilters", "Filters");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpGet]
+        public ActionResult EditFilterGroup(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    ViewBag.GroupFilterId = id;
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        public ActionResult EditFilterGroup(string Title, int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var groupFilter = db.GroupFilter.Where(f => f.Id == id).SingleOrDefault();
+                    if (groupFilter == null)
+                    {
+                        return RedirectToAction("Index", "Manage");
+                    }
+                    groupFilter.Title = Title;
+                    db.SaveChanges();
+                    return RedirectToAction("ManageFilters", "Filters");
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
     }
 }
 

@@ -26,7 +26,7 @@
                         <li style="font-weight:normal;">
                             @if (child.FilterItems != null)
                             {
-                                @child.Title @Html.ActionLink("Add Filters", "AddFilter", "Filters", new { id = child.Id}, new { @class="filterMargin"}) @Html.ActionLink("Edit", "EditFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" }) @Html.ActionLink("Delete", "DeleteFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" })
+                                @child.Title @Html.ActionLink("Add Filters", "AddFilters", "Filters", new { id = child.Id}, new { @class="filterMargin"}) @Html.ActionLink("Edit", "EditFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" }) @Html.ActionLink("Delete", "DeleteFilterGroup", "Filters", new { id = child.Id}, new { @class = "filterMargin" })
                                 
                             <ul style="font-weight:bold;">
 
