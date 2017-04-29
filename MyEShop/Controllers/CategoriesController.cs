@@ -108,10 +108,8 @@ namespace MyEShop.Web.Controllers
                 if (User.IsInRole("Admin"))
                 {
                     var cat = db.Categories.Where(c => c.Id == id).SingleOrDefault();
-                    var groupFilters = db.GroupFilter.ToList();
                     if (cat != null)
                     {
-                        //ViewBag.GroupFilters = groupFilters;
                         return View(cat);
                     }
                 }
@@ -233,29 +231,102 @@ namespace MyEShop.Web.Controllers
             return View(category);
         }
 
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (User.IsInRole("Admin"))
+                {
+                    ViewBag.Error = "";
+                    var cat = db.Categories.Where(c => c.Id == id).SingleOrDefault();
+                    if (cat != null)
+                    {
+                        return View(cat);
+                    }
+                }
+                return RedirectToAction("Index", "Manage");
             }
-            Category category = await db.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
+            return RedirectToAction("Index", "Manage");
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult Delete(Category cat)
         {
-            Category category = await db.Categories.FindAsync(id);
-            db.Categories.Remove(category);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var category = db.Categories.Where(c => c.Id == cat.Id).SingleOrDefault();
+                    var groupFilters = db.CategoriesGroupFilters.Where(c => c.CategoryId == cat.Id).ToList();
+                    if (category != null)
+                    {
+                        if (groupFilters.Count() > 0)
+                        {
+                            ViewBag.Error = "Can not be deleted. There are products associated with this category.";
+                            return View(category);
+                        }
+                        db.Categories.Remove(category);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("FetchCategories", "Categories");
+            }
+            return RedirectToAction("Index", "Manage");
         }
+
+        [HttpGet]
+        public ActionResult AddSubCategory(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var cat = db.Categories.Where(c => c.Id == id).SingleOrDefault();
+                    if (cat != null)
+                    {
+                        ViewBag.ParentId = cat.Id;
+                        return View();
+                    }
+                }
+                return RedirectToAction("FetchCategories", "Categories");
+            }
+            return RedirectToAction("FetchCategories", "Categories");
+        }
+
+
+        [HttpPost]
+        public ActionResult AddSubCategory(string Title, int parentId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var parent = db.Categories.Where(c => c.Id == parentId).SingleOrDefault();
+                    if (parent != null)
+                    {
+                        var category = new Category();
+                        category.Parent = parent;
+                        category.ParentCategoryId = parent.Id;
+                        category.CategoryName = Title;
+                        db.Categories.Add(category);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("FetchCategories", "Categories");
+            }
+            return RedirectToAction("FetchCategories", "Categories");
+        }
+
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Category category = db.Categories.Find(id);
+        //    db.Categories.Remove(category);
+        //    db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

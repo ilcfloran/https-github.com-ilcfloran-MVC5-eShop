@@ -10,7 +10,7 @@
             @if (item.Children != null)
             {
                 <li>
-                    @item.CategoryName @Html.ActionLink("Add Filters", "AddFilters", "Filters", new { id = item.Id }, new { @class = "filterMargin" })
+                    @item.CategoryName @Html.ActionLink("Add", "AddSubCategory", "Categories", new { id = item.Id }, new { @class = "filterMargin" })
                     @Html.ActionLink("Edit", "EditFilterGroup", "Filters", new { id = item.Id }, new { @class = "filterMargin" }) @Html.ActionLink("Delete", "DeleteFilterGroup", "Filters", new { id = item.Id }, new { @class = "filterMargin" })
                     <ul>
 

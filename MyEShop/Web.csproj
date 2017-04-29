@@ -429,6 +429,7 @@
     <Content Include="Views\Categories\EditCategory.cshtml" />
     <Content Include="Views\FilterItems\GetFilterGroupsForCategory.cshtml" />
     <Content Include="Views\FilterItems\_GetFilterGroupsForCategory.cshtml" />
+    <Content Include="Views\Categories\AddSubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
