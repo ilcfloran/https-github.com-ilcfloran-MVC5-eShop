@@ -681,6 +681,57 @@ namespace MyEShop.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
+        [HttpGet]
+        public ActionResult ManageBills(int page = 1)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var users = db.Bills.Include("User").Where(b => b.PayMe == true).ToList();
+
+                    int take = 1;
+                    var count = users.Count();
+                    int skip = 0;
+                    if (count > take)
+                    {
+                        skip = (take * page) - take;
+                    }
+                    var TotalPages = Math.Ceiling((decimal)(count / take));
+                    ViewBag.TotalPages = TotalPages;
+                    var _page = page <= TotalPages ? page : TotalPages;
+                    ViewBag.Page = _page;
+
+                    return View(users.OrderBy(p => p.Id).Skip(skip).Take(take));
+                }
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpGet]
+        public ActionResult PaySeller(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    //pay the amout, change the balance
+
+                    //Send a message to the User
+
+                    return RedirectToAction("ManageBills");
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
+
+
+
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

@@ -432,6 +432,7 @@
     <Content Include="Views\Categories\AddSubCategory.cshtml" />
     <Content Include="Views\Categories\EditSubCategory.cshtml" />
     <Content Include="Views\Categories\AddCategory.cshtml" />
+    <Content Include="Views\Products\ManageBills.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

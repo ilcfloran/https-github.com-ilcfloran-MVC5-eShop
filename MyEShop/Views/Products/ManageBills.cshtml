@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MyEShop.Core.Models.Bill>
+
+@if (Model.Count() > 0)
+{
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="features_items" id="productItemsPlaceHolder">
+                    <h2 class="title text-center">Bills</h2>
+                    @*<p style="color:orange">Auctions in orange are passed.</p>*@
+                    @if (Model.Count() > 0)
+                {
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr class="cart_menu">
+                                    <td class="description">Name</td>
+                                    <td class="price">Balance</td>
+                                    <td class="price">Requested</td>
+                                    <td class="total">Pay</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="description">
+                                           <h4>@item.User.FullName</h4>
+                                        </td>
+
+                                        <td class="price">
+                                            <p>$@(item.TotalRec - 100)</p>
+                                        </td>
+                                       
+                                        <td class="price">
+                                            <p>$@item.PayMeAmount</p>
+                                        </td>
+                                        <td class="description">
+                                            @Html.ActionLink("Pay", "PaySeller", "Products", new { id = item.Id} , new { @class = "btn btn-info"})
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        using (Html.BeginForm("PaySeller", "Products", FormMethod.Get, new { id = "pageForm" }))
+                        {
+                            <input type="hidden" id="pageNumber" name="page" value="" />
+                            <ul class="pagination" id="productsPagination">
+                                @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                                {
+                                    if (i == (int)ViewBag.Page)
+                                    {
+                                        <li class="active"><a class="page_number">@i.ToString()</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a class="page_number">@i.ToString()</a></li>
+                                    }
+                                }
+                                @*<li><a>&raquo;</a></li>*@
+                            </ul>
+                        }
+
+                    }
+                    else
+                    {
+                        <p>No item found.</p>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <p>No item found.</p>
+}
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', ".page_number", function (e) {
+                e.preventDefault();
+                $("#pageNumber").val($(this).text());
+                $("#pageForm").submit();
+            });
+
+
+        });
+    </script>
+}
