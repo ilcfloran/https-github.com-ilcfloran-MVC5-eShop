@@ -708,7 +708,7 @@ namespace MyEShop.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        [HttpGet]
+
         public ActionResult PaySeller(int amount, int id)
         {
             if (User.Identity.IsAuthenticated)
@@ -719,11 +719,14 @@ namespace MyEShop.Controllers
                     if (bill != null)
                     {
                         //pay the amout, change the balance
+                        //Send a message to the User
+
                         if ((bill.TotalRec - 100) > amount)
                         {
                             bill.TotalRec -= amount;
                             bill.PayMe = false;
                             bill.PayMeAmount = 0;
+                            bill.TimeOfLastRec = DateTime.Now;
 
                             var msg = new Message()
                             {
@@ -738,7 +741,6 @@ namespace MyEShop.Controllers
                             db.Messages.Add(msg);
                             db.SaveChanges();
                         }
-                        //Send a message to the User
 
                         return RedirectToAction("ManageBills");
                     }
