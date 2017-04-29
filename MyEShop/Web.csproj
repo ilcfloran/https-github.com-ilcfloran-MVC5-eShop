@@ -425,6 +425,10 @@
     <Content Include="Views\Filters\DeleteFilterGroup.cshtml" />
     <Content Include="Views\Filters\AddSubGroupFilters.cshtml" />
     <Content Include="Views\Filters\CreateHeadGroupFilters.cshtml" />
+    <Content Include="Views\Categories\FetchCategories.cshtml" />
+    <Content Include="Views\Categories\EditCategory.cshtml" />
+    <Content Include="Views\FilterItems\GetFilterGroupsForCategory.cshtml" />
+    <Content Include="Views\FilterItems\_GetFilterGroupsForCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

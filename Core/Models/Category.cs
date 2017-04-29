@@ -6,6 +6,7 @@ namespace MyEShop.Core.Models
 {
     public class Category : ITreeNode<Category>, ICategory
     {
+
         public Category()
         {
             IList<Category> Children = new List<Category>();

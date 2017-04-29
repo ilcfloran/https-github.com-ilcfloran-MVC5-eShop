@@ -105,6 +105,24 @@ namespace MyEShop.Controllers
             return View(filterItem);
         }
 
+        [HttpGet]
+        public ActionResult GetFilterGroupsForCategory(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (id > 0)
+                {
+                    var selectedGroupFilters = db.CategoriesGroupFilters.Where(c => c.CategoryId == id).Select(c => c.GroupFilters).ToList();
+                    var allGroupFilters = db.GroupFilter.Where(g => g.ParentId == null).ToList();
+                    ViewBag.SelectedGroupFilters = selectedGroupFilters;
+                    ViewBag.AllGroupFilters = allGroupFilters;
+                    return PartialView("_GetFilterGroupsForCategory");
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
 
         public ActionResult Create()
         {

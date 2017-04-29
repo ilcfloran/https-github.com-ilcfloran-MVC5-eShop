@@ -1,0 +1,20 @@
+﻿
+
+@if (ViewBag.AllGroupFilters != null)
+{
+    foreach (var item in ViewBag.AllGroupFilters as ICollection<MyEShop.Core.Models.GroupFilter>)
+    {
+
+        if ((ViewBag.SelectedGroupFilters as IEnumerable<MyEShop.Core.Models.GroupFilter>).Contains(item))
+        {
+            @item.Title <input type="checkbox" name="groupFilters" value="@item.Id" checked="checked" />   }
+        else
+        {
+            @item.Title <input type="checkbox" name="groupFilters" value="@item.Id" />   }
+
+    }
+}
+else
+{
+    <p>no group filters has been found.</p>
+}

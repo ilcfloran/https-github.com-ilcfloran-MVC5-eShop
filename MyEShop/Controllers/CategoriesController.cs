@@ -83,7 +83,91 @@ namespace MyEShop.Web.Controllers
             return PartialView("_CategoryProducts", topLevelCategories);
         }
 
-        // GET: Categories/Details/5
+        [HttpGet]
+        public ActionResult FetchCategories()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    IEnumerable<CategoryVM> listOfNodes = GetListOfNodes();
+                    IList<CategoryVM> topLevelCategories = TreeHelper.ConvertToForest(listOfNodes);
+
+                    return View(topLevelCategories);
+                }
+
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpGet]
+        public ActionResult EditCategory(int id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var cat = db.Categories.Where(c => c.Id == id).SingleOrDefault();
+                    var groupFilters = db.GroupFilter.ToList();
+                    if (cat != null)
+                    {
+                        //ViewBag.GroupFilters = groupFilters;
+                        return View(cat);
+                    }
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        public ActionResult EditCategory(Category cat, List<int?> groupFilters)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    var category = db.Categories.Where(c => c.Id == cat.Id).SingleOrDefault();
+                    if (category != null)
+                    {
+                        category.CategoryName = cat.CategoryName;
+
+
+                        var catGroupFilter = db.CategoriesGroupFilters.Where(c => c.CategoryId == cat.Id).ToList();
+                        if (catGroupFilter != null)
+                        {
+                            List<CategoriesGroupFilters> lst = new List<CategoriesGroupFilters>();
+                            foreach (var item in catGroupFilter)
+                            {
+                                lst.Add(item);
+                            }
+                            db.CategoriesGroupFilters.RemoveRange(lst);
+                            db.SaveChanges();
+                        }
+
+
+                        if (groupFilters != null)
+                        {
+                            foreach (var item in groupFilters)
+                            {
+                                var catg = new CategoriesGroupFilters();
+                                catg.CategoryId = cat.Id;
+                                catg.GroupFilterId = item ?? 0;
+                                db.CategoriesGroupFilters.Add(catg);
+                            }
+                            db.SaveChanges();
+                        }
+                    }
+                    return RedirectToAction("FetchCategories", "Categories");
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+
+
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
