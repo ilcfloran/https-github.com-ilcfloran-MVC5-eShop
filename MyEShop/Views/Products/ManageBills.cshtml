@@ -37,7 +37,7 @@
                                             <p>$@item.PayMeAmount</p>
                                         </td>
                                         <td class="description">
-                                            @Html.ActionLink("Pay", "PaySeller", "Products", new { id = item.Id} , new { @class = "btn btn-info"})
+                                            @Html.ActionLink("Pay", "PaySeller", "Products", new { amount = item.PayMeAmount , id = item.Id} , new { @class = "btn btn-info"})
                                         </td>
                                     </tr>
                                 }

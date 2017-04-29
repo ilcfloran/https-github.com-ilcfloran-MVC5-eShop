@@ -709,19 +709,41 @@ namespace MyEShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult PaySeller(int id)
+        public ActionResult PaySeller(int amount, int id)
         {
             if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole("Admin"))
                 {
-                    //pay the amout, change the balance
+                    var bill = db.Bills.Where(b => b.Id == id && b.PayMe == true).SingleOrDefault();
+                    if (bill != null)
+                    {
+                        //pay the amout, change the balance
+                        if ((bill.TotalRec - 100) > amount)
+                        {
+                            bill.TotalRec -= amount;
+                            bill.PayMe = false;
+                            bill.PayMeAmount = 0;
 
-                    //Send a message to the User
+                            var msg = new Message()
+                            {
+                                Date = DateTime.Now,
+                                IsRead = false,
+                                Text = "You have been paid " + amount,
+                                Title = "New Payment",
+                                UserRecId = bill.UserId,
+                                UserRec = bill.User
+                            };
 
+                            db.Messages.Add(msg);
+                            db.SaveChanges();
+                        }
+                        //Send a message to the User
+
+                        return RedirectToAction("ManageBills");
+                    }
                     return RedirectToAction("ManageBills");
                 }
-
             }
             return RedirectToAction("Index", "Manage");
         }
