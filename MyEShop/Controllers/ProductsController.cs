@@ -355,10 +355,21 @@ namespace MyEShop.Controllers
 
                 if (User.IsInRole("Seller"))
                 {
+                    var userId = User.Identity.GetUserId();
+                    var seller = db.Users.Where(u => u.Id == userId).SingleOrDefault();
+                    if (seller.BankAcount == null || seller.BankName == null)
+                    {
+                        ViewBag.Categories = db.Categories.Select(c => new SelectListItem
+                        {
+                            Text = c.CategoryName,
+                            Value = c.Id.ToString()
+                        }).ToList();
 
+                        ViewBag.Error = "You have to fill out your Bank Name and account to be able to sell products";
+                        return View(product);
+                    }
                     var randomNameGenerate = new Random();
 
-                    var userId = User.Identity.GetUserId();
                     if (ModelState.IsValid)
                     {
                         var filterItems = db.FilterItems.Where(f => filterItemschk.Any(fi => fi == f.Id));
@@ -423,7 +434,7 @@ namespace MyEShop.Controllers
                             db.SaveChanges();
                         }
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Manage");
                     }
                     ViewBag.Categories = db.Categories.Select(c => new SelectListItem
                     {

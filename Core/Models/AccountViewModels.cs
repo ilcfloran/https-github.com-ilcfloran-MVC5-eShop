@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyEShop.Core.Models
@@ -94,15 +93,19 @@ namespace MyEShop.Core.Models
         [Display(Name = "Profile picture")]
         public byte[] ProfilePicture { get; set; }
 
+        [Required]
         [StringLength(30, ErrorMessage = "Address must be 30 characters or shorter.")]
         public string Address { get; set; }
 
+        [Required]
         [StringLength(30, ErrorMessage = "City must be 30 characters or shorter.")]
         public string City { get; set; }
 
+        [Required]
         [StringLength(30, ErrorMessage = "State must be 10 characters or shorter.")]
         public string State { get; set; }
 
+        [Required]
         [StringLength(30, ErrorMessage = "ZipCode must be 15 characters or shorter.")]
         public string ZipCode { get; set; }
 

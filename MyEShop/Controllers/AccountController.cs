@@ -148,8 +148,22 @@ namespace MyEShop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    Address = model.Address,
+                    City = model.City,
+                    ZipCode = model.ZipCode,
+                    State = model.State
+                };
+
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRole(user.Id, "Seller");
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -168,6 +182,46 @@ namespace MyEShop.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = UserManager.FindById(userId);
+                return View(user);
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+
+        [HttpPost]
+        public ActionResult EditProfile(ApplicationUser user)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                if (user.Id == userId)
+                {
+                    var userInDb = UserManager.FindById(userId);
+                    userInDb.FirstName = user.FirstName;
+                    userInDb.LastName = user.LastName;
+                    userInDb.Address = user.Address;
+                    userInDb.City = user.City;
+                    userInDb.State = user.State;
+                    userInDb.ZipCode = user.ZipCode;
+                    userInDb.Mobile = user.Mobile;
+                    userInDb.BankAcount = user.BankAcount;
+                    userInDb.BankName = user.BankName;
+
+                    UserManager.Update(userInDb);
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
