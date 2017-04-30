@@ -3,9 +3,9 @@
 <h3>About Seller</h3>
 <div class="brands-name">
     <ul class="nav nav-pills nav-stacked">
-        <li>Seller: @ViewBag.UserName</li>
-        <li>Member Since: @ViewBag.MemberSince.ToShortDateString()</li>
-        <li>City: @ViewBag.City</li>
+        <li id="itemPlace">Seller: @ViewBag.UserName</li>
+        <li id="itemPlace">Member Since: @ViewBag.MemberSince.ToShortDateString()</li>
+        <li id="itemPlace">City: @ViewBag.City</li>
     </ul>
 </div>
 
@@ -16,15 +16,15 @@
         {
             foreach (var item in Model)
             {
-                <li><span>@item.Price</span></li>
+                <li id="itemPlace"><span>@item.Price</span></li>
             }
         }
         else
         {
-            <li>Be the first one to bid.</li>
+            <li id="itemPlace" >Be the first one to bid.</li>
         }
     </ul>
-    <p>@ViewBag.AuctionCount person(s) participated.</p>
+    <p id="itemPlace">@ViewBag.AuctionCount person(s) participated.</p>
 
 </div>
 @if (Request.IsAuthenticated)
@@ -38,7 +38,7 @@
                 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "bidForm" }))
                 {
                     <span id="offerText" style="display:none; color:red">Your offer is being sent.</span>
-                    <span style="display:block;" class="btnSubmitForm">Your offer: <span class="btnSubmitForm"> @(ViewBag.UserBid ?? 0)</span> </span> <input type="text" class="bid btnSubmitForm" name="bid" value="">
+                    <span style="display:block;" class="btnSubmitForm" id="itemPlace">Your offer: <span class="btnSubmitForm"> @(ViewBag.UserBid ?? 0)</span> </span> <input type="text" class="bid btnSubmitForm" name="bid" value="">
                     <input type="hidden"  name="pId" value="@ViewBag.ProductId" />
                     <button type="submit" class="btnSubmitForm">Submit</button>
                 }
@@ -46,5 +46,5 @@
     </div>
 }else
 {
-    <p>Login to bid.</p>
+    <p id="itemPlace">Login to bid.</p>
 }

@@ -1,0 +1,48 @@
+﻿@model IList<MyEShop.Core.Models.Product>
+
+<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="item">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="col-sm-4">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="~/Content/Product-Pictures/@Model[i].Image" alt="">
+                                <h2>$@Model[i].Price</h2>
+                                    <p>@Model[i].Name</p>
+                                    <a href="~/Products/Details/@Model[i].Id" class="btn btn-default add-to-cart"><i class="fa fa-arrow-circle-right"></i>Go to product page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="item active">
+            @for (int i = 3; i < 6; i++)
+            {
+                <div class="col-sm-4">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="~/Content/Product-Pictures/@Model[i].Image" alt="">
+                                <h2>$@Model[i].Price</h2>
+                                    <p>@Model[i].Name</p>
+                                    <a href="~/Products/Details/@Model[i].Id" class="btn btn-default add-to-cart"><i class="fa fa-arrow-circle-right"></i>Go to product page</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+        <i class="fa fa-angle-left"></i>
+    </a>
+    <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+        <i class="fa fa-angle-right"></i>
+    </a>
+</div>

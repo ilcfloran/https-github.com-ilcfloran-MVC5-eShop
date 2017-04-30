@@ -19,11 +19,11 @@ namespace MyEShop.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public async Task<ActionResult> Index()
-        {
+        //public async Task<ActionResult> Index()
+        //{
 
-            return View(await db.Products.ToListAsync());
-        }
+        //    return View(await db.Products.ToListAsync());
+        //}
 
         public async Task<ActionResult> Details(int? id)
         {
@@ -762,7 +762,11 @@ namespace MyEShop.Controllers
         }
 
 
-
+        public ActionResult NewItems()
+        {
+            var newItems = db.Products.OrderByDescending(p => p.date).ToList().Take(6);
+            return PartialView(newItems.ToList());
+        }
 
 
 

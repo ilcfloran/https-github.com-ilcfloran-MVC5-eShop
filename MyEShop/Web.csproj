@@ -288,6 +288,7 @@
     <Content Include="Content\Website-Images\logo.png" />
     <Content Include="Content\Website-Images\map.png" />
     <Content Include="Content\Website-Images\pricing.png" />
+    <Content Include="Content\Website-Images\shipping.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -443,6 +444,7 @@
     <Content Include="Views\Categories\AddCategory.cshtml" />
     <Content Include="Views\Products\ManageBills.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Products\NewItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

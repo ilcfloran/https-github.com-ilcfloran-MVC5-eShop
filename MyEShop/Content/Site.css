@@ -2588,3 +2588,22 @@ h2.title {
 .filterMargin {
 	margin-left:5px;
 }
+.search_box input {
+   color: #040404;
+   font-size: 14px;    
+   height: 30px;
+   width: 300px;
+}
+
+.search_box.centered {
+	text-align: center;
+}
+
+.productinfo img {
+    height: 210px;
+}
+
+#itemPlace {
+    margin-left: 5px;
+    font-family: monospace;
+}
