@@ -130,13 +130,14 @@
                                         <p id="productName">@item.Name</p>
                                         <h2>@item.Price</h2>
                                         <p id="productDescription">@item.Text</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        @*<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
                                             <h2>@item.Price</h2>
-                                            <p id="productDescription">@item.Description</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <p id="productDescription" style="font-weight:bold">@item.Text</p>
+                                            <p id="productDescription" style="font-weight:bold">@item.Description</p>
+                                            @*<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
                                         </div>
                                     </div>
                                     @if (item.Onsale)
@@ -151,7 +152,7 @@
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified text-center">
-                                        <li><i class="fa fa-arrow-circle-right">@Html.ActionLink("Go to product", "Details", "Products", new { id = item.Id }, new { id = "gotoproduct"})</i> </li>
+                                        <li><i class="fa fa-arrow-circle-right">@Html.ActionLink("Go to product", "Details", "Products", new { id = item.Id }, new { id = "gotoproduct", @class= "add-to-cart" })</i> </li>
                                     </ul>
                                 </div>
                             </div>
