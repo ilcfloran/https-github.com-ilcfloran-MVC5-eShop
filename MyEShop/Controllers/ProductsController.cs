@@ -769,6 +769,24 @@ namespace MyEShop.Controllers
         }
 
 
+        public ActionResult GetNewAuctions()
+        {
+            var items = db.Products.Where(p => p.EndDate != null).OrderByDescending(p => p.date).ToList().Take(4);
+            return PartialView("GetProductItems", items);
+        }
+
+
+        public ActionResult GetOnSale()
+        {
+            var items = db.Products.Where(p => p.Onsale == true).OrderByDescending(p => p.date).ToList().Take(4);
+            return PartialView("GetProductItems", items);
+        }
+
+        public ActionResult BestSeller()
+        {
+            var items = db.Products.Where(p => p.EndDate == null).OrderByDescending(p => p.date).ToList().Take(4);
+            return PartialView("GetProductItems", items);
+        }
 
 
         public async Task<ActionResult> Delete(int? id)

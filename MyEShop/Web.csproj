@@ -445,6 +445,7 @@
     <Content Include="Views\Products\ManageBills.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Products\NewItems.cshtml" />
+    <Content Include="Views\Products\GetProductItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

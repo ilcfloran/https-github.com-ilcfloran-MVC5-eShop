@@ -1,0 +1,24 @@
+﻿@model IEnumerable<MyEShop.Core.Models.Product>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-sm-3">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                    <div class="productinfo text-center">
+                        <img src="~/Content/Product-Pictures/@item.Image" alt="">
+                        <h2>$ @item.Price</h2>
+                        <p>@item.Name</p>
+                        <a href="~/Products/Details/@item.Id" class="btn btn-default add-to-cart"><i class="fa fa-arrow-circle-right"></i>Go to page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>no item found.</p>
+}
