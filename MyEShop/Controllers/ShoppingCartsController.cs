@@ -235,7 +235,7 @@ namespace MyEShop.Controllers
 
                     if (Parmeters.status == 1)
                     {
-                        var tmpSales = db.TempSale.Where(t => t.BankGetNo == transId).ToList();
+                        var tmpSales = db.TempSale.Include("Product").Where(t => t.BankGetNo == transId).ToList();
 
                         foreach (var i in tmpSales)
                         {
@@ -245,8 +245,8 @@ namespace MyEShop.Controllers
                         }
 
                         db.SaveChanges();
-                        List<Sale> LstSale = new List<Sale>();
 
+                        List<Sale> LstSale = new List<Sale>();
                         foreach (var j in tmpSales)
                         {
                             Sale s = new Sale()
@@ -260,11 +260,23 @@ namespace MyEShop.Controllers
                                 ProductId = j.ProductId,
                                 StatusId = SalesStatus.OnHold,
                                 UserId = userId,
+                                Product = j.Product,
                                 TransId = Convert.ToInt32(transId)
                             };
                             LstSale.Add(s);
 
                         }
+
+                        // find Id of sellers
+                        var ids = new List<string>();
+                        foreach (var o in tmpSales)
+                        {
+                            ids.Add(o.Product.UserId);
+                        }
+
+                        var bills = db.Bills.Where(b => ids.Contains(b.UserId)).ToList();
+                        var userBillId = bills.Select(b => b.UserId).ToList();
+
 
                         foreach (var v in LstSale)
                         {
@@ -276,6 +288,34 @@ namespace MyEShop.Controllers
                                 Title = "Item Sold",
                                 UserRecId = v.Product.UserId
                             };
+
+                            db.Messages.Add(messageToSeller);
+
+                            if (userBillId.Contains(v.Product.UserId))
+                            {
+                                var currentBill = db.Bills.Where(b => b.UserId == v.Product.UserId).SingleOrDefault();
+                                currentBill.LastRec = Convert.ToInt32(v.Count * v.Price);
+                                currentBill.TotalRec = currentBill.TotalRec + Convert.ToInt32(v.Count * v.Price);
+                                currentBill.TimeOfLastRec = DateTime.Now;
+                                db.SaveChanges();
+
+                            }
+                            else
+                            {
+                                Bill bill = new Bill()
+                                {
+                                    LastRec = Convert.ToInt32(v.Count * v.Price),
+                                    TotalRec = Convert.ToInt32(v.Count * v.Price),
+                                    TimeOfLastRec = DateTime.Now,
+                                    PayMe = false,
+                                    PayMeAmount = 0,
+                                    UserId = v.Product.UserId,
+                                    User = v.Product.User
+                                };
+
+                                db.Bills.Add(bill);
+                            }
+
                         }
                         db.Sales.AddRange(LstSale);
                         db.SaveChanges();
@@ -296,10 +336,7 @@ namespace MyEShop.Controllers
                         return Content("error");
                     }
                 }
-
-
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -348,6 +385,7 @@ namespace MyEShop.Controllers
                     cartItem.WebId = cartitem.Id;
                     cartItem.Date = cartitem.Date;
                     cartItem.StatusId = cartitem.StatusId;
+                    cartItem.TrackingCode = cartitem.TrackingCode;
 
                     if (cart.CartItems == null)
                     {

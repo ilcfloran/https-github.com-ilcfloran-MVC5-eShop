@@ -3,6 +3,7 @@ using MyEShop.Core.Models;
 using MyEShop.DataAccess.ModelConfigs;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -195,7 +196,7 @@ namespace MyEShop.Controllers
                 if (messages != null)
                 {
 
-                    int take = 1;
+                    int take = 3;
                     var count = messages.Count();
                     int skip = 0;
                     if (count > take)
@@ -300,7 +301,7 @@ namespace MyEShop.Controllers
                     if (Parmeters.status == 1)
                     {
 
-                        var itemsInCart = db.Sales.Where(s => s.UserId == userId && s.BankNo == transId && s.Payed == false).ToList();
+                        var itemsInCart = db.Sales.Include("Product").Where(s => s.UserId == userId && s.BankNo == transId && s.Payed == false).ToList();
 
                         foreach (var item in itemsInCart)
                         {
@@ -308,6 +309,60 @@ namespace MyEShop.Controllers
                             item.TransId = Convert.ToInt32(transId);
                         }
                         db.SaveChanges();
+
+                        var lstId = new List<string>();
+                        foreach (var item in itemsInCart)
+                        {
+                            lstId.Add(item.Product.UserId);
+                        }
+
+
+                        var bills = db.Bills.Where(b => lstId.Contains(b.UserId)).ToList();
+                        var userBillId = bills.Select(b => b.UserId).ToList();
+
+
+                        foreach (var v in itemsInCart)
+                        {
+                            Message messageToSeller = new Message()
+                            {
+                                Date = DateTime.Now,
+                                IsRead = false,
+                                Text = "You sold auction item " + v.Product.Name + " , Price: " + v.Price,
+                                Title = "Auction Sold",
+                                UserRecId = v.Product.UserId
+                            };
+
+                            db.Messages.Add(messageToSeller);
+
+                            if (userBillId.Contains(v.Product.UserId))
+                            {
+                                var currentBill = db.Bills.Where(b => b.UserId == v.Product.UserId).SingleOrDefault();
+                                currentBill.LastRec = Convert.ToInt32(v.Count * v.Price);
+                                currentBill.TotalRec = currentBill.TotalRec + Convert.ToInt32(v.Count * v.Price);
+                                currentBill.TimeOfLastRec = DateTime.Now;
+                                db.SaveChanges();
+
+                            }
+                            else
+                            {
+                                Bill bill = new Bill()
+                                {
+                                    LastRec = Convert.ToInt32(v.Count * v.Price),
+                                    TotalRec = Convert.ToInt32(v.Count * v.Price),
+                                    TimeOfLastRec = DateTime.Now,
+                                    PayMe = false,
+                                    PayMeAmount = 0,
+                                    UserId = v.Product.UserId,
+                                    User = v.Product.User
+                                };
+
+                                db.Bills.Add(bill);
+                            }
+
+                        }
+                        db.SaveChanges();
+
+
 
                         return RedirectToAction("GetSalesItemByTrasnId", "ShoppingCarts", new { tId = transId, price = Parmeters.amount.ToString() });
                     }

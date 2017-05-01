@@ -10,7 +10,7 @@ public class Payment
     private string GatewayResult = "https://pay.ir/payment/test/verify";
 
     private string Api = "test";
-    private string Redirect = "http://localhost:49817/ShoppingCarts/PaymentComplete";
+    private string Redirect = "http://localhost:44346/ShoppingCarts/PaymentComplete";
 
     public string pay(String Amount)
     {

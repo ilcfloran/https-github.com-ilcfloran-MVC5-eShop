@@ -13,7 +13,7 @@ namespace MyEShop.Utilities.AuctionPayment
         private string GatewayResult = "https://pay.ir/payment/test/verify";
 
         private string Api = "test";
-        private string Redirect = "http://localhost:49817/Auctions/PaymentComplete";
+        private string Redirect = "http://localhost:44346/Auctions/PaymentComplete";
 
         public string pay(String Amount)
         {

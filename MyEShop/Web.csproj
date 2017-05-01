@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44346</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -487,7 +488,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49817</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44346/</IISUrl>
+          <IISUrl>http://localhost:44346/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

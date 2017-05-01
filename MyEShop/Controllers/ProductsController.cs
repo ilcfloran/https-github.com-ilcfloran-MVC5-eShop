@@ -101,7 +101,7 @@ namespace MyEShop.Controllers
                 productsVM.AddRange(q);
             }
 
-            int take = 1;
+            int take = 3;
             var count = productsVM.Count();
 
             int skip = 0;
@@ -143,7 +143,7 @@ namespace MyEShop.Controllers
             productsVM = db.Products
                 .Where(p => (p.Name.Contains(searchText) || p.Text.Contains(searchText)) && (p.EndDate == null || p.EndDate > DateTime.Now)).ToList();
 
-            int take = 1;
+            int take = 3;
             var count = productsVM.Count();
 
             int skip = 0;
@@ -271,7 +271,7 @@ namespace MyEShop.Controllers
                 var userId = User.Identity.GetUserId();
                 var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate == null).ToList();
 
-                int take = 1;
+                int take = 3;
                 var count = myProducts.Count();
                 int skip = 0;
                 if (count > take)
@@ -299,7 +299,7 @@ namespace MyEShop.Controllers
                 var myProducts = db.Products.Where(p => p.UserId == userId && p.EndDate != null).ToList();
 
 
-                int take = 1;
+                int take = 3;
                 var count = myProducts.Count();
                 int skip = 0;
                 if (count > take)
@@ -701,7 +701,7 @@ namespace MyEShop.Controllers
                 {
                     var users = db.Bills.Include("User").Where(b => b.PayMe == true).ToList();
 
-                    int take = 1;
+                    int take = 3;
                     var count = users.Count();
                     int skip = 0;
                     if (count > take)

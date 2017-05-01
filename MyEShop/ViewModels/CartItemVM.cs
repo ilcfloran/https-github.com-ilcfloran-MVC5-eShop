@@ -17,5 +17,6 @@ namespace MyEShop.Web.ViewModels
 
         public SalesStatus StatusId { get; set; }
 
+        public int TrackingCode { get; set; }
     }
 }
